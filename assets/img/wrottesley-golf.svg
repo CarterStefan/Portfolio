@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#F2F5EE"/>
+  <!-- browser frame -->
+  <rect x="90" y="80" width="620" height="440" rx="16" fill="#FFFFFF" stroke="#E1E3DB" stroke-width="2"/>
+  <line x1="91" y1="126" x2="709" y2="126" stroke="#EAECE3" stroke-width="2"/>
+  <circle cx="116" cy="103" r="5" fill="#D7DACF"/>
+  <circle cx="134" cy="103" r="5" fill="#D7DACF"/>
+  <circle cx="152" cy="103" r="5" fill="#D7DACF"/>
+  <rect x="180" y="94" width="240" height="18" rx="9" fill="#F0F2EB"/>
+  <!-- hero: copy left -->
+  <rect x="130" y="164" width="70" height="9" rx="4.5" fill="#8FC9AE"/>
+  <rect x="130" y="190" width="220" height="17" rx="8.5" fill="#3A3F36"/>
+  <rect x="130" y="216" width="176" height="17" rx="8.5" fill="#3A3F36"/>
+  <rect x="130" y="250" width="200" height="8" rx="4" fill="#D9DDD2"/>
+  <rect x="130" y="266" width="164" height="8" rx="4" fill="#D9DDD2"/>
+  <rect x="130" y="296" width="112" height="34" rx="17" fill="#166B4D"/>
+  <rect x="158" y="309" width="56" height="8" rx="4" fill="#FFFFFF"/>
+  <!-- hero: course illustration right -->
+  <g>
+    <rect x="418" y="150" width="252" height="180" rx="12" fill="#E2EEE4"/>
+    <clipPath id="course"><rect x="418" y="150" width="252" height="180" rx="12"/></clipPath>
+    <g clip-path="url(#course)">
+      <circle cx="462" cy="188" r="18" fill="#FBE9A9"/>
+      <ellipse cx="480" cy="340" rx="130" ry="60" fill="#A8D2BD"/>
+      <ellipse cx="630" cy="352" rx="140" ry="70" fill="#BFDECE"/>
+      <ellipse cx="574" cy="306" rx="70" ry="22" fill="#8FC9AE"/>
+      <!-- flag and hole -->
+      <ellipse cx="574" cy="304" rx="12" ry="4" fill="#115540"/>
+      <line x1="574" y1="304" x2="574" y2="212" stroke="#3A3F36" stroke-width="3" stroke-linecap="round"/>
+      <polygon points="574,212 608,222 574,234" fill="#166B4D"/>
+      <circle cx="546" cy="298" r="5" fill="#FFFFFF" stroke="#DDE0D5" stroke-width="1.5"/>
+      <!-- trees -->
+      <circle cx="446" cy="266" r="17" fill="#8FC9AE"/>
+      <rect x="443" y="278" width="6" height="14" rx="3" fill="#7BA88C"/>
+      <circle cx="652" cy="250" r="14" fill="#A8D2BD"/>
+      <rect x="649" y="260" width="6" height="12" rx="3" fill="#7BA88C"/>
+    </g>
+  </g>
+  <!-- pro-shop product cards -->
+  <g>
+    <rect x="130" y="358" width="166" height="130" rx="10" fill="#FAFBF7" stroke="#E6E8DF" stroke-width="2"/>
+    <rect x="142" y="370" width="142" height="66" rx="6" fill="#E3E8DB"/>
+    <rect x="142" y="448" width="92" height="8" rx="4" fill="#C9CDC0"/>
+    <rect x="142" y="464" width="44" height="8" rx="4" fill="#166B4D"/>
+  </g>
+  <g>
+    <rect x="317" y="358" width="166" height="130" rx="10" fill="#FAFBF7" stroke="#E6E8DF" stroke-width="2"/>
+    <rect x="329" y="370" width="142" height="66" rx="6" fill="#E3E8DB"/>
+    <rect x="329" y="448" width="98" height="8" rx="4" fill="#C9CDC0"/>
+    <rect x="329" y="464" width="44" height="8" rx="4" fill="#166B4D"/>
+  </g>
+  <g>
+    <rect x="504" y="358" width="166" height="130" rx="10" fill="#FAFBF7" stroke="#E6E8DF" stroke-width="2"/>
+    <rect x="516" y="370" width="142" height="66" rx="6" fill="#E3E8DB"/>
+    <rect x="516" y="448" width="86" height="8" rx="4" fill="#C9CDC0"/>
+    <rect x="516" y="464" width="44" height="8" rx="4" fill="#166B4D"/>
+  </g>
+</svg>

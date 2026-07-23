@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#F1F7F3"/>
+  <!-- browser frame -->
+  <rect x="90" y="80" width="620" height="440" rx="16" fill="#FFFFFF" stroke="#E1E7E1" stroke-width="2"/>
+  <line x1="91" y1="126" x2="709" y2="126" stroke="#EAEFEA" stroke-width="2"/>
+  <circle cx="116" cy="103" r="5" fill="#D5DDD5"/>
+  <circle cx="134" cy="103" r="5" fill="#D5DDD5"/>
+  <circle cx="152" cy="103" r="5" fill="#D5DDD5"/>
+  <rect x="180" y="94" width="240" height="18" rx="9" fill="#F1F4F0"/>
+  <!-- hero: copy left -->
+  <rect x="130" y="164" width="70" height="9" rx="4.5" fill="#8FC9AE"/>
+  <rect x="130" y="190" width="225" height="17" rx="8.5" fill="#3A3E48"/>
+  <rect x="130" y="216" width="180" height="17" rx="8.5" fill="#3A3E48"/>
+  <rect x="130" y="250" width="205" height="8" rx="4" fill="#D8DFD8"/>
+  <rect x="130" y="266" width="165" height="8" rx="4" fill="#D8DFD8"/>
+  <rect x="130" y="296" width="118" height="34" rx="17" fill="#166B4D"/>
+  <rect x="159" y="309" width="60" height="8" rx="4" fill="#FFFFFF"/>
+  <!-- hero: cricket illustration right -->
+  <g>
+    <rect x="418" y="150" width="252" height="180" rx="12" fill="#E4EFE6"/>
+    <ellipse cx="556" cy="308" rx="100" ry="16" fill="#CCE3D6"/>
+    <!-- stumps -->
+    <rect x="522" y="182" width="13" height="118" rx="6.5" fill="#EAE3D0" stroke="#D3C9AC" stroke-width="2"/>
+    <rect x="549" y="182" width="13" height="118" rx="6.5" fill="#EAE3D0" stroke="#D3C9AC" stroke-width="2"/>
+    <rect x="576" y="182" width="13" height="118" rx="6.5" fill="#EAE3D0" stroke="#D3C9AC" stroke-width="2"/>
+    <rect x="524" y="172" width="30" height="8" rx="4" fill="#D3C9AC"/>
+    <rect x="557" y="172" width="30" height="8" rx="4" fill="#D3C9AC"/>
+    <!-- ball and trajectory -->
+    <path d="M436 210 q30 60 52 74" fill="none" stroke="#8FC9AE" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round"/>
+    <circle cx="472" cy="278" r="15" fill="#166B4D"/>
+    <path d="M462 270 q10 8 20 0" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-dasharray="3 3"/>
+  </g>
+  <!-- programme cards -->
+  <g>
+    <rect x="130" y="358" width="166" height="130" rx="10" fill="#FAFBFA" stroke="#E6EBE4" stroke-width="2"/>
+    <circle cx="162" cy="392" r="16" fill="#E8F2EC"/>
+    <rect x="154" y="388" width="16" height="8" rx="4" fill="#166B4D"/>
+    <rect x="146" y="424" width="100" height="8" rx="4" fill="#C9CFC5"/>
+    <rect x="146" y="442" width="130" height="7" rx="3.5" fill="#E2E7E0"/>
+    <rect x="146" y="458" width="44" height="8" rx="4" fill="#166B4D"/>
+  </g>
+  <g>
+    <rect x="317" y="358" width="166" height="130" rx="10" fill="#FAFBFA" stroke="#E6EBE4" stroke-width="2"/>
+    <circle cx="349" cy="392" r="16" fill="#E8F2EC"/>
+    <rect x="341" y="388" width="16" height="8" rx="4" fill="#166B4D"/>
+    <rect x="333" y="424" width="92" height="8" rx="4" fill="#C9CFC5"/>
+    <rect x="333" y="442" width="130" height="7" rx="3.5" fill="#E2E7E0"/>
+    <rect x="333" y="458" width="44" height="8" rx="4" fill="#166B4D"/>
+  </g>
+  <g>
+    <rect x="504" y="358" width="166" height="130" rx="10" fill="#FAFBFA" stroke="#E6EBE4" stroke-width="2"/>
+    <circle cx="536" cy="392" r="16" fill="#E8F2EC"/>
+    <rect x="528" y="388" width="16" height="8" rx="4" fill="#166B4D"/>
+    <rect x="520" y="424" width="108" height="8" rx="4" fill="#C9CFC5"/>
+    <rect x="520" y="442" width="130" height="7" rx="3.5" fill="#E2E7E0"/>
+    <rect x="520" y="458" width="44" height="8" rx="4" fill="#166B4D"/>
+  </g>
+</svg>

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#F4F7F3"/>
+  <!-- artboard -->
+  <rect x="90" y="80" width="620" height="440" rx="16" fill="#FFFFFF" stroke="#E4E1E9" stroke-width="2"/>
+  <!-- typography specimen -->
+  <rect x="130" y="118" width="90" height="9" rx="4.5" fill="#E2DFE9"/>
+  <text x="130" y="216" font-family="Georgia, 'Times New Roman', serif" font-size="84" font-weight="bold" fill="#17181D">Aa</text>
+  <rect x="130" y="238" width="160" height="8" rx="4" fill="#DCD9E3"/>
+  <rect x="130" y="254" width="120" height="8" rx="4" fill="#E8E5EE"/>
+  <!-- color swatches -->
+  <rect x="130" y="292" width="90" height="9" rx="4.5" fill="#E2DFE9"/>
+  <circle cx="148" cy="338" r="17" fill="#166B4D"/>
+  <circle cx="192" cy="338" r="17" fill="#17181D"/>
+  <circle cx="236" cy="338" r="17" fill="#8FC9AE"/>
+  <circle cx="280" cy="338" r="17" fill="#CCE3D6"/>
+  <circle cx="324" cy="338" r="17" fill="#F4F3F6" stroke="#D9D6E0" stroke-width="2"/>
+  <!-- spacing scale -->
+  <rect x="130" y="392" width="90" height="9" rx="4.5" fill="#E2DFE9"/>
+  <rect x="130" y="418" width="24" height="24" rx="6" fill="#E8F2EC"/>
+  <rect x="164" y="418" width="36" height="24" rx="6" fill="#D9EBE0"/>
+  <rect x="210" y="418" width="52" height="24" rx="6" fill="#BFDECE"/>
+  <rect x="272" y="418" width="72" height="24" rx="6" fill="#A8D2BD"/>
+  <!-- components column -->
+  <rect x="430" y="118" width="180" height="44" rx="22" fill="#166B4D"/>
+  <rect x="475" y="136" width="90" height="9" rx="4.5" fill="#FFFFFF"/>
+  <rect x="431" y="181" width="178" height="42" rx="21" fill="none" stroke="#C6C2CF" stroke-width="2"/>
+  <rect x="475" y="197" width="90" height="9" rx="4.5" fill="#17181D"/>
+  <rect x="430" y="244" width="240" height="44" rx="10" fill="#FAFAF8" stroke="#DDD9E4" stroke-width="2"/>
+  <rect x="446" y="261" width="110" height="9" rx="4.5" fill="#C6C2CF"/>
+  <!-- toggles -->
+  <rect x="430" y="316" width="64" height="32" rx="16" fill="#166B4D"/>
+  <circle cx="478" cy="332" r="12" fill="#FFFFFF"/>
+  <rect x="510" y="316" width="64" height="32" rx="16" fill="#E4E1EA"/>
+  <circle cx="526" cy="332" r="12" fill="#FFFFFF"/>
+  <!-- slider -->
+  <line x1="430" y1="396" x2="670" y2="396" stroke="#E4E1EA" stroke-width="6" stroke-linecap="round"/>
+  <line x1="430" y1="396" x2="560" y2="396" stroke="#166B4D" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="560" cy="396" r="11" fill="#FFFFFF" stroke="#166B4D" stroke-width="3"/>
+  <!-- checkbox row -->
+  <rect x="430" y="438" width="24" height="24" rx="7" fill="#166B4D"/>
+  <path d="M436 450l5 5 9-10" stroke="#FFFFFF" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="466" y="445" width="110" height="9" rx="4.5" fill="#DCD9E3"/>
+</svg>

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#F1F7F3"/>
+  <!-- browser frame -->
+  <rect x="90" y="80" width="620" height="440" rx="16" fill="#FFFFFF" stroke="#E1E7E1" stroke-width="2"/>
+  <line x1="91" y1="126" x2="709" y2="126" stroke="#EAEFEA" stroke-width="2"/>
+  <circle cx="116" cy="103" r="5" fill="#D5DDD5"/>
+  <circle cx="134" cy="103" r="5" fill="#D5DDD5"/>
+  <circle cx="152" cy="103" r="5" fill="#D5DDD5"/>
+  <rect x="180" y="94" width="240" height="18" rx="9" fill="#F1F4F0"/>
+  <!-- sidebar -->
+  <rect x="91" y="127" width="130" height="391" fill="#FAFBFA"/>
+  <line x1="221" y1="127" x2="221" y2="518" stroke="#EAEFEA" stroke-width="2"/>
+  <rect x="104" y="148" width="104" height="28" rx="8" fill="#E8F2EC"/>
+  <rect x="116" y="158" width="60" height="8" rx="4" fill="#166B4D"/>
+  <rect x="116" y="196" width="76" height="8" rx="4" fill="#DCE2DC"/>
+  <rect x="116" y="224" width="64" height="8" rx="4" fill="#DCE2DC"/>
+  <rect x="116" y="252" width="82" height="8" rx="4" fill="#DCE2DC"/>
+  <rect x="116" y="280" width="58" height="8" rx="4" fill="#DCE2DC"/>
+  <!-- workflow board: three columns -->
+  <g>
+    <rect x="246" y="152" width="136" height="340" rx="12" fill="#FAFBFA" stroke="#EAEFEA" stroke-width="2"/>
+    <rect x="262" y="168" width="64" height="9" rx="4.5" fill="#C7D0C7"/>
+    <circle cx="366" cy="172" r="8" fill="#E8F2EC"/>
+    <rect x="258" y="192" width="112" height="64" rx="8" fill="#FFFFFF" stroke="#E6EBE6" stroke-width="2"/>
+    <rect x="270" y="204" width="70" height="8" rx="4" fill="#D9DED9"/>
+    <rect x="270" y="228" width="44" height="14" rx="7" fill="#E8F2EC"/>
+    <rect x="278" y="233" width="28" height="4" rx="2" fill="#166B4D"/>
+    <rect x="258" y="268" width="112" height="64" rx="8" fill="#FFFFFF" stroke="#E6EBE6" stroke-width="2"/>
+    <rect x="270" y="280" width="58" height="8" rx="4" fill="#D9DED9"/>
+    <rect x="270" y="304" width="44" height="14" rx="7" fill="#F1F4F0"/>
+    <rect x="258" y="344" width="112" height="64" rx="8" fill="#FFFFFF" stroke="#E6EBE6" stroke-width="2"/>
+    <rect x="270" y="356" width="66" height="8" rx="4" fill="#D9DED9"/>
+    <rect x="270" y="380" width="44" height="14" rx="7" fill="#F1F4F0"/>
+  </g>
+  <g>
+    <rect x="398" y="152" width="136" height="340" rx="12" fill="#FAFBFA" stroke="#EAEFEA" stroke-width="2"/>
+    <rect x="414" y="168" width="56" height="9" rx="4.5" fill="#C7D0C7"/>
+    <circle cx="518" cy="172" r="8" fill="#E8F2EC"/>
+    <!-- highlighted in-progress card -->
+    <rect x="410" y="192" width="112" height="64" rx="8" fill="#E8F2EC" stroke="#8FC9AE" stroke-width="2"/>
+    <rect x="422" y="204" width="70" height="8" rx="4" fill="#166B4D"/>
+    <rect x="422" y="228" width="44" height="14" rx="7" fill="#FFFFFF"/>
+    <rect x="430" y="233" width="28" height="4" rx="2" fill="#2E8563"/>
+    <rect x="410" y="268" width="112" height="64" rx="8" fill="#FFFFFF" stroke="#E6EBE6" stroke-width="2"/>
+    <rect x="422" y="280" width="52" height="8" rx="4" fill="#D9DED9"/>
+    <rect x="422" y="304" width="44" height="14" rx="7" fill="#F1F4F0"/>
+  </g>
+  <g>
+    <rect x="550" y="152" width="136" height="340" rx="12" fill="#FAFBFA" stroke="#EAEFEA" stroke-width="2"/>
+    <rect x="566" y="168" width="60" height="9" rx="4.5" fill="#C7D0C7"/>
+    <circle cx="670" cy="172" r="8" fill="#E8F2EC"/>
+    <rect x="562" y="192" width="112" height="64" rx="8" fill="#FFFFFF" stroke="#E6EBE6" stroke-width="2"/>
+    <rect x="574" y="204" width="62" height="8" rx="4" fill="#D9DED9"/>
+    <rect x="574" y="228" width="52" height="14" rx="7" fill="#E8F2EC"/>
+    <path d="M582 235l4 4 7-8" stroke="#166B4D" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="562" y="268" width="112" height="64" rx="8" fill="#FFFFFF" stroke="#E6EBE6" stroke-width="2"/>
+    <rect x="574" y="280" width="70" height="8" rx="4" fill="#D9DED9"/>
+    <rect x="574" y="304" width="52" height="14" rx="7" fill="#E8F2EC"/>
+    <path d="M582 311l4 4 7-8" stroke="#166B4D" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

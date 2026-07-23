@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#F3F6F1"/>
+  <!-- browser frame -->
+  <rect x="90" y="80" width="620" height="440" rx="16" fill="#FFFFFF" stroke="#E1E5DE" stroke-width="2"/>
+  <line x1="91" y1="126" x2="709" y2="126" stroke="#EAEDE6" stroke-width="2"/>
+  <circle cx="116" cy="103" r="5" fill="#D6DACF"/>
+  <circle cx="134" cy="103" r="5" fill="#D6DACF"/>
+  <circle cx="152" cy="103" r="5" fill="#D6DACF"/>
+  <rect x="180" y="94" width="240" height="18" rx="9" fill="#F0F2EC"/>
+  <!-- site nav -->
+  <rect x="130" y="146" width="80" height="10" rx="5" fill="#3A3E48"/>
+  <rect x="500" y="148" width="38" height="8" rx="4" fill="#D4D8CE"/>
+  <rect x="550" y="148" width="38" height="8" rx="4" fill="#D4D8CE"/>
+  <rect x="606" y="138" width="64" height="26" rx="13" fill="#E8F2EC"/>
+  <rect x="622" y="147" width="32" height="8" rx="4" fill="#166B4D"/>
+  <!-- hero: copy left -->
+  <rect x="130" y="204" width="70" height="9" rx="4.5" fill="#8FC9AE"/>
+  <rect x="130" y="230" width="230" height="17" rx="8.5" fill="#3A3E48"/>
+  <rect x="130" y="256" width="186" height="17" rx="8.5" fill="#3A3E48"/>
+  <rect x="130" y="290" width="210" height="8" rx="4" fill="#D9DCD5"/>
+  <rect x="130" y="306" width="170" height="8" rx="4" fill="#D9DCD5"/>
+  <rect x="130" y="336" width="120" height="34" rx="17" fill="#166B4D"/>
+  <rect x="160" y="349" width="60" height="8" rx="4" fill="#FFFFFF"/>
+  <!-- hero: portrait right -->
+  <g>
+    <circle cx="560" cy="270" r="86" fill="#E8F2EC"/>
+    <clipPath id="portrait"><circle cx="560" cy="270" r="86"/></clipPath>
+    <g clip-path="url(#portrait)">
+      <circle cx="560" cy="244" r="28" fill="#8FC9AE"/>
+      <ellipse cx="560" cy="322" rx="52" ry="34" fill="#2E8563"/>
+    </g>
+    <circle cx="560" cy="270" r="86" fill="none" stroke="#CCE3D6" stroke-width="3"/>
+  </g>
+  <!-- testimonial strip -->
+  <g>
+    <rect x="130" y="400" width="166" height="90" rx="10" fill="#FAFBF8" stroke="#E6E9E1" stroke-width="2"/>
+    <text x="146" y="440" font-family="Georgia, serif" font-size="30" fill="#8FC9AE">&#8220;</text>
+    <rect x="146" y="446" width="120" height="7" rx="3.5" fill="#D8DCD2"/>
+    <rect x="146" y="462" width="80" height="7" rx="3.5" fill="#E4E7DF"/>
+  </g>
+  <g>
+    <rect x="317" y="400" width="166" height="90" rx="10" fill="#FAFBF8" stroke="#E6E9E1" stroke-width="2"/>
+    <text x="333" y="440" font-family="Georgia, serif" font-size="30" fill="#8FC9AE">&#8220;</text>
+    <rect x="333" y="446" width="120" height="7" rx="3.5" fill="#D8DCD2"/>
+    <rect x="333" y="462" width="92" height="7" rx="3.5" fill="#E4E7DF"/>
+  </g>
+  <g>
+    <rect x="504" y="400" width="166" height="90" rx="10" fill="#FAFBF8" stroke="#E6E9E1" stroke-width="2"/>
+    <text x="520" y="440" font-family="Georgia, serif" font-size="30" fill="#8FC9AE">&#8220;</text>
+    <rect x="520" y="446" width="120" height="7" rx="3.5" fill="#D8DCD2"/>
+    <rect x="520" y="462" width="70" height="7" rx="3.5" fill="#E4E7DF"/>
+  </g>
+</svg>

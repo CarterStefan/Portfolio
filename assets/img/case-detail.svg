@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600">
+  <rect width="1200" height="600" fill="#F5F5F0"/>
+  <!-- flow connectors -->
+  <g stroke="#C9C6BF" stroke-width="2" stroke-dasharray="6 6" fill="none">
+    <path d="M390 300h70"/>
+    <path d="M740 300h70"/>
+  </g>
+  <g fill="#C9C6BF">
+    <path d="M460 293l14 7-14 7z"/>
+    <path d="M810 293l14 7-14 7z"/>
+  </g>
+  <!-- artboard 1: list wireframe -->
+  <g>
+    <rect x="130" y="120" width="260" height="360" rx="14" fill="#FFFFFF" stroke="#E3E1D9" stroke-width="2"/>
+    <rect x="154" y="148" width="120" height="12" rx="6" fill="#3A3E48"/>
+    <rect x="154" y="172" width="80" height="8" rx="4" fill="#E0DED6"/>
+    <rect x="154" y="204" width="212" height="52" rx="8" fill="#F4F3EE" stroke="#E7E5DD" stroke-width="2"/>
+    <rect x="154" y="268" width="212" height="52" rx="8" fill="#F4F3EE" stroke="#E7E5DD" stroke-width="2"/>
+    <rect x="154" y="332" width="212" height="52" rx="8" fill="#F4F3EE" stroke="#E7E5DD" stroke-width="2"/>
+    <rect x="170" y="222" width="90" height="8" rx="4" fill="#D5D3CA"/>
+    <rect x="170" y="286" width="110" height="8" rx="4" fill="#D5D3CA"/>
+    <rect x="170" y="350" width="76" height="8" rx="4" fill="#D5D3CA"/>
+    <rect x="154" y="416" width="212" height="40" rx="20" fill="#166B4D"/>
+    <rect x="214" y="432" width="92" height="9" rx="4.5" fill="#FFFFFF"/>
+  </g>
+  <!-- artboard 2: detail wireframe -->
+  <g>
+    <rect x="480" y="120" width="260" height="360" rx="14" fill="#FFFFFF" stroke="#E3E1D9" stroke-width="2"/>
+    <rect x="504" y="148" width="212" height="120" rx="8" fill="#E8F2EC"/>
+    <circle cx="610" cy="208" r="26" fill="#BFDECE"/>
+    <rect x="504" y="292" width="150" height="12" rx="6" fill="#3A3E48"/>
+    <rect x="504" y="318" width="212" height="8" rx="4" fill="#E0DED6"/>
+    <rect x="504" y="336" width="180" height="8" rx="4" fill="#E0DED6"/>
+    <rect x="504" y="354" width="196" height="8" rx="4" fill="#E0DED6"/>
+    <rect x="504" y="392" width="100" height="34" rx="17" fill="#166B4D"/>
+    <rect x="616" y="392" width="100" height="34" rx="17" fill="none" stroke="#C9C6BF" stroke-width="2"/>
+  </g>
+  <!-- artboard 3: confirmation wireframe -->
+  <g>
+    <rect x="830" y="120" width="260" height="360" rx="14" fill="#FFFFFF" stroke="#E3E1D9" stroke-width="2"/>
+    <circle cx="960" cy="230" r="44" fill="#E8F2EC"/>
+    <path d="M940 230l14 14 26-30" stroke="#166B4D" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="890" y="304" width="140" height="12" rx="6" fill="#3A3E48"/>
+    <rect x="880" y="330" width="160" height="8" rx="4" fill="#E0DED6"/>
+    <rect x="896" y="348" width="128" height="8" rx="4" fill="#E0DED6"/>
+    <rect x="884" y="400" width="152" height="40" rx="20" fill="#166B4D"/>
+    <rect x="928" y="416" width="64" height="9" rx="4.5" fill="#FFFFFF"/>
+  </g>
+  <!-- sticky notes -->
+  <g transform="rotate(-4 250 90)">
+    <rect x="210" y="66" width="86" height="52" rx="4" fill="#FBE9A9"/>
+    <rect x="222" y="80" width="60" height="6" rx="3" fill="#C9B267"/>
+    <rect x="222" y="94" width="44" height="6" rx="3" fill="#C9B267"/>
+  </g>
+  <g transform="rotate(3 940 520)">
+    <rect x="900" y="500" width="86" height="52" rx="4" fill="#C9E4D2"/>
+    <rect x="912" y="514" width="56" height="6" rx="3" fill="#84A991"/>
+    <rect x="912" y="528" width="40" height="6" rx="3" fill="#84A991"/>
+  </g>
+</svg>

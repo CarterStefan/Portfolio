@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#F5F5F0"/>
+  <!-- browser frame -->
+  <rect x="90" y="80" width="620" height="440" rx="16" fill="#FFFFFF" stroke="#E3E1D9" stroke-width="2"/>
+  <line x1="91" y1="126" x2="709" y2="126" stroke="#ECEAE2" stroke-width="2"/>
+  <circle cx="116" cy="103" r="5" fill="#DAD8D0"/>
+  <circle cx="134" cy="103" r="5" fill="#DAD8D0"/>
+  <circle cx="152" cy="103" r="5" fill="#DAD8D0"/>
+  <rect x="180" y="94" width="240" height="18" rx="9" fill="#F1F0EA"/>
+  <!-- hero band with town skyline -->
+  <g>
+    <rect x="130" y="146" width="540" height="170" rx="12" fill="#E8F2EC"/>
+    <!-- castle tower -->
+    <rect x="376" y="192" width="48" height="94" fill="#8FC9AE"/>
+    <rect x="376" y="182" width="10" height="12" fill="#8FC9AE"/>
+    <rect x="395" y="182" width="10" height="12" fill="#8FC9AE"/>
+    <rect x="414" y="182" width="10" height="12" fill="#8FC9AE"/>
+    <rect x="392" y="238" width="16" height="48" rx="8" fill="#E8F2EC"/>
+    <line x1="400" y1="182" x2="400" y2="158" stroke="#166B4D" stroke-width="3"/>
+    <polygon points="400,158 428,166 400,174" fill="#166B4D"/>
+    <!-- buildings -->
+    <rect x="296" y="226" width="64" height="60" fill="#BFDECE"/>
+    <polygon points="296,226 328,204 360,226" fill="#A8D2BD"/>
+    <rect x="440" y="216" width="72" height="70" fill="#CCE3D6"/>
+    <rect x="452" y="232" width="14" height="14" fill="#FFFFFF"/>
+    <rect x="476" y="232" width="14" height="14" fill="#FFFFFF"/>
+    <rect x="452" y="256" width="14" height="14" fill="#FFFFFF"/>
+    <rect x="476" y="256" width="14" height="14" fill="#FFFFFF"/>
+    <!-- tree + ground -->
+    <circle cx="252" cy="252" r="22" fill="#A8D2BD"/>
+    <rect x="248" y="268" width="8" height="18" rx="4" fill="#8FB89F"/>
+    <line x1="200" y1="286" x2="600" y2="286" stroke="#8FC9AE" stroke-width="3" stroke-linecap="round"/>
+    <!-- map pin -->
+    <circle cx="560" cy="186" r="13" fill="#166B4D"/>
+    <circle cx="560" cy="184" r="5" fill="#FFFFFF"/>
+    <polygon points="560,212 551,192 569,192" fill="#166B4D"/>
+  </g>
+  <!-- search pill -->
+  <rect x="250" y="340" width="300" height="38" rx="19" fill="#FAFAF7" stroke="#E3E1D9" stroke-width="2"/>
+  <circle cx="276" cy="359" r="7" fill="none" stroke="#166B4D" stroke-width="2.5"/>
+  <line x1="281" y1="364" x2="287" y2="370" stroke="#166B4D" stroke-width="2.5" stroke-linecap="round"/>
+  <rect x="300" y="355" width="150" height="8" rx="4" fill="#D8D6CC"/>
+  <!-- info cards: see & do / what's on / eat & drink -->
+  <g>
+    <rect x="130" y="404" width="166" height="86" rx="10" fill="#FAFAF7" stroke="#E8E6DE" stroke-width="2"/>
+    <circle cx="162" cy="434" r="14" fill="#E8F2EC"/>
+    <rect x="156" y="430" width="12" height="8" rx="3" fill="#166B4D"/>
+    <rect x="146" y="460" width="90" height="8" rx="4" fill="#C9C7BD"/>
+    <rect x="146" y="474" width="60" height="7" rx="3.5" fill="#E4E2DA"/>
+  </g>
+  <g>
+    <rect x="317" y="404" width="166" height="86" rx="10" fill="#FAFAF7" stroke="#E8E6DE" stroke-width="2"/>
+    <circle cx="349" cy="434" r="14" fill="#E8F2EC"/>
+    <rect x="343" y="430" width="12" height="8" rx="3" fill="#166B4D"/>
+    <rect x="333" y="460" width="80" height="8" rx="4" fill="#C9C7BD"/>
+    <rect x="333" y="474" width="66" height="7" rx="3.5" fill="#E4E2DA"/>
+  </g>
+  <g>
+    <rect x="504" y="404" width="166" height="86" rx="10" fill="#FAFAF7" stroke="#E8E6DE" stroke-width="2"/>
+    <circle cx="536" cy="434" r="14" fill="#E8F2EC"/>
+    <rect x="530" y="430" width="12" height="8" rx="3" fill="#166B4D"/>
+    <rect x="520" y="460" width="96" height="8" rx="4" fill="#C9C7BD"/>
+    <rect x="520" y="474" width="54" height="7" rx="3.5" fill="#E4E2DA"/>
+  </g>
+</svg>
