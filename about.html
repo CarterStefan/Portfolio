@@ -4,219 +4,231 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>About — Stefan Carter</title>
-  <meta name="description" content="About Stefan Carter — a product designer working across web and product. What I do, the tools I reach for, and kind words from the people I've worked with.">
-  <meta name="theme-color" content="#F5F1E8">
+  <meta name="description" content="Stefan Carter is a product designer for the AI era — prototyping in Claude Code, designing in Figma and shipping websites and regulated pharmaceutical products alongside engineering teams.">
+  <meta name="theme-color" content="#ECEFE0">
 
   <link rel="icon" href="assets/img/logo.png" type="image/png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wdth,wght@75..112.5,100..800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 
-<body id="top">
+<body id="top" class="cert page-about">
+<!--
+  THESIS: A hard-ruled grid holding the whole page. It refuses the
+  portrait-plus-paragraph biography and the icon-card services grid.
+  OWN-WORLD: Hard-ruled form grid on warm Kaleido paper. 1px ink rules, zero
+  radius, zero shadow, cells in #F9F6EF on a #ECEFE0 blueprint ground. Martian
+  Mono only. This page's hue is deep ochre #7D6832, on rotated labels only.
+  STORY: The visitor learns how Stefan works, sees it corroborated by colleagues,
+  and reaches the work or the email.
+  FIRST VIEWPORT: Header rail, then the claim at display scale in the dominant
+  cell with a focus list beside it, and the profile rail below carrying award,
+  focus, career path and stack against the long prose column.
+  FORM: Hard-ruled grid system, taken from a certificate reference for its
+  styling and structure only - big blocks, hard rules, mono type. Not a
+  certificate, and it does not borrow certificate language.
+  FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+-->
 
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
-  <!-- ============================================================
-       NAVIGATION
-  ============================================================ -->
-  <nav id="siteNav" class="navbar navbar-expand-lg fixed-top site-nav" aria-label="Primary">
-    <div class="container">
-      <a class="navbar-brand brand" href="/"><img class="brand-logo" src="assets/img/logo.png" alt="" width="36" height="36">Stefan Carter<span class="brand-dot">.</span></a>
-
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
-              aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navMenu">
-        <ul class="navbar-nav ms-auto align-items-lg-center">
-          <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-          <li class="nav-item"><a class="nav-link active" aria-current="page" href="/about">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="/work">Work</a></li>
-          <li class="nav-item nav-cta-item">
-            <a class="btn btn-accent btn-nav" href="/contact">Contact</a>
-          </li>
-        </ul>
-      </div>
+  <nav class="cert-nav" aria-label="Primary">
+    <div class="cert-nav-inner">
+      <a class="cert-brand" href="/">
+        <img src="assets/img/logo.png" alt="Stefan Carter — home" width="32" height="32">
+      </a>
+      <ul class="cert-nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about" aria-current="page">About</a></li>
+        <li><a href="/work">Work</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
     </div>
   </nav>
 
-  <main id="main-content">
+  <div class="cert-page">
+    <main id="main-content" class="sheet sheet-in">
 
-    <!-- ============================================================
-         PAGE HEADER
-    ============================================================ -->
-    <header class="page-head">
-      <div class="container">
-        <p class="eyebrow reveal">About</p>
-        <h1 class="display-hero reveal">A bit about me.</h1>
-        <p class="page-lead reveal">
-          I&rsquo;m a product designer working across web and product. I care about clear,
-          accessible experiences and the craft behind them &mdash; here&rsquo;s what I do,
-          the tools I reach for, and a few kind words from people I&rsquo;ve built things with.
-        </p>
+      <!-- Claim + focus -->
+      <div class="crow g-hero-aside">
+        <p class="vlabel">Practice</p>
+        <div class="cell cell-pad-lg cell-mid">
+          <h1 class="c-hero">A product designer for the <span class="c-hue">AI era</span>.</h1>
+          <p class="c-body cs-3">
+            I design, prototype and ship &mdash; modern websites and digital products,
+            built shoulder-to-shoulder with the engineers who make them real.
+          </p>
+        </div>
+        <!-- A portrait sits here when a real photograph exists; until then the
+             cell carries what I actually do rather than a placeholder image. -->
+        <div class="cell cell-mid">
+          <p class="c-meta mb-label">What I do</p>
+          <ul class="c-list">
+            <li>Product design</li>
+            <li>Web design</li>
+            <li>Design systems</li>
+            <li>Prototyping in code</li>
+            <li>Front-end build</li>
+          </ul>
+        </div>
       </div>
-    </header>
 
-    <!-- ============================================================
-         SERVICES — typographic rows
-    ============================================================ -->
-    <section id="services" class="section">
-      <div class="container">
-        <header class="section-head reveal">
-          <p class="eyebrow">Services</p>
-          <h2 class="section-title mb-0">What I do</h2>
-        </header>
-
-        <ul class="type-rows type-rows-plain list-unstyled mb-0">
-          <li class="type-row reveal">
-            <div>
-              <h3>Web Design</h3>
-              <p>Marketing sites, landing pages and e-commerce experiences that are fast, accessible and built to convert &mdash; designed mobile-first and handed off clean.</p>
-              <ul class="service-tags list-unstyled d-flex flex-wrap mb-0">
-                <li>Responsive layouts</li>
-                <li>Accessibility</li>
-                <li>Conversion-focused</li>
-              </ul>
-            </div>
-            <a class="link-arrow" href="/work?filter=web">
-              See projects
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-          </li>
-          <li class="type-row reveal">
-            <div>
-              <h3>Product Design</h3>
-              <p>End-to-end product design for SaaS and mobile &mdash; research, user flows, interactive prototypes and polished, dev-ready UI that scales with your roadmap.</p>
-              <ul class="service-tags list-unstyled d-flex flex-wrap mb-0">
-                <li>UX research</li>
-                <li>Interaction design</li>
-                <li>Design systems</li>
-              </ul>
-            </div>
-            <a class="link-arrow" href="/work?filter=product">
-              See projects
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- ============================================================
-         TOOLS & STACK — one big typographic line
-    ============================================================ -->
-    <section id="stack" class="section band-light">
-      <div class="container">
-        <header class="section-head reveal">
-          <p class="eyebrow">Tools &amp; stack</p>
-        </header>
-        <ul class="stack-strip list-unstyled reveal" aria-label="Tools and technologies">
-          <li>HTML</li>
-          <li>CSS</li>
-          <li>Bootstrap</li>
-          <li>AI Engineering</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- ============================================================
-         TESTIMONIALS — one big quote, two supporting
-    ============================================================ -->
-    <section id="testimonials" class="section">
-      <div class="container">
-        <header class="section-head reveal">
-          <p class="eyebrow">Kind words</p>
-        </header>
-
-        <figure class="quote-lg reveal">
-          <span class="quote-mark" aria-hidden="true">&ldquo;</span>
-          <blockquote>
-            <p>Stefan took a messy, ambiguous brief and turned it into the clearest product experience we&rsquo;ve ever shipped. Our activation rate jumped within a month.</p>
-          </blockquote>
-          <figcaption>
-            <span class="t-name">Maya Lindqvist</span>
-            <span class="t-role">&mdash; Head of Product, Northwind Labs</span>
-          </figcaption>
-        </figure>
-
-        <div class="row g-4 mt-4">
-          <div class="col-md-6 reveal">
-            <figure class="quote-sm mb-0">
-              <blockquote>
-                <p>&ldquo;A rare mix of craft and pragmatism. The design system Stefan delivered cut our front-end build time in half.&rdquo;</p>
-              </blockquote>
-              <figcaption>
-                <span class="t-name">Daniel Okafor</span>
-                <span class="t-role">&mdash; Founder &amp; CEO, Brightline</span>
-              </figcaption>
-            </figure>
+      <!-- Profile -->
+      <div class="crow g-profile">
+        <p class="vlabel">Profile</p>
+        <div class="cell cell-pad-lg">
+          <p class="c-display">
+            I don&rsquo;t stop at the mock-up.
+          </p>
+          <p class="c-body cs-4">
+            I prototype in Claude Code, design in Figma, and stay with engineering until
+            it&rsquo;s live. Most of my work starts as something you can click &mdash;
+            prototypes pressure-tested in a browser instead of argued over in a deck.
+            That way of working lives or dies on getting intent across precisely,
+            written and spoken.
+          </p>
+          <p class="c-body">
+            I get stuck into the front end and build my own designs in HTML, CSS and
+            JavaScript. Years on developer-focused products means I understand database
+            structures, APIs and real engineering constraints &mdash; including
+            pharmaceuticals, a niche, heavily regulated space where accuracy and
+            compliance aren&rsquo;t up for debate.
+          </p>
+          <p class="c-body">
+            AI runs through the whole workflow, from research analysis to ideation and
+            prototyping. But speed is only half of it. I look for the opportunity worth
+            building, then see it through to shipped.
+          </p>
+        </div>
+        <div class="cell c-rail">
+          <div>
+            <p class="c-meta mb-label">Award</p>
+            <p class="c-title">Digital Hero of the Year</p>
+            <p class="c-meta cs-1">Nominated finalist &middot; 2026</p>
           </div>
-          <div class="col-md-6 reveal">
-            <figure class="quote-sm mb-0">
-              <blockquote>
-                <p>&ldquo;Every screen arrived annotated, accessible and ready to build. Our engineers actually enjoyed the handoff.&rdquo;</p>
-              </blockquote>
-              <figcaption>
-                <span class="t-name">Sofia Reyes</span>
-                <span class="t-role">&mdash; Engineering Lead, Atlas Analytics</span>
-              </figcaption>
-            </figure>
+
+          <div>
+            <p class="c-meta mb-label">Focus</p>
+            <p class="c-title">Product &amp; web design</p>
+            <p class="c-meta cs-1">Regulated pharmaceutical software</p>
+          </div>
+
+          <div>
+          <p class="c-meta mb-label">Path</p>
+          <ul class="c-ladder" aria-label="Career path">
+            <li><s>Junior UX/UI Designer</s><span class="visually-hidden">(past role)</span></li>
+            <li><s>UX/UI Designer</s><span class="visually-hidden">(past role)</span></li>
+            <li><s>Senior UX/UI Designer</s><span class="visually-hidden">(past role)</span></li>
+            <li class="is-now">Senior Product Designer <span class="c-now" aria-hidden="true">Now</span><span class="visually-hidden">(current role)</span></li>
+          </ul>
+          </div>
+
+          <div>
+          <p class="c-meta mb-label">Tools &amp; technologies</p>
+          <ul class="c-stack" aria-label="Tools and technologies">
+            <li>Figma</li>
+            <li>Claude Code</li>
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>JavaScript</li>
+            <li>APIs</li>
+          </ul>
           </div>
         </div>
       </div>
-    </section>
 
-  </main>
-
-  <!-- ============================================================
-       FOOTER — big CTA + bottom bar
-  ============================================================ -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-cta">
-        <p class="footer-eyebrow">Have a project in mind?</p>
-        <h2 class="footer-title">Let&rsquo;s build something people love.</h2>
-        <a class="footer-mail" href="mailto:carter_stefan@outlook.com">carter_stefan@outlook.com</a>
+      <!-- Services -->
+      <div class="crow g-label-2">
+        <p class="vlabel">Web design</p>
+        <div class="cell">
+          <h2 class="c-title">Web Design</h2>
+          <p class="c-body cs-2">
+            Marketing sites, landing pages and e-commerce experiences that are fast,
+            accessible and built to convert &mdash; designed mobile-first and handed
+            off clean.
+          </p>
+          <ul class="c-list cs-3">
+            <li>Responsive layouts</li>
+            <li>Accessibility</li>
+            <li>Conversion-focused</li>
+          </ul>
+          <a class="c-link cs-3" href="/work?filter=web">See projects</a>
+        </div>
+        <p class="vlabel">Product design</p>
+        <div class="cell">
+          <h2 class="c-title">Product Design</h2>
+          <p class="c-body cs-2">
+            End-to-end product design for SaaS and mobile &mdash; research, user flows,
+            interactive prototypes and polished, dev-ready UI that scales with your
+            roadmap.
+          </p>
+          <ul class="c-list cs-3">
+            <li>UX research</li>
+            <li>Interaction design</li>
+            <li>Design systems</li>
+          </ul>
+          <a class="c-link cs-3" href="/work?filter=product">See projects</a>
+        </div>
       </div>
 
-      <div class="footer-bottom d-flex flex-wrap justify-content-between align-items-center gap-3">
-        <p class="mb-0">&copy; <span id="year">2026</span> Stefan Carter. All rights reserved.</p>
-        <ul class="footer-social list-inline mb-0">
-          <li class="list-inline-item">
-            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4V8h4v1.57A6 6 0 0 1 16 8z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-              LinkedIn
-            </a>
-          </li>
-          <li class="list-inline-item">
-            <a href="https://dribbble.com/" target="_blank" rel="noopener noreferrer">
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>
-              Dribbble
-            </a>
-          </li>
-          <li class="list-inline-item">
-            <a href="mailto:carter_stefan@outlook.com">
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
-              Email
-            </a>
-          </li>
-        </ul>
-        <a class="back-top" href="#top">Back to top &uarr;</a>
+      <!-- Kudos nominations. Quotes are excerpted from the full nominations and
+           otherwise verbatim; an ellipsis marks where text was cut. -->
+      <div class="crow g-hero-aside">
+        <p class="vlabel">Kudos</p>
+        <div class="cell cell-pad-lg">
+          <blockquote class="c-quote">
+            <p>Stefan consistently demonstrates exceptional execution within the product team, turning ideas into tangible outcomes with clarity and momentum. He has a rare ability to distill complex concepts into their essential components, quickly identifying issues and articulating them in a way that enables the team to align and act.</p>
+          </blockquote>
+        </div>
+        <div class="cell cell-mid">
+          <p class="c-meta mb-label">Nominated by</p>
+          <p class="c-title">Dr Brenda Finney</p>
+          <p class="c-meta cs-2">Kudos &mdash; peer-nominated award</p>
+          <!-- TODO: add role, e.g. <p class="c-meta cs-1">Director of Product</p> -->
+        </div>
       </div>
-    </div>
-  </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+      <div class="crow g-hero-aside">
+        <p class="vlabel">Kudos</p>
+        <div class="cell cell-pad-lg">
+          <blockquote class="c-quote">
+            <p>When I first joined the team, Stefan dedicated a significant amount of time to helping me onboard, always taking the time to answer questions, share his knowledge, and provide guidance whenever it was needed. &hellip; Despite being split across multiple teams and balancing competing priorities, Stefan always puts others first and gives his time and energy generously to support colleagues.</p>
+          </blockquote>
+        </div>
+        <div class="cell cell-mid">
+          <p class="c-meta mb-label">Nominated by</p>
+          <p class="c-title">Rachel Hemingway</p>
+          <p class="c-meta cs-2">Kudos &mdash; peer-nominated award</p>
+          <!-- TODO: add role, e.g. <p class="c-meta cs-1">Product Manager</p> -->
+        </div>
+      </div>
+
+      <!-- Close -->
+      <div class="crow g-label-1 cert-foot">
+        <p class="vlabel">Get in touch</p>
+        <div class="cell cell-pad-lg">
+          <p class="c-meta mb-label">Have a project in mind?</p>
+          <a class="cert-mail" href="mailto:carter_stefan@outlook.com">carter_stefan@outlook.com</a>
+        </div>
+      </div>
+
+      <div class="crow g-2">
+        <div class="cell cell-tight">
+          <p class="c-meta">&copy; <span id="year">2026</span> Stefan Carter</p>
+        </div>
+        <div class="cell cell-tight">
+          <a class="c-link" href="#top">Back to top <svg class="c-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="20" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></a>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
   <script src="js/main.js"></script>
 </body>
 </html>

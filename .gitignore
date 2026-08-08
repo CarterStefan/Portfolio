@@ -1,1 +1,9 @@
 .vscode/
+
+# Impeccable design skill (local tooling, not site content)
+.claude/
+.impeccable/
+
+# Internal design/product notes — GitHub Pages would serve these publicly
+PRODUCT.md
+DESIGN.md
