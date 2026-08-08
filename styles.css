@@ -10,14 +10,18 @@
    --------------------------------------------------------------------------
    TABLE OF CONTENTS
 
-   Sections 1-16 are the PREVIOUS design, still live on the nine case-study
-   pages under projects/. Sections 17-18 are the certificate system used by
-   index / about / work / contact, scoped throughout to `body.cert`.
+   EVERY page now runs the grid system (sections 17-19, scoped to `body.cert`).
+   Sections 1-16 are the PREVIOUS design and are now almost entirely dead: no
+   page loads Bootstrap and none uses the old page templates.
 
-   Do not delete sections 1-16 while the case-study pages exist. Note also
-   that the certificate Work page reuses `.project-item.is-hidden` and
-   `.card-in` from section 11 — js/main.js drives filtering through them, so
-   removing section 11 would break filtering on the new design too.
+   Still referenced out of 1-16, so do not delete it wholesale:
+     - .skip-link and .visually-hidden        (section 4)
+     - .reveal / reduced-motion              (section 15)
+     - .project-item.is-hidden and .card-in  (section 11) — js/main.js drives
+       the Work page filter through them
+     - a handful of legacy case-study class names that section 19 restyles
+       rather than replaces (.case-shot, .shot-*, .type-row*, .case-points,
+       .big-lead, .next-link, .link-arrow, .case-img)
 
    1.  Design tokens (CSS custom properties)
    2.  Base & typography (incl. the big-type utility classes, grain overlay)
@@ -35,8 +39,9 @@
    14. Footer (big CTA + bottom bar)
    15. Scroll-reveal animation & reduced-motion
    16. About page (previous design)
-   17. Certificate system (sheet, rows, cells, rotated labels, type scale)
-   18. Certificate home sheet & component detail
+   17. Grid system (sheet, rows, cells, rotated edge labels, type scale)
+   18. Grid home sheet & component detail
+   19. Case-study pages in the grid system
 
    Sections 6 (Home: hero) and the former splash block were removed with the
    design overhaul; nothing references them.
@@ -1903,4 +1908,176 @@ body { margin: 0; }
 @media (prefers-reduced-motion: reduce) {
   .js .sheet-in,
   .js .sheet-in .vlabel { animation: none; }
+}
+
+
+/* ==========================================================================
+   19. CASE-STUDY PAGES IN THE GRID SYSTEM
+   The nine case studies keep their original prose, lists and screenshot
+   frames; those legacy class names are restyled here rather than rewritten,
+   so no copy or image was touched in the conversion.
+   ========================================================================== */
+
+.page-case { --hue: var(--accent); }
+
+/* Bootstrap is gone from these pages, so its row/col classes are inert.
+   Give any surviving row a sensible responsive grid. */
+.cert .row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: clamp(1rem, 2vw, 1.75rem);
+}
+.cert [class*="col-"] { min-width: 0; }
+
+/* Metadata pairs in the header cell */
+.mb-gap { margin-bottom: 1.1rem; }
+.mb-gap:last-child { margin-bottom: 0; }
+
+/* Prose inside a case cell */
+.cert .big-lead {
+  font-family: var(--font-mono);
+  font-size: clamp(1.05rem, 2.7vw, 1.85rem);
+  font-weight: 500;
+  font-stretch: 87.5%;
+  letter-spacing: -0.03em;
+  line-height: 1.3;
+  color: var(--ink);
+  margin: 0 0 1.2rem;
+  max-width: 34ch;
+}
+.cert .cell p:not([class]),
+.cert .cell li:not([class]) {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--ink-2);
+  max-width: 62ch;
+}
+.cert .cell p:not([class]) + p:not([class]) { margin-top: 1.1rem; }
+
+.cert .case-points {
+  list-style: none;
+  margin: 1.2rem 0 0;
+  padding: 0;
+}
+.cert .case-points li {
+  border-top: 1px solid var(--rule);
+  padding: 0.8rem 0;
+}
+.cert .case-points li:last-child { border-bottom: 1px solid var(--rule); }
+
+/* Numbered approach steps */
+.cert .type-rows { list-style: none; margin: 0; padding: 0; }
+.cert .type-row {
+  display: grid;
+  grid-template-columns: 2.6rem 1fr;
+  gap: 1rem;
+  border-top: 1px solid var(--rule);
+  padding: 1.1rem 0;
+}
+.cert .type-row:last-child { border-bottom: 1px solid var(--rule); }
+.cert .type-row-num {
+  font-size: 0.62rem;
+  font-weight: 600;
+  font-stretch: 75%;
+  letter-spacing: 0.14em;
+  color: var(--hue);
+}
+.cert .type-row h3 {
+  font-size: clamp(1.05rem, 1.7vw, 1.28rem);
+  font-weight: 600;
+  font-stretch: 87.5%;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.4rem;
+}
+
+/* Screenshot frames — squared off, ruled, no chrome gloss */
+.cert .case-shot { margin: 0 0 1.5rem; }
+.cert .case-shot:last-child { margin-bottom: 0; }
+.cert .shot-browser,
+.cert .shot-phone {
+  border: 1px solid var(--rule);
+  border-radius: 0;
+  background: var(--band);
+  overflow: hidden;
+}
+.cert .shot-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-bottom: 1px solid var(--rule);
+  padding: 0.5rem 0.7rem;
+  background: var(--surface);
+}
+.cert .shot-dots { display: flex; gap: 0.3rem; }
+.cert .shot-dots span {
+  width: 6px; height: 6px;
+  border: 1px solid var(--rule);
+  border-radius: 0;
+  background: transparent;
+}
+.cert .shot-url {
+  font-size: 0.62rem;
+  font-stretch: 75%;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+.cert .shot-view,
+.cert .shot-scroll { display: block; }
+.cert .case-shot img,
+.cert .case-img { display: block; width: 100%; height: auto; }
+.cert .case-img { border: 1px solid var(--rule); }
+.cert figcaption {
+  font-size: 0.82rem;   /* the documented list step, not a new size */
+  font-stretch: 87.5%;
+  line-height: 1.6;
+  color: var(--muted);
+  margin-top: 0.7rem;
+  max-width: 62ch;
+}
+.cert figcaption a { color: var(--ink); border-bottom: 1px solid var(--hue); text-decoration: none; }
+
+/* Next project + outbound link */
+.cert .next-link {
+  display: inline-block;
+  font-family: var(--font-mono);   /* the legacy rule sets the serif face */
+  font-size: clamp(1.45rem, 5vw, 3.6rem);
+  font-weight: 600;
+  font-stretch: 87.5%;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 2px solid var(--hue);
+}
+.cert .next-link:hover,
+.cert .next-link:focus-visible { color: var(--hue); }
+
+.cert .link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.62rem;
+  font-weight: 600;
+  font-stretch: 75%;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--hue);
+  padding-bottom: 0.2rem;
+}
+.cert .link-arrow svg { width: 14px; height: 14px; }
+
+/* Column template for a case section: label rail, heading, body */
+.g-case { grid-template-columns: 2.6rem 16rem 1fr; }
+
+@media (max-width: 991.98px) {
+  .g-case { grid-template-columns: 2.2rem 1fr; }
+  .g-case > .vlabel { grid-row: 1 / -1; }
+  .g-case > .cell {
+    grid-column: 2;
+    border-right: 0;
+    border-top: 1px solid var(--rule);
+  }
+  .g-case > .cell:first-of-type { border-top: 0; }
 }
