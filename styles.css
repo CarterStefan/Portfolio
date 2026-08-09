@@ -1296,6 +1296,11 @@ body { margin: 0; }
      hairline (--line) is far too soft to carry it, so rules use ink. */
   --rule: var(--ink);
 
+  /* Width of the right-hand aside. Expressed as a fraction of the sheet so the
+     rule lands at 75%, against the 50% split of the two-up rows - halves and
+     quarters, one modular relationship rather than assorted fixed widths. */
+  --aside: 25%;
+
   /* Per-page hue. Tints rotated labels and a small number of rules only;
      cells stay warm paper. Overridden per page below. All four are
      contrast-checked at >=4.5:1 against --surface. */
@@ -1311,23 +1316,6 @@ body { margin: 0; }
 .cert.page-work    { --hue: #52697A; }  /* dusty blue   — 5.31:1 */
 .cert.page-contact { --hue: #6E5567; }  /* muted plum   — 6.16:1 */
 
-/* Measurement ground. A blueprint field is native to this world — the
-   reference sits its certificate on exactly this — not decoration. */
-.cert::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(var(--ink-rgb), 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(var(--ink-rgb), 0.055) 1px, transparent 1px);
-  background-size: 32px 32px;
-}
-
-/* Lift the page above the fixed ground. Scoped to the actual containers --
-   a blanket `.cert > *` also caught .skip-link and overrode its fixed
-   positioning, dropping it into flow as an inline box. */
 .cert-page,
 .cert-nav { position: relative; z-index: 1; }
 
@@ -1693,10 +1681,16 @@ body { margin: 0; }
 .g-head        { grid-template-columns: auto 1fr 2.6rem 16rem; }
 /* Prose sized near its own measure so the cell does not run on past the text,
    with the aside taking the remainder instead of a fixed narrow track. */
-.g-profile     { grid-template-columns: 2.6rem 1fr 1fr; }
+.g-profile     { grid-template-columns: 2.6rem 1fr var(--aside); }
 .g-2           { grid-template-columns: 1fr 1fr; }
+/* The closing bar carries an empty rail cell so both the label rule and the
+   aside rule run unbroken to the bottom edge of the page. */
+.g-bottom      { grid-template-columns: 2.6rem 1fr var(--aside); }
+/* The rail cell is empty, so it takes no padding - .cell's default padding is
+   wider than the 2.6rem track and would push the rule off the line. */
+.g-bottom > .cell:first-child { padding: 0; }
 .g-3           { grid-template-columns: repeat(3, 1fr); }
-.g-hero-aside  { grid-template-columns: 2.6rem 1fr 15rem; }
+.g-hero-aside  { grid-template-columns: 2.6rem 1fr var(--aside); }
 .g-project     { grid-template-columns: 2.6rem 16rem 1fr 12rem; }
 .g-foot        { grid-template-columns: 2.6rem 1fr 2.6rem 16rem; }
 
@@ -1758,6 +1752,9 @@ body { margin: 0; }
   .g-2 > .cell, .g-3 > .cell { border-right: 0; border-bottom: 1px solid var(--rule); }
   .g-2 > .cell:last-child, .g-3 > .cell:last-child { border-bottom: 0; }
 
+  .g-bottom { grid-template-columns: 2.2rem 1fr; }
+  .g-bottom > .cell:last-child { grid-column: 2; border-right: 0; border-top: 1px solid var(--rule); }
+
   .vlabel { font-size: 0.62rem; letter-spacing: 0.1em; padding: 0.5rem 0.25rem; }
 
   /* Keep the wordmark on one line and let the four links share what is left. */
@@ -1770,18 +1767,32 @@ body { margin: 0; }
    18. CERTIFICATE — HOME SHEET & COMPONENT DETAIL
    ========================================================================== */
 
-.cert-page-full { min-height: 100dvh; display: flex; }
-.cert-page-full .sheet {
+/* Home fills the viewport beneath the shared header rail. The body is the
+   flex context, so the nav's height is measured rather than guessed at. */
+.page-home {
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
 }
+.cert-page-full {
+  flex: 1 1 auto;
+  display: flex;
+  min-height: 0;
+}
+.cert-page-full .sheet {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
 /* Headline rows absorb the spare height so the grid reaches the bottom edge. */
 .cert-page-full .row-grow { flex: 1 1 0; }
 
-/* Issue line. Top-aligned, as the reference sets its title block. */
-.c-issue { display: flex; align-items: flex-start; gap: 0.6rem; }
-.c-dot { color: var(--hue); flex: none; }
+/* A centred display statement still needs a measure; balance stops the last
+   line stranding a single word. */
+.c-statement {
+  max-width: 32ch;
+  text-wrap: balance;
+}
 
 /* A label sitting directly above the content it names */
 .mb-label { margin-bottom: 0.6rem; }
@@ -1878,11 +1889,6 @@ body { margin: 0; }
 .cs-4 { margin-top: 1.7rem; }
 .c-narrow { max-width: 26ch; }
 .text-end { text-align: right; }
-
-/* --- Vertical navigation list ----------------------------------------------- */
-.c-navlist { line-height: 2.1; }
-.c-navlist a[aria-current="page"] { color: var(--hue); font-weight: 700; }
-.c-link-mail { margin-top: 1rem; }
 
 /* --- The authored moment ----------------------------------------------------
    The sheet prints once on load: the document settles, then the rotated
