@@ -48,7 +48,10 @@
   --band:         #ECEFE0;   /* pastel sage wash for alternate bands    */
   --ink:          #2A2620;   /* soft warm near-black for headings       */
   --ink-2:        #4A4638;   /* body text                               */
-  --muted:        #746D5B;   /* secondary text                          */
+  /* Darkened from #746D5B on 2026-08-09: metadata is set at the 0.62rem floor,
+     and the old value fell to 4.19:1 once cells started taking a hue wash.
+     This clears 4.5:1 on paper, sage and all four washes. */
+  --muted:        #6B6452;   /* secondary text                          */
   --line:         #E3DDC8;   /* warm sand hairline borders               */
 
   /* Accent (muted moss green — used sparingly) */
@@ -649,10 +652,21 @@ body { margin: 0; }
      quarters, one modular relationship rather than assorted fixed widths. */
   --aside: 25%;
 
-  /* Per-page hue. Tints rotated labels and a small number of rules only;
-     cells stay warm paper. Overridden per page below. All four are
-     contrast-checked at >=4.5:1 against --surface. */
-  --hue: var(--accent);
+  /* Per-page hue, as a three-token set. Overridden per page below.
+
+       --hue       the chromatic voice: label type, underlines, marks, and the
+                   fill of an inverted control. >=4.5:1 on --surface, and
+                   >=4.5:1 for --surface type sitting on it.
+       --hue-deep  the same colour darkened, for type that sits ON --hue-cell
+                   (--hue on --hue-cell lands near 4.4:1 and would fail).
+       --hue-cell  a pastel wash of the hue: the third surface, used for the
+                   label rail, media wells and a small number of feature cells.
+                   >=11:1 against --ink, >=5.7:1 against --hue-deep.
+
+     Home is green, Contact blue, Work and the case studies red, About amber. */
+  --hue:      var(--accent);
+  --hue-deep: #3F5849;
+  --hue-cell: #E6EDE2;
 
   background-color: var(--band);
   font-family: var(--font-mono);
@@ -660,9 +674,17 @@ body { margin: 0; }
   color: var(--ink-2);
 }
 
-.cert.page-about   { --hue: #7D6832; }  /* deep ochre   — 4.99:1 */
-.cert.page-work    { --hue: #52697A; }  /* dusty blue   — 5.31:1 */
-.cert.page-contact { --hue: #6E5567; }  /* muted plum   — 6.16:1 */
+/* Amber — 4.66:1 */
+.cert.page-about   { --hue: #8A6A2A; --hue-deep: #6E541F; --hue-cell: #F0EAD5; }
+/* Brick red — 5.24:1. Work is the index of the case studies, so the index and
+   the nine studies behind it share one hue and read as a single section. */
+.cert.page-work,
+.cert.page-case    { --hue: #A0503F; --hue-deep: #83402F; --hue-cell: #F4E5DF; }
+/* Slate blue — 5.27:1 */
+.cert.page-contact { --hue: #4A6A85; --hue-deep: #35516A; --hue-cell: #E3EBF0; }
+
+/* Text selection picks up the page hue rather than the old system's accent */
+.cert ::selection { background: var(--hue); color: var(--surface); }
 
 .cert-page,
 .cert-nav { position: relative; z-index: 1; }
@@ -701,7 +723,10 @@ body { margin: 0; }
 .cell-pad-lg { padding: clamp(1.6rem, 4vw, 3.2rem); }
 .cell-tight  { padding: clamp(0.7rem, 1.4vw, 1rem); }
 .cell-mid    { display: flex; flex-direction: column; justify-content: center; }
-.cell-fill   { background: var(--band); }
+
+/* The feature cell: one washed block per page, on the cell the page is really
+   about. Type inside stays ink — the wash carries the colour, not the words. */
+.cell-hue    { background: var(--hue-cell); }
 
 /* The reference centres its two dominant cells; left-aligning them in a wide
    cell leaves a void the composition cannot carry. */
@@ -709,7 +734,9 @@ body { margin: 0; }
 
 /* --- Rotated edge label ----------------------------------------------------
    The signature move of the reference: a narrow column of bottom-to-top
-   type naming the cell beside it. */
+   type naming the cell beside it. Every row carries one, so washing the track
+   in the page hue draws a continuous coloured rail down the whole sheet —
+   the loudest the colour gets, and the reason it needs no help elsewhere. */
 .vlabel {
   border-right: 1px solid var(--rule);
   display: flex;
@@ -724,7 +751,8 @@ body { margin: 0; }
   font-stretch: 75%;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--hue);
+  background: var(--hue-cell);
+  color: var(--hue-deep);
 }
 
 /* --- Type scale ------------------------------------------------------------
@@ -780,13 +808,15 @@ body { margin: 0; }
   margin: 0;
 }
 
+/* A bare count standing alone in its own cell. It carries no words, so it is
+   the one display-scale step set in the hue rather than in ink. */
 .c-num {
   font-size: clamp(1.6rem, 4vw, 2.8rem);
   font-weight: 700;
   font-stretch: 87.5%;
   letter-spacing: -0.04em;
   line-height: 1;
-  color: var(--ink);
+  color: var(--hue-deep);
   margin: 0;
 }
 
@@ -904,17 +934,23 @@ body { margin: 0; }
 }
 .cert-nav-links a:hover,
 .cert-nav-links a:focus-visible { color: var(--ink); background: var(--band); }
-/* Marked with a rule rather than a filled block: the nav bar is full-bleed but
-   its inner track is not, so a background here leaves a colour step at the edge. */
+/* Marked twice over: the hue wash names the section by colour at a glance, and
+   the 2px inset rule keeps the mark legible if the wash goes unnoticed. Hover
+   already fills with --band, so a fill here is the same shape at a louder
+   value rather than a new behaviour. */
 .cert-nav-links a[aria-current="page"] {
-  color: var(--hue);
-  background: transparent;
+  color: var(--hue-deep);
+  background: var(--hue-cell);
   box-shadow: inset 0 -2px 0 var(--hue);
 }
 
 /* The closing row lives inside the sheet, so it takes extra padding rather than
-   a margin — a margin here would tear a gap in the ruled document. */
-.cert-foot > .cell { padding-block: clamp(1.4rem, 3vw, 2.4rem); }
+   a margin — a margin here would tear a gap in the ruled document. It washes in
+   the page hue so every page closes on the colour it opened with. */
+.cert-foot > .cell {
+  padding-block: clamp(1.4rem, 3vw, 2.4rem);
+  background: var(--hue-cell);
+}
 
 /* Media fills its cell edge to edge, the way the reference seats its blocks. */
 .cell-flush { padding: 0; }
@@ -929,8 +965,9 @@ body { margin: 0; }
   border-bottom: 2px solid var(--hue);
   word-break: break-all;
 }
+/* It sits on the washed closing cell, so hover takes the darkened hue */
 .cert-mail:hover,
-.cert-mail:focus-visible { color: var(--hue); }
+.cert-mail:focus-visible { color: var(--hue-deep); }
 
 /* --- Form controls, rebuilt square ----------------------------------------- */
 .cert .form-control {
@@ -1023,20 +1060,24 @@ body { margin: 0; }
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease;
 }
-.c-filter:hover { color: var(--ink); background: var(--band); }
-.c-filter.is-active { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+.c-filter:hover { color: var(--hue-deep); background: var(--hue-cell); }
+/* The selected filter is the page's one inverted control, so it inverts into
+   the hue rather than into ink — paper type on it clears 5.2:1. */
+.c-filter.is-active { background: var(--hue); color: var(--surface); border-color: var(--hue); }
 
-/* --- Project media inside a cell -------------------------------------------- */
+/* --- Project media inside a cell --------------------------------------------
+   The well behind an image takes the hue wash, so a transparent asset sits on
+   the page's colour instead of on neutral sage. */
 .c-shot {
   border-bottom: 1px solid var(--rule);
-  background: var(--band);
+  background: var(--hue-cell);
   aspect-ratio: 16 / 10;
   overflow: hidden;
 }
 .c-shot img { width: 100%; height: 100%; object-fit: cover; }
 
 /* --- Portrait --------------------------------------------------------------- */
-.c-portrait { background: var(--band); aspect-ratio: 4 / 5; overflow: hidden; }
+.c-portrait { background: var(--hue-cell); aspect-ratio: 4 / 5; overflow: hidden; }
 .c-portrait img { width: 100%; height: 100%; object-fit: cover; }
 
 /* --- Layout helpers --------------------------------------------------------- */
@@ -1056,8 +1097,9 @@ body { margin: 0; }
    aside rule run unbroken to the bottom edge of the page. */
 .g-bottom      { grid-template-columns: 2.6rem 1fr var(--aside); }
 /* The rail cell is empty, so it takes no padding - .cell's default padding is
-   wider than the 2.6rem track and would push the rule off the line. */
-.g-bottom > .cell:first-child { padding: 0; }
+   wider than the 2.6rem track and would push the rule off the line. It washes
+   like a .vlabel so the coloured rail reaches the bottom edge unbroken. */
+.g-bottom > .cell:first-child { padding: 0; background: var(--hue-cell); }
 .g-3           { grid-template-columns: repeat(3, 1fr); }
 .g-hero-aside  { grid-template-columns: 2.6rem 1fr var(--aside); }
 .g-project     { grid-template-columns: 2.6rem 16rem 1fr 12rem; }
@@ -1090,7 +1132,16 @@ body { margin: 0; }
   .g-project,
   .g-foot { grid-template-columns: 2.2rem 1fr; }
 
-  /* (a) label rail spans its whole group */
+  /* (a) label rail spans its whole group.
+     `grid-row: 1 / -1` resolves -1 against the EXPLICIT grid, so on a row with
+     only implicit tracks it collapses to a single row and the rail stops
+     partway down the group. Declaring the rows explicitly gives -1 a line to
+     land on; four is more than any row stacks, and a surplus `auto` row with
+     nothing in it measures 0. */
+  .g-hero-aside,
+  .g-profile,
+  .g-project { grid-template-rows: repeat(4, auto); }
+
   .g-hero-aside > .vlabel,
   .g-profile > .vlabel,
   .g-project > .vlabel { grid-row: 1 / -1; }
@@ -1121,7 +1172,10 @@ body { margin: 0; }
   .g-2 > .cell, .g-3 > .cell { border-right: 0; border-bottom: 1px solid var(--rule); }
   .g-2 > .cell:last-child, .g-3 > .cell:last-child { border-bottom: 0; }
 
-  .g-bottom { grid-template-columns: 2.2rem 1fr; }
+  /* The rail spans both stacked cells, so its rule and its wash reach the
+     bottom edge instead of stopping halfway down the row. */
+  .g-bottom { grid-template-columns: 2.2rem 1fr; grid-template-rows: repeat(3, auto); }
+  .g-bottom > .cell:first-child { grid-row: 1 / -1; }
   .g-bottom > .cell:last-child { grid-column: 2; border-right: 0; border-top: 1px solid var(--rule); }
 
   .vlabel { font-size: 0.62rem; letter-spacing: 0.1em; padding: 0.5rem 0.25rem; }
@@ -1179,7 +1233,7 @@ body { margin: 0; }
 }
 .c-ladder s { text-decoration-thickness: 1px; }
 .c-ladder .is-now {
-  color: var(--hue);
+  color: var(--hue-deep);
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -1187,6 +1241,7 @@ body { margin: 0; }
 }
 .c-now {
   border: 1px solid var(--hue);
+  background: var(--hue-cell);
   font-size: 0.62rem;
   font-weight: 600;
   letter-spacing: 0.16em;
@@ -1205,6 +1260,7 @@ body { margin: 0; }
 }
 .c-stack li {
   border: 1px solid var(--rule);
+  background: var(--hue-cell);
   margin: 0 -1px -1px 0;
   text-align: center;
   padding: 0.55rem 0.9rem;
@@ -1293,7 +1349,12 @@ body { margin: 0; }
    so no copy or image was touched in the conversion.
    ========================================================================== */
 
-.page-case { --hue: var(--accent); }
+/* The case studies take the Work hue (section 17) — they are the pages the
+   Work index points at, so the section reads as one colour. */
+
+/* The em-dash bullet is drawn, not written, so it takes the hue. Section 12
+   colours it with the previous system's --accent; this wins on specificity. */
+.cert .case-points li::before { color: var(--hue); }
 
 /* Bootstrap is gone from these pages, so its row/col classes are inert.
    Give any surviving row a sensible responsive grid. */
@@ -1391,11 +1452,13 @@ body { margin: 0; }
   padding: clamp(1rem, 2.4vw, 2rem);
 }
 
+/* Frame and address bar wash in the page hue, the same treatment the .c-shot
+   well takes on the Work index — one media language across the section. */
 .cert .shot-browser,
 .cert .shot-phone {
   border: 1px solid var(--rule);
   border-radius: 0;
-  background: var(--band);
+  background: var(--hue-cell);
   overflow: hidden;
 }
 .cert .shot-bar {
@@ -1404,7 +1467,7 @@ body { margin: 0; }
   gap: 0.6rem;
   border-bottom: 1px solid var(--rule);
   padding: 0.5rem 0.7rem;
-  background: var(--surface);
+  background: var(--hue-cell);
 }
 .cert .shot-dots { display: flex; gap: 0.3rem; }
 .cert .shot-dots span {
@@ -1413,11 +1476,17 @@ body { margin: 0; }
   border-radius: 0;
   background: transparent;
 }
+/* The legacy rule leaves this a 999px pill on a --line border; against the
+   washed bar both now read as foreign objects, so it squares off and re-rules. */
 .cert .shot-url {
   font-size: 0.62rem;
   font-stretch: 75%;
   letter-spacing: 0.1em;
   color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 0;
+  padding: 0.2rem 0.7rem;
   /* Truncate rather than widen the frame — a long path is not worth a
      horizontal scrollbar on a phone. */
   min-width: 0;
@@ -1488,8 +1557,10 @@ body { margin: 0; }
 .g-media-3 { grid-template-columns: 2.6rem repeat(3, 1fr); }
 
 @media (max-width: 991.98px) {
+  /* Explicit rows so the rail's `1 / -1` has a line to reach — see the note in
+     section 17's breakpoint. */
   .g-case,
-  .g-media-2 { grid-template-columns: 2.2rem 1fr; }
+  .g-media-2 { grid-template-columns: 2.2rem 1fr; grid-template-rows: repeat(4, auto); }
   .g-case > .vlabel,
   .g-media-2 > .vlabel { grid-row: 1 / -1; }
   .g-case > .cell,
@@ -1506,7 +1577,7 @@ body { margin: 0; }
 }
 
 @media (max-width: 575.98px) {
-  .g-media-3 { grid-template-columns: 2.2rem 1fr; }
+  .g-media-3 { grid-template-columns: 2.2rem 1fr; grid-template-rows: repeat(4, auto); }
   .g-media-3 > .vlabel { grid-row: 1 / -1; }
   .g-media-3 > .cell {
     grid-column: 2;
