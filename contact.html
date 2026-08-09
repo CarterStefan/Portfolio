@@ -54,7 +54,7 @@
     <main id="main-content" class="sheet sheet-in">
 
       <!-- Invitation -->
-      <div class="crow g-hero-aside">
+      <div class="crow g-label-1">
         <p class="vlabel">Contact</p>
         <div class="cell cell-pad-lg cell-mid">
           <h1 class="c-hero">Let&rsquo;s talk.</h1>
@@ -64,58 +64,32 @@
             happy to have a conversation.
           </p>
         </div>
-        <div class="cell cell-mid">
-          <p class="c-meta mb-label">Direct</p>
-          <a class="c-link" href="mailto:carter_stefan@outlook.com">Email me</a>
-        </div>
       </div>
 
       <!-- The form posts to Formspree — replace "your-form-id" with a
            real form ID from formspree.io to make it live. Until then the direct
            email links on this page are the only working route. -->
       <form class="cert-form" action="https://formspree.io/f/your-form-id" method="POST">
+        <div class="form-stack">
 
-        <div class="crow g-label-2">
-          <p class="vlabel">Name</p>
-          <div class="cell">
+          <div class="form-field">
             <label class="form-label" for="cf-name">Name</label>
             <input class="form-control" type="text" id="cf-name" name="name" autocomplete="name" required>
           </div>
-          <p class="vlabel">Email</p>
-          <div class="cell">
+
+          <div class="form-field">
             <label class="form-label" for="cf-email">Email</label>
             <input class="form-control" type="email" id="cf-email" name="_replyto" autocomplete="email" required>
           </div>
-        </div>
 
-        <div class="crow g-label-1">
-          <p class="vlabel">Website</p>
-          <div class="cell">
-            <label class="form-label" for="cf-website">Website <span class="c-optional">(optional)</span></label>
-            <input class="form-control" type="url" id="cf-website" name="website" placeholder="https://" autocomplete="url">
-          </div>
-        </div>
-
-        <div class="crow g-label-1">
-          <p class="vlabel">Message</p>
-          <div class="cell">
+          <div class="form-field">
             <label class="form-label" for="cf-message">Message</label>
             <textarea class="form-control" id="cf-message" name="message" rows="7" required></textarea>
           </div>
-        </div>
 
-        <div class="crow g-label-2">
-          <p class="vlabel">Send</p>
-          <div class="cell cell-mid">
-            <button class="c-btn" type="submit">Send message</button>
-          </div>
-          <p class="vlabel">Note</p>
-          <div class="cell cell-mid">
-            <p class="c-meta mb-label">Required</p>
-            <p class="c-body">Name, email and message. Website is optional.</p>
-          </div>
-        </div>
+          <button class="c-btn c-btn-block" type="submit">Send message</button>
 
+        </div>
       </form>
 
       <!-- Close -->

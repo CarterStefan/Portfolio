@@ -846,6 +846,15 @@ body { margin: 0; }
 .c-btn:hover,
 .c-btn:focus-visible { background: var(--hue); color: var(--surface); }
 
+/* Full-bleed variant — squares off the bottom of a stacked column so the
+   action reads as the closing edge of the form rather than a loose chip. */
+.c-btn-block {
+  display: block;
+  width: 100%;
+  align-self: stretch;
+  text-align: center;
+}
+
 /* --- Certificate chrome: nav + footer -------------------------------------- */
 .cert-nav {
   border-bottom: 1px solid var(--rule);
@@ -967,11 +976,23 @@ body { margin: 0; }
 }
 .cert .form-control::placeholder { color: var(--muted); }
 
-/* The form wraps its own rows, so :last-child inside it would drop a rule the
-   document still needs between the form and what follows. */
-.cert-form > .crow:last-child { border-bottom: 1px solid var(--rule); }
+/* The form is the one place the ruled grid stands down. Every internal rule
+   here competed with the field borders and made the form hard to read, so it
+   becomes a single band: one centred column of stacked fields, closed top and
+   bottom by the sheet's own rules. */
+.cert-form { border-bottom: 1px solid var(--rule); }
 
-.c-optional { color: var(--muted); text-transform: none; letter-spacing: 0.04em; }
+.form-stack {
+  max-width: 44rem;   /* border-box, so the fields land near 38rem inside */
+  margin-inline: auto;
+  padding: clamp(2rem, 6vw, 4rem) clamp(1.25rem, 5vw, 3rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.2rem, 2.5vw, 1.7rem);
+}
+
+/* The button closes the column, so it takes the extra step the fields do not. */
+.form-stack > .c-btn { margin-top: 0.6rem; }
 
 .cert .form-label {
   display: block;
@@ -1344,9 +1365,32 @@ body { margin: 0; }
   margin: 0 0 0.4rem;
 }
 
-/* Screenshot frames — squared off, ruled, no chrome gloss */
-.cert .case-shot { margin: 0 0 1.5rem; }
-.cert .case-shot:last-child { margin-bottom: 0; }
+/* Screenshot frames — squared off, ruled, no chrome gloss.
+   A shot is evidence sitting beside the writing, not the largest object on the
+   page, so every frame caps its own width and centres in its cell. A wider
+   viewport then grows the sheet and its rules, never the picture. */
+.cert .case-shot {
+  --shot-cap: 34rem;
+  width: 100%;
+  /* A flex item sizes to min-content by default, and the address bar's mono
+     URL is one unbreakable string — without this the frame pushes past a
+     narrow cell instead of shrinking inside it. */
+  min-width: 0;
+  max-width: min(var(--shot-cap), 100%);
+  margin: 0;
+}
+.cert .case-shot-wide  { --shot-cap: 50rem; }
+.cert .case-shot-phone { --shot-cap: 12rem; }
+
+/* A cell whose only job is to hold a shot. Media centres rather than sitting
+   left in a wide cell, where the leftover space reads as a void. */
+.cell-media {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(1rem, 2.4vw, 2rem);
+}
+
 .cert .shot-browser,
 .cert .shot-phone {
   border: 1px solid var(--rule);
@@ -1374,12 +1418,25 @@ body { margin: 0; }
   font-stretch: 75%;
   letter-spacing: 0.1em;
   color: var(--muted);
+  /* Truncate rather than widen the frame — a long path is not worth a
+     horizontal scrollbar on a phone. */
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .cert .shot-view,
 .cert .shot-scroll { display: block; }
+/* The self-scrolling full-page capture reads as a window, so its window is
+   sized to the frame it sits in rather than to the viewport. */
+.cert .shot-scroll .shot-view { --shot-h: clamp(240px, 26vw, 380px); }
 .cert .case-shot img,
 .cert .case-img { display: block; width: 100%; height: auto; }
-.cert .case-img { border: 1px solid var(--rule); }
+.cert .case-img {
+  border: 1px solid var(--rule);
+  border-radius: 0;              /* the legacy rule rounds it; the sheet does not */
+  max-width: 50rem;
+}
 .cert figcaption {
   font-size: 0.82rem;   /* the documented list step, not a new size */
   font-stretch: 87.5%;
@@ -1425,13 +1482,36 @@ body { margin: 0; }
 /* Column template for a case section: label rail, heading, body */
 .g-case { grid-template-columns: 2.6rem 16rem 1fr; }
 
+/* Media rows. Screenshots are cells like any other, so a pair or a trio of
+   shots is a row of ruled cells rather than a stack of loose pictures. */
+.g-media-2 { grid-template-columns: 2.6rem 1fr 1fr; }
+.g-media-3 { grid-template-columns: 2.6rem repeat(3, 1fr); }
+
 @media (max-width: 991.98px) {
-  .g-case { grid-template-columns: 2.2rem 1fr; }
-  .g-case > .vlabel { grid-row: 1 / -1; }
-  .g-case > .cell {
+  .g-case,
+  .g-media-2 { grid-template-columns: 2.2rem 1fr; }
+  .g-case > .vlabel,
+  .g-media-2 > .vlabel { grid-row: 1 / -1; }
+  .g-case > .cell,
+  .g-media-2 > .cell {
     grid-column: 2;
     border-right: 0;
     border-top: 1px solid var(--rule);
   }
-  .g-case > .cell:first-of-type { border-top: 0; }
+  .g-case > .cell:first-of-type,
+  .g-media-2 > .cell:first-of-type { border-top: 0; }
+
+  /* Three phones stay side by side — that comparison is the point of the row */
+  .g-media-3 { grid-template-columns: 2.2rem repeat(3, 1fr); }
+}
+
+@media (max-width: 575.98px) {
+  .g-media-3 { grid-template-columns: 2.2rem 1fr; }
+  .g-media-3 > .vlabel { grid-row: 1 / -1; }
+  .g-media-3 > .cell {
+    grid-column: 2;
+    border-right: 0;
+    border-top: 1px solid var(--rule);
+  }
+  .g-media-3 > .cell:first-of-type { border-top: 0; }
 }
