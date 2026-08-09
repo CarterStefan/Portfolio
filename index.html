@@ -21,15 +21,14 @@
 <!--
   THESIS: The page is one hard-ruled grid filling the screen. It refuses the
   card-grid portfolio and the centred marketing hero.
-  OWN-WORLD: Hard-ruled form grid on warm Kaleido paper. 1px ink rules, zero radius,
-  zero shadow, cells in #F9F6EF on a #ECEFE0 blueprint ground. Martian Mono only,
-  from 0.6rem metadata to 3rem hero. A per-page hue tints rotated edge labels and
-  nothing else.
-  STORY: The visitor reads Stefan Carter as a documented practitioner, scans the
-  record of work, and makes contact.
-  FIRST VIEWPORT: One full-bleed grid. Wordmark top-left, short intro and the
-  navigation across the top band. Name at hero scale in the dominant cell, role
-  beneath. Career path and selected work in the bottom band.
+  OWN-WORLD: Hard-ruled grid on warm Kaleido paper. 1px ink rules, zero radius,
+  zero shadow, cells in #F9F6EF on a #ECEFE0 ground. Martian Mono only.
+  A per-page hue tints rotated edge labels and nothing else.
+  STORY: The visitor reads the name, then what Stefan actually does, then scans
+  the record of work and makes contact.
+  FIRST VIEWPORT: The shared header rail, then the name at hero scale and the
+  practice statement beneath it, each taking half the remaining height. Career
+  path and selected work in the bottom band.
   FORM: Hard-ruled grid system, taken from a certificate reference for its
   styling and structure only - big blocks, hard rules, mono type. Not a
   certificate, and it does not borrow certificate language.
@@ -38,41 +37,24 @@
 
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
+  <nav class="cert-nav" aria-label="Primary">
+    <div class="cert-nav-inner">
+      <a class="cert-brand" href="/">
+        <img src="assets/img/logo.png" alt="Stefan Carter — home" width="32" height="32">
+      </a>
+      <ul class="cert-nav-links">
+        <li><a href="/" aria-current="page">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/work">Work</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
   <div class="cert-page cert-page-full">
     <main id="main-content" class="sheet sheet-in">
 
-      <!-- Row 1 — masthead and navigation -->
-      <div class="crow g-head">
-        <div class="cell cell-tight">
-          <span class="cert-brand">
-            <img src="assets/img/logo.png" alt="Stefan Carter" width="32" height="32">
-          </span>
-        </div>
-        <div class="cell cell-tight">
-          <p class="c-issue">
-            <svg class="c-dot" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="2 3.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg>
-            <span class="c-meta">Product &amp; web design &middot; <span id="year">2026</span></span>
-          </p>
-          <p class="c-body cs-3">
-            I design, prototype and ship &mdash; websites and digital products,
-            built alongside the engineers who make them real.
-          </p>
-        </div>
-        <p class="vlabel">Navigate</p>
-        <div class="cell cell-tight">
-          <nav aria-label="Primary">
-            <ul class="c-list c-navlist">
-              <li><a href="/" aria-current="page">Home</a></li>
-              <li><a href="/about">About</a></li>
-              <li><a href="/work">Work</a></li>
-              <li><a href="/contact">Contact</a></li>
-            </ul>
-          </nav>
-          <a class="c-link c-link-mail" href="mailto:carter_stefan@outlook.com">Email</a>
-        </div>
-      </div>
-
-      <!-- Row 2 — the name -->
+      <!-- The name -->
       <div class="crow g-label-1 row-grow">
         <p class="vlabel">Portfolio</p>
         <div class="cell cell-pad-lg cell-mid cell-centre">
@@ -80,15 +62,18 @@
         </div>
       </div>
 
-      <!-- Row 3 — the practice -->
+      <!-- The practice -->
       <div class="crow g-label-1 row-grow">
-        <p class="vlabel">Currently</p>
+        <p class="vlabel">Practice</p>
         <div class="cell cell-pad-lg cell-mid cell-centre">
-          <p class="c-display">Senior Product Designer</p>
+          <p class="c-display c-statement">
+            I design, prototype and ship &mdash; websites and digital products,
+            built alongside the engineers who make them real.
+          </p>
         </div>
       </div>
 
-      <!-- Row 4 — career and selected work -->
+      <!-- Career and selected work -->
       <div class="crow g-foot">
         <p class="vlabel">Career</p>
         <div class="cell">
