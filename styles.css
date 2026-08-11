@@ -652,21 +652,30 @@ body { margin: 0; }
      quarters, one modular relationship rather than assorted fixed widths. */
   --aside: 25%;
 
-  /* Per-page hue, as a three-token set. Overridden per page below.
+  /* --- The four section themes ---------------------------------------------
+     Each section of the site owns one colour as a three-token set. They are
+     named here once because two different things draw on them: the page class
+     below, and the nav links, which colour by destination rather than by the
+     page you happen to be on.
 
-       --hue       the chromatic voice: label type, underlines, marks, and the
-                   fill of an inverted control. >=4.5:1 on --surface, and
-                   >=4.5:1 for --surface type sitting on it.
-       --hue-deep  the same colour darkened, for type that sits ON --hue-cell
-                   (--hue on --hue-cell lands near 4.4:1 and would fail).
-       --hue-cell  a pastel wash of the hue: the third surface, used for the
-                   label rail, media wells and a small number of feature cells.
-                   >=11:1 against --ink, >=5.7:1 against --hue-deep.
+       *        the chromatic voice: label type, underlines, marks, and the
+                fill of an inverted control. >=4.5:1 on --surface, and >=4.5:1
+                for --surface type sitting on it.
+       *-deep   the same colour darkened, for type that sits ON the wash (the
+                plain hue on its own wash lands near 4.4:1 and would fail).
+       *-cell   a pastel wash of the hue: the third surface, used for the label
+                rail, media wells and one feature cell per page.
+                >=11:1 against --ink, >=4.5:1 against --muted. */
+  --moss:  var(--accent); --moss-deep:  #3F5849; --moss-cell:  #E6EDE2;  /* Home    5.0:1 */
+  --amber: #8A6A2A;       --amber-deep: #6E541F; --amber-cell: #F0EAD5;  /* About   4.7:1 */
+  --rose:  #9E4E68;       --rose-deep:  #823E55; --rose-cell:  #F5E3E9;  /* Work    5.2:1 */
+  --slate: #4A6A85;       --slate-deep: #35516A; --slate-cell: #E3EBF0;  /* Contact 5.3:1 */
 
-     Home is green, Contact blue, Work and the case studies red, About amber. */
-  --hue:      var(--accent);
-  --hue-deep: #3F5849;
-  --hue-cell: #E6EDE2;
+  /* The theme in force on this page. Moss is the default when no page class is
+     set; the classes below swap the whole set, never a single token. */
+  --hue:      var(--moss);
+  --hue-deep: var(--moss-deep);
+  --hue-cell: var(--moss-cell);
 
   background-color: var(--band);
   font-family: var(--font-mono);
@@ -674,14 +683,12 @@ body { margin: 0; }
   color: var(--ink-2);
 }
 
-/* Amber — 4.66:1 */
-.cert.page-about   { --hue: #8A6A2A; --hue-deep: #6E541F; --hue-cell: #F0EAD5; }
-/* Brick red — 5.24:1. Work is the index of the case studies, so the index and
-   the nine studies behind it share one hue and read as a single section. */
+.cert.page-about   { --hue: var(--amber); --hue-deep: var(--amber-deep); --hue-cell: var(--amber-cell); }
+/* Work is the index of the case studies, so the index and the nine studies
+   behind it share one theme and read as a single section. */
 .cert.page-work,
-.cert.page-case    { --hue: #A0503F; --hue-deep: #83402F; --hue-cell: #F4E5DF; }
-/* Slate blue — 5.27:1 */
-.cert.page-contact { --hue: #4A6A85; --hue-deep: #35516A; --hue-cell: #E3EBF0; }
+.cert.page-case    { --hue: var(--rose);  --hue-deep: var(--rose-deep);  --hue-cell: var(--rose-cell); }
+.cert.page-contact { --hue: var(--slate); --hue-deep: var(--slate-deep); --hue-cell: var(--slate-cell); }
 
 /* Text selection picks up the page hue rather than the old system's accent */
 .cert ::selection { background: var(--hue); color: var(--surface); }
@@ -932,12 +939,22 @@ body { margin: 0; }
   text-decoration: none;
   transition: background 0.15s ease, color 0.15s ease;
 }
+/* Each link re-declares the theme set to the one belonging to the page it
+   points at, so it keeps that colour on every page of the site rather than
+   inheriting whichever theme is currently in force. The nav becomes a fixed
+   colour key: green is Home, amber is About, rose is Work, blue is Contact,
+   wherever you are standing. Keyed off href because the markup already
+   distinguishes the four destinations - no extra classes needed on 13 pages. */
+.cert-nav-links a[href="/"]        { --hue: var(--moss);  --hue-deep: var(--moss-deep);  --hue-cell: var(--moss-cell); }
+.cert-nav-links a[href="/about"]   { --hue: var(--amber); --hue-deep: var(--amber-deep); --hue-cell: var(--amber-cell); }
+.cert-nav-links a[href="/work"]    { --hue: var(--rose);  --hue-deep: var(--rose-deep);  --hue-cell: var(--rose-cell); }
+.cert-nav-links a[href="/contact"] { --hue: var(--slate); --hue-deep: var(--slate-deep); --hue-cell: var(--slate-cell); }
+
 .cert-nav-links a:hover,
-.cert-nav-links a:focus-visible { color: var(--ink); background: var(--band); }
-/* Marked twice over: the hue wash names the section by colour at a glance, and
-   the 2px inset rule keeps the mark legible if the wash goes unnoticed. Hover
-   already fills with --band, so a fill here is the same shape at a louder
-   value rather than a new behaviour. */
+.cert-nav-links a:focus-visible { color: var(--hue-deep); background: var(--hue-cell); }
+/* Hover and current share the destination's wash, so the 2px inset rule is what
+   separates them: hover is the wash alone, current is the wash plus the mark.
+   That also keeps the current page legible without relying on colour alone. */
 .cert-nav-links a[aria-current="page"] {
   color: var(--hue-deep);
   background: var(--hue-cell);
