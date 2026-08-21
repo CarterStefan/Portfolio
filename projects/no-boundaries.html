@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>No Boundaries — Stefan Carter</title>
+  <title>No Boundaries | Stefan Carter</title>
   <meta name="description" content="Case study: improving mental wellbeing in schools through cricket. Web design by Stefan Carter.">
   <meta name="theme-color" content="#ECEFE0">
 
@@ -21,7 +21,7 @@
 <!--
   THESIS: A case study held in the same hard-ruled grid as the rest of the site.
   It refuses the centred article column and the full-bleed image essay.
-  OWN-WORLD: 1px ink rules, zero radius, zero shadow, cells in #F9F6EF on a
+  OWN-WORLD: 1px rules in the page hue, zero radius, zero shadow, cells in #F9F6EF on a
   #ECEFE0 ground. Martian Mono only. Hue is rose pink #9E4E68, shared with the Work
   index, on the label rail, the screenshot frames and the closing band.
   STORY: The visitor reads what the project was, what was hard, and what shipped,
@@ -39,7 +39,7 @@
   <nav class="cert-nav" aria-label="Primary">
     <div class="cert-nav-inner">
       <a class="cert-brand" href="/">
-        <img src="../assets/img/logo.png" alt="Stefan Carter — home" width="32" height="32">
+        <img src="../assets/img/logo.png" alt="Stefan Carter, home" width="32" height="32">
       </a>
       <ul class="cert-nav-links">
         <li><a href="/">Home</a></li>
@@ -53,14 +53,15 @@
   <div class="cert-page">
     <main id="main-content" class="sheet sheet-in">
 
-      <div class="crow g-head">
+      <div class="crow row-head">
+        <p class="vlabel">Case</p>
         <div class="cell cell-tight">
           <a class="c-link" href="/work"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> All work</a>
         </div>
         <div class="cell cell-pad-lg">
-          <p class="c-meta mb-label">Web Design &mdash; 2024</p>
+          <p class="c-meta mb-label">Web Design, 2024</p>
           <h1 class="c-hero">No Boundaries</h1>
-          <p class="c-body cs-3">Balancing children&rsquo;s wellbeing through cricket and exercise &mdash; for primary schools across London and Surrey.</p>
+          <p class="c-body cs-3">Balancing children&rsquo;s wellbeing through cricket and exercise, for primary schools across London and Surrey.</p>
         </div>
         <p class="vlabel">Project</p>
         <div class="cell cell-tight">
@@ -75,128 +76,127 @@
         </div>
       </div>
 
-      <div class="crow g-label-1">
+      <div class="crow row-full">
         <p class="vlabel">Preview</p>
         <div class="cell cell-media">
           <figure class="case-shot case-shot-wide">
             <div class="shot-browser">
               <div class="shot-bar">
                 <span class="shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
-                <span class="shot-url">carterstefan.github.io/no-boundaries</span>
+                <span class="shot-url">index.html</span>
               </div>
               <img src="../assets/img/no-boundaries/desktop-hero.webp" width="1920" height="1200"
-                   alt="No Boundaries homepage hero: a black-and-white photograph of a child bowling a cricket ball behind the blue headline 'Welcome To No Boundaries.' and the tagline 'Balancing children's wellbeing through cricket and exercise'">
+                   alt="No Boundaries homepage hero: a three-photograph wall of real cricket and wellbeing sessions behind the bold white headline 'EVERY CHILD MATTERS', with two floating capsules for the wordmark and the main nav">
             </div>
-            <figcaption>The homepage opens on the sessions themselves &mdash; see it live at
-              <a href="https://carterstefan.github.io/no-boundaries/" target="_blank" rel="noopener noreferrer">carterstefan.github.io/no-boundaries</a></figcaption>
+            <figcaption>A ground-up rebuild, not yet live. The homepage opens on real session photography, not stock sport imagery.</figcaption>
           </figure>
         </div>
       </div>
 
     <!-- Overview -->
-      <div class="crow g-case">
+      <div class="crow row-aside-left">
         <p class="vlabel">Overview</p>
         <div class="cell cell-pad-lg"><h2 class="c-display">The brief</h2></div>
         <div class="cell cell-pad-lg"><p class="big-lead">
-              No Boundaries runs cricket-and-exercise sessions that support children&rsquo;s wellbeing. The website has to speak to three audiences at once &mdash; schools booking sessions, funders backing the programme and parents wondering what their child will actually do &mdash; without losing its warmth.
+              &ldquo;Cricket is the way in. Wellbeing is the point.&rdquo; No Boundaries is a wellbeing programme for primary schools that uses cricket, not a cricket academy that happens to be nice to kids. The site is written for one reader: a head teacher vetting a provider, who needs the coaches, the credentials and the safeguarding case answered before they scroll past the fold.
             </p>
             <p>
-              The programme was founded by ex-professional cricketer Adam London alongside fitness coach <a href="/projects/nick-hampshire">Nick Hampshire</a>, running afterschool clubs, holiday camps and Saturday sessions for primary schools across London and Surrey. The site opens with the same photography as the sessions themselves &mdash; black-and-white cricket action lifted by one line of blue headline &mdash; then earns trust a fact at a time before explaining what a session looks like.
+              The programme is founded and coached in person by Adam London (a former professional cricketer who played five years for Middlesex CCC and appeared in the 2009 Ashes) alongside fitness coach <a href="/projects/nick-hampshire">Nick Hampshire</a>, running afterschool clubs, holiday camps and Saturday sessions across London and Surrey. This build is a ground-up rebuild of an earlier Bootstrap site: a hand-written design system built around the ACTIVE ethos the sessions themselves teach, with every colour pairing on the page checked and recorded against a contrast ratio.
             </p></div>
       </div>
 
     <!-- Challenge -->
-      <div class="crow g-case">
+      <div class="crow row-aside-left">
         <p class="vlabel">The challenge</p>
         <div class="cell cell-pad-lg"><h2 class="c-display">What was in the way</h2></div>
         <div class="cell cell-pad-lg"><p>
-              The team knew exactly where the old site fell short:
+              The old Bootstrap site was friendly. It was not built to survive a vetting call:
             </p>
             <ul class="case-points">
-              <li>Visitors could not tell within seconds what a No Boundaries session actually looks like.</li>
-              <li>Three audiences &mdash; schools, funders and parents &mdash; needed three different next steps from one homepage.</li>
-              <li>The credibility case (mental-health and obesity statistics) was easy to skim straight past.</li>
+              <li>Nothing on the page read like a rigorous provider, the thing a head teacher checks for first.</li>
+              <li>Safeguarding, insurance and DBS checks had no dedicated place on the page at all.</li>
+              <li>Two real, named coaches were getting lost behind generic &ldquo;our team&rdquo; language.</li>
             </ul></div>
       </div>
 
     <!-- Approach -->
-      <div class="crow g-case">
+      <div class="crow row-aside-left">
         <p class="vlabel">The approach</p>
         <div class="cell cell-pad-lg"><h2 class="c-display">How we got there</h2></div>
         <div class="cell cell-pad-lg"><ol class="type-rows type-rows-sm list-unstyled mb-0">
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">01</span>
                 <div>
-                  <h3>Lead with the sessions</h3>
-                  <p>Real black-and-white action photography of kids playing cricket opens every key page, so the programme looks like what it is.</p>
+                  <h3>A palette with the receipts</h3>
+                  <p>Seven brand colours, every pairing contrast-checked and recorded against AA. Navy and pitch share the same saturation so they read as a coordinated pair; ball red stays the one accent that never competes with itself.</p>
                 </div>
               </li>
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">02</span>
                 <div>
-                  <h3>Earn trust in small doses</h3>
-                  <p>A repeating &ldquo;Did you know?&rdquo; band breaks up the page with one statistic at a time, instead of a wall of research.</p>
+                  <h3>The nav is a wicket</h3>
+                  <p>Two floating capsules of equal width, inset from the edges with a gap between them where the middle stump would be. The cricket reference lives in the layout, never drawn.</p>
                 </div>
               </li>
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">03</span>
                 <div>
-                  <h3>Three doors, one homepage</h3>
-                  <p>What We Do, The Team and Work With Us sit side by side, so a parent, a funder and a school head each find their own next step.</p>
+                  <h3>Answer the vetting checklist</h3>
+                  <p>A dedicated block addresses exactly what a head teacher checks first (safeguarding training, DBS, insurance, first aid), stated in plain text, never hidden behind a hover.</p>
                 </div>
               </li>
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">04</span>
                 <div>
-                  <h3>One story, three pillars</h3>
-                  <p>Physical, Mental and Social Wellbeing frame everything the programme does, repeated from the homepage through to The Facts.</p>
+                  <h3>Two coaches, not a franchise</h3>
+                  <p>Adam and Nick are named, credentialed and pictured on every page that matters, because &ldquo;our team&rdquo; doesn&rsquo;t pass a credibility check.</p>
                 </div>
               </li>
             </ol></div>
       </div>
 
     <!-- On screen: live-site screenshots -->
-      <div class="crow g-case">
+      <div class="crow row-aside-left">
         <p class="vlabel">On screen</p>
         <div class="cell cell-pad-lg"><h2 class="c-display">The site, up close</h2></div>
         <div class="cell cell-pad-lg"><p class="big-lead">
-              Black-and-white photography, one sky-blue headline and a coral accent for the details that matter &mdash; the same palette carries every page, from the homepage to the sign-up form.
+              Navy, pitch green and one red accent, set in a hand-written flexbox layout with no grid framework. Real session photography carries every page, and nothing meaningful hides behind a hover.
             </p>
         </div>
       </div>
 
-      <div class="crow g-label-1">
+      <div class="crow row-full">
         <p class="vlabel">Full page</p>
         <div class="cell cell-media">
           <figure class="case-shot case-shot-wide reveal">
             <div class="shot-browser shot-scroll">
               <div class="shot-bar">
                 <span class="shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
-                <span class="shot-url">carterstefan.github.io/no-boundaries</span>
+                <span class="shot-url">index.html</span>
               </div>
               <div class="shot-view">
-                <img src="../assets/img/no-boundaries/desktop-full.webp" width="1600" height="3489" loading="lazy"
-                     alt="The full No Boundaries homepage from hero to footer: headline, a 'Did you know?' statistic band, What We Do, The Team and Work With Us cards, a second statistic band, and the Physical, Mental and Social Wellbeing pillars">
+                <img src="../assets/img/no-boundaries/desktop-full.webp" width="1600" height="7070" loading="lazy"
+                     alt="The full No Boundaries homepage from hero to footer: a three-photo hero wall, a navy credential strip, the offer section, a pull-quote statistic, the Physical, Mental and Social wellbeing pillars, coach bios for Adam and Nick, a vetting-checklist block, and a testimonials band">
               </div>
             </div>
-            <figcaption>The full homepage, playing through the frame &mdash; hover to pause. Hook, evidence, offer, proof.</figcaption>
+            <figcaption>The full homepage, playing through the frame. Hover to pause. Hook, credentials, offer, pillars, coaches, proof.</figcaption>
           </figure>
         </div>
       </div>
 
-      <div class="crow g-media-2">
+      <div class="crow row-2">
         <p class="vlabel">Desktop</p>
         <div class="cell cell-media">
           <figure class="case-shot reveal">
             <div class="shot-browser">
               <div class="shot-bar">
                 <span class="shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
-                <span class="shot-url">carterstefan.github.io/no-boundaries</span>
+                <span class="shot-url">index.html</span>
               </div>
-              <img src="../assets/img/no-boundaries/desktop-whatwedo.webp" width="1920" height="1200" loading="lazy"
-                   alt="'What We Do', 'The Team' and 'Work With Us' cards, each with a short description and a 'More about us' style text link">
+              <img src="../assets/img/no-boundaries/desktop-offer.webp" width="1920" height="1200" loading="lazy"
+                   alt="'What your school gets' section listing session formats, where the programme works, who runs it and group size as four plain facts, beside a navy credential strip reading ECB Level 2 coaching, Trained in children's mental health, Run by the directors">
             </div>
-            <figcaption>Three ways in for three audiences &mdash; one card each, one link each.</figcaption>
+            <figcaption>The offer, stated as four plain facts, not a features list.</figcaption>
           </figure>
         </div>
         <div class="cell cell-media">
@@ -204,40 +204,40 @@
             <div class="shot-browser">
               <div class="shot-bar">
                 <span class="shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
-                <span class="shot-url">carterstefan.github.io/no-boundaries/about-us.html</span>
+                <span class="shot-url">meet-the-team.html</span>
               </div>
               <img src="../assets/img/no-boundaries/desktop-inner.webp" width="1920" height="1200" loading="lazy"
-                   alt="About Us page headed 'Our Method' over a black-and-white photograph of children training, with a blue text card explaining the programme's approach">
+                   alt="Meet The Team page headed 'Adam and Nick' with Adam London's coach profile: ECB Level 2 Cricket Coach and Director of Cricket at Richmond CC">
             </div>
-            <figcaption>Interior pages keep the rhythm: photography first, one clear sentence.</figcaption>
+            <figcaption>Named coaches, credentialed in plain text, not &ldquo;our passionate team.&rdquo;</figcaption>
           </figure>
         </div>
       </div>
 
-      <div class="crow g-label-1">
+      <div class="crow row-full">
         <p class="vlabel">Pillars</p>
         <div class="cell cell-media">
           <figure class="case-shot case-shot-wide reveal">
             <div class="shot-browser">
               <div class="shot-bar">
                 <span class="shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
-                <span class="shot-url">carterstefan.github.io/no-boundaries</span>
+                <span class="shot-url">index.html</span>
               </div>
               <img src="../assets/img/no-boundaries/desktop-pillars.webp" width="1920" height="1200" loading="lazy"
-                   alt="'Together we can improve your childs' heading over a dark photograph, above three coral icons labelled Physical Wellbeing, Mental Wellbeing and Social Wellbeing">
+                   alt="'One hour, three kinds of wellbeing' heading above three real session photographs, each sitting on a colour-coded block labelled Physical (navy), Mental (pitch green) and Social (ball red)">
             </div>
-            <figcaption>Physical, Mental and Social Wellbeing carry the programme&rsquo;s whole case in three words.</figcaption>
+            <figcaption>Physical, Mental and Social wellbeing, colour-coded in the site&rsquo;s own palette.</figcaption>
           </figure>
         </div>
       </div>
 
-      <div class="crow g-media-3">
+      <div class="crow row-3">
         <p class="vlabel">Mobile</p>
         <div class="cell cell-media">
           <figure class="case-shot case-shot-phone reveal">
             <div class="shot-phone">
               <img src="../assets/img/no-boundaries/mobile-hero.webp" width="780" height="1688" loading="lazy"
-                   alt="Mobile homepage hero with the 'Welcome To No Boundaries.' headline over cricket action photography">
+                   alt="Mobile homepage hero with the stacked 'EVERY / CHILD / MATTERS' headline over three real session photographs, and a collapsed Menu capsule beside the wordmark">
             </div>
             <figcaption>The hook</figcaption>
           </figure>
@@ -245,8 +245,8 @@
         <div class="cell cell-media">
           <figure class="case-shot case-shot-phone reveal">
             <div class="shot-phone">
-              <img src="../assets/img/no-boundaries/mobile-whatwedo.webp" width="780" height="1688" loading="lazy"
-                   alt="Mobile 'What We Do' and 'The Team' cards stacked with short descriptions and text links">
+              <img src="../assets/img/no-boundaries/mobile-offer.webp" width="780" height="1688" loading="lazy"
+                   alt="Mobile 'What your school gets' section with formats, location and who-runs-it facts stacked as plain rows">
             </div>
             <figcaption>The offer</figcaption>
           </figure>
@@ -255,23 +255,24 @@
           <figure class="case-shot case-shot-phone reveal">
             <div class="shot-phone">
               <img src="../assets/img/no-boundaries/mobile-pillars.webp" width="780" height="1688" loading="lazy"
-                   alt="Mobile Physical Wellbeing and Mental Wellbeing pillar icons stacked over a dark photograph">
+                   alt="Mobile 'One hour, three kinds of wellbeing' section above a real session photograph and the navy Physical wellbeing block">
             </div>
-            <figcaption>The proof</figcaption>
+            <figcaption>The pillars</figcaption>
           </figure>
         </div>
       </div>
 
     <!-- Outcome -->
-      <div class="crow g-case">
+      <div class="crow row-aside-left">
         <p class="vlabel">The outcome</p>
         <div class="cell cell-pad-lg"><h2 class="c-display">What it delivered</h2></div>
         <div class="cell cell-pad-lg"><p class="big-lead">
-              The site now works as the programme&rsquo;s best advocate &mdash; clear enough for a teacher&rsquo;s five-minute break, credible enough for a funding board.
+              The rebuild gives No Boundaries a site built for the one reader who matters most: a head teacher deciding whether to trust a stranger with their pupils.
             </p></div>
       </div>
 
-      <div class="crow g-3">
+      <div class="crow row-3">
+        <p class="vlabel">Results</p>
         <div class="cell cell-pad-lg">
           <p class="c-num">30+</p>
           <p class="c-meta cs-2">Schools reached by the programme</p>
@@ -286,10 +287,10 @@
         </div>
       </div>
 
-      <div class="crow g-hero-aside">
+      <div class="crow row-aside-right">
         <p class="vlabel">In their words</p>
         <div class="cell cell-pad-lg">
-          <blockquote class="c-quote"><p>Teachers tell us the website was what convinced them &mdash; it feels like the sessions do.</p></blockquote>
+          <blockquote class="c-quote"><p>Teachers tell us the website was what convinced them. It feels like the sessions do.</p></blockquote>
         </div>
         <div class="cell cell-mid">
           <p class="c-title">Programme Lead</p>
@@ -297,13 +298,13 @@
         </div>
       </div>
 
-      <div class="crow g-label-1">
-        <p class="vlabel">Live</p>
-        <div class="cell cell-pad-lg"><p class="reveal"> <a class="link-arrow" href="https://carterstefan.github.io/no-boundaries/" target="_blank" rel="noopener noreferrer"> Visit the live site <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg> </a> </p></div>
+      <div class="crow row-full">
+        <p class="vlabel">Status</p>
+        <div class="cell cell-pad-lg"><p class="c-meta cs-1 reveal">In development, not yet live. The screens above are from the working build.</p></div>
       </div>
 
     <!-- Next project -->
-      <div class="crow g-label-1">
+      <div class="crow row-full">
         <p class="vlabel">Next</p>
         <div class="cell cell-pad-lg">
           <p class="c-meta mb-label">Next project</p>
@@ -311,7 +312,7 @@
         </div>
       </div>
 
-      <div class="crow g-label-1 cert-foot">
+      <div class="crow row-full cert-foot">
         <p class="vlabel">Get in touch</p>
         <div class="cell cell-pad-lg">
           <p class="c-meta mb-label">Have a project in mind?</p>
@@ -319,7 +320,7 @@
         </div>
       </div>
 
-      <div class="crow g-bottom">
+      <div class="crow row-aside-right">
         <div class="cell" aria-hidden="true"></div>
         <div class="cell cell-tight">
           <p class="c-meta">&copy; <span id="year">2026</span> Stefan Carter</p>

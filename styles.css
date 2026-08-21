@@ -1,10 +1,10 @@
 /* ==========================================================================
-   STEFAN CARTER — PRODUCT DESIGNER PORTFOLIO (multi-page)
+   STEFAN CARTER - PRODUCT DESIGNER PORTFOLIO (multi-page)
    Custom styles layered on top of Bootstrap 5.
    Design direction: big, clean, editorial typography. Fraunces (serif)
    carries all headings, display type and quotes; Manrope (sans) carries body
    copy and UI. Ornament stays minimal. Warm paper base with a muted,
-   pastel moss-green accent used sparingly — a Kindle Colorsoft-inspired
+   pastel moss-green accent used sparingly - a Kindle Colorsoft-inspired
    palette (soft, desaturated tones + a fine grain texture, never stark
    white or pure black).
    --------------------------------------------------------------------------
@@ -33,7 +33,7 @@
    13. Contact Page
    15. Scroll-Reveal & Reduced Motion
    17. Grid System
-   18. Grid — Home Sheet & Component Detail
+   18. Grid - Home Sheet & Component Detail
    19. Case-Study Pages In The Grid System
    ========================================================================== */
 
@@ -42,7 +42,7 @@
    1. DESIGN TOKENS
    ========================================================================== */
 :root {
-  /* Neutrals — warm paper base, pastel & muted like an E Ink Kaleido panel */
+  /* Neutrals - warm paper base, pastel & muted like an E Ink Kaleido panel */
   --bg:           #F5F1E8;   /* warm paper page background              */
   --surface:      #F9F6EF;   /* raised surfaces, a shade lighter        */
   --band:         #ECEFE0;   /* pastel sage wash for alternate bands    */
@@ -54,7 +54,7 @@
   --muted:        #6B6452;   /* secondary text                          */
   --line:         #E3DDC8;   /* warm sand hairline borders               */
 
-  /* Accent (muted moss green — used sparingly) */
+  /* Accent (muted moss green - used sparingly) */
   --accent:       #557160;
   --accent-dark:  #415A49;   /* hover state                             */
   --accent-soft:  #DEE8DA;   /* pale sage for chips & highlights        */
@@ -114,7 +114,7 @@ a:hover { color: var(--accent-dark); }
 
 ::selection { background: var(--accent); color: var(--on-accent); }
 
-/* Fine grain overlay — the soft, papery "fuzz" of an E Ink panel, laid
+/* Fine grain overlay - the soft, papery "fuzz" of an E Ink panel, laid
    over the whole site. Fixed so it reads at a constant density regardless
    of scroll; sits above the nav but below the skip link. Non-interactive
    and disabled when the OS forces a high-contrast palette. */
@@ -138,7 +138,7 @@ body::after {
 /* Page-opening display headline (home hero, work page header) */
 
 
-/* Large lead paragraph — the "spoken out loud" size */
+/* Large lead paragraph - the "spoken out loud" size */
 .big-lead {
   font-size: clamp(1.25rem, 2.4vw, 1.7rem);
   font-weight: 500;
@@ -239,7 +239,7 @@ body::after {
 /* ==========================================================================
    8. TYPOGRAPHIC LIST ROWS
    Used for services on the home page and approach steps on case pages.
-   Big titles, hairline rules — the typography carries the layout.
+   Big titles, hairline rules - the typography carries the layout.
    ========================================================================== */
 .type-rows { border-bottom: 1px solid var(--line); }
 
@@ -305,7 +305,7 @@ body::after {
   margin-bottom: 1.25rem;
 }
 
-/* Big quotes are set in the serif italic — pure editorial */
+/* Big quotes are set in the serif italic - pure editorial */
 .quote-lg blockquote p {
   font-family: var(--font-serif);
   font-style: italic;
@@ -449,7 +449,7 @@ body::after {
 
 .case-quote { margin-top: clamp(3rem, 6vw, 4.5rem); }
 
-/* Giant "Next project" band — the palest green moment on the site */
+/* Giant "Next project" band - the palest green moment on the site */
 
 
 .next-link {
@@ -543,7 +543,7 @@ body::after {
   97%, 100% { transform: translateY(calc(var(--shot-h) - 100%)); }
 }
 
-/* Slim phone bezel for mobile captures — dark to match the client site */
+/* Slim phone bezel for mobile captures - dark to match the client site */
 .shot-phone {
   background: #1C1912;
   border: 1px solid var(--line);
@@ -566,7 +566,7 @@ body::after {
 /* ==========================================================================
    13. CONTACT PAGE
    A quiet form styled with the design tokens, then "elsewhere" links as
-   big typographic rows — same hairline-rule language as the rest of the site.
+   big typographic rows - same hairline-rule language as the rest of the site.
    ========================================================================== */
 /* The header lives inside the form band (no separate page-head),
    so the band itself clears the fixed nav */
@@ -643,14 +643,43 @@ body { margin: 0; }
 .cert {
   --font-mono: "Martian Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-  /* The rule colour is what makes the grid read as hard-ruled. The warm sand
-     hairline (--line) is far too soft to carry it, so rules use ink. */
-  --rule: var(--ink);
+  /* The rule colour is what makes the grid read as hard-ruled, and every one of
+     the 26 rules in the system draws from this one token. It takes the page hue
+     rather than ink, so the whole ruled structure is tinted by the section it
+     belongs to: moss on Home, amber on About, rose on Work and the case
+     studies, slate on Contact. Ink at ~13:1 made every line shout equally loud;
+     the hue lands near 4.5:1 on all three grounds, which is quiet enough for
+     the type to lead and still well clear of the 3:1 that WCAG 1.4.11 asks of a
+     non-text line. Worst case across the four themes is amber on its own wash
+     at 4.18:1.
 
-  /* Width of the right-hand aside. Expressed as a fraction of the sheet so the
-     rule lands at 75%, against the 50% split of the two-up rows - halves and
-     quarters, one modular relationship rather than assorted fixed widths. */
-  --aside: 25%;
+     Substitution happens here, on the element that carries this declaration, so
+     the nav links re-declaring --hue for their destination colour do NOT drag
+     their rules with them. The rules stay the page's colour throughout.
+
+     The dial, if these read too faint at large sizes: anchor the line back
+     towards ink with color-mix(in srgb, var(--hue) 70%, var(--ink)). The warm
+     sand hairline (--line) remains far too soft to carry the grid. */
+  --rule: var(--hue);
+
+  /* --- The track scale ------------------------------------------------------
+     Every vertical rule on the site lands on one of five lines: the label rail,
+     then quarters of the field left over. A row picks its shape from the
+     .row-* templates in the layout helpers below and inherits those lines, so
+     rules stack into continuous verticals down the page instead of drifting a
+     few pixels per row. --col is a calc rather than a fixed width, so the lines
+     hold at every viewport instead of only at the one they were eyeballed on. */
+  --rail: 2.6rem;
+  --field: calc(100% - var(--rail));     /* what is left after the leading rail */
+  --col:   calc(var(--field) / 4);       /* one quarter of it */
+  --half:  calc(var(--field) / 2);       /* two quarters */
+
+  /* A block that carries its own rail mid-row still has to measure one quarter,
+     rail included, or its outer edge sits a rail width wide of the line every
+     unlabelled aside draws. The rail belongs to the block it names, so the cell
+     beside it gives the width back. */
+  --col-inset:  calc(var(--col)  - var(--rail));
+  --half-inset: calc(var(--half) - var(--rail));
 
   /* --- The four section themes ---------------------------------------------
      Each section of the site owns one colour as a three-token set. They are
@@ -732,7 +761,7 @@ body { margin: 0; }
 .cell-mid    { display: flex; flex-direction: column; justify-content: center; }
 
 /* The feature cell: one washed block per page, on the cell the page is really
-   about. Type inside stays ink — the wash carries the colour, not the words. */
+   about. Type inside stays ink - the wash carries the colour, not the words. */
 .cell-hue    { background: var(--hue-cell); }
 
 /* The reference centres its two dominant cells; left-aligning them in a wide
@@ -742,7 +771,7 @@ body { margin: 0; }
 /* --- Rotated edge label ----------------------------------------------------
    The signature move of the reference: a narrow column of bottom-to-top
    type naming the cell beside it. Every row carries one, so washing the track
-   in the page hue draws a continuous coloured rail down the whole sheet —
+   in the page hue draws a continuous coloured rail down the whole sheet -
    the loudest the colour gets, and the reason it needs no help elsewhere. */
 .vlabel {
   border-right: 1px solid var(--rule);
@@ -829,7 +858,7 @@ body { margin: 0; }
 
 .c-hue { color: var(--hue); }
 
-/* Dense metadata lists — the packed cells of the reference */
+/* Dense metadata lists - the packed cells of the reference */
 .c-list {
   list-style: none;
   margin: 0;
@@ -883,7 +912,7 @@ body { margin: 0; }
 .c-btn:hover,
 .c-btn:focus-visible { background: var(--hue); color: var(--surface); }
 
-/* Full-bleed variant — squares off the bottom of a stacked column so the
+/* Full-bleed variant - squares off the bottom of a stacked column so the
    action reads as the closing edge of the form rather than a loose chip. */
 .c-btn-block {
   display: block;
@@ -910,7 +939,7 @@ body { margin: 0; }
 }
 .cert-nav-inner .cert-brand { padding: 0.9rem 0; }
 
-/* The mark stands alone — no wordmark beside it. The img carries the
+/* The mark stands alone - no wordmark beside it. The img carries the
    accessible name, since there is no longer any text to do it. */
 .cert-brand {
   display: flex;
@@ -952,6 +981,46 @@ body { margin: 0; }
 
 .cert-nav-links a:hover,
 .cert-nav-links a:focus-visible { color: var(--hue-deep); background: var(--hue-cell); }
+
+/* The link group takes the same last quarter that every .row-aside-right hands
+   its aside, so a single rule runs from the top of the page to the bottom
+   instead of the nav stopping wherever four words happen to end. The nav
+   becomes a grid to do it: a percentage width on the flex list would resolve
+   against the inner's padding box and miss the line by a quarter of the rail.
+   This holds everywhere the aside itself exists. Below 992px the aside rows
+   stack, so there is no line left to meet and the nav reverts to a flex row. */
+@media (min-width: 992px) {
+  .cert-nav-inner {
+    display: grid;
+    grid-template-columns: var(--rail) 1fr var(--col);
+    padding-left: 0;
+    gap: 0;
+  }
+  /* The mark spans the rail and the field beside it, keeping the inset it had
+     when the inner was a flex row. */
+  .cert-nav-inner .cert-brand {
+    grid-column: 1 / 3;
+    padding-left: clamp(1rem, 3vw, 2.5rem);
+  }
+  /* The four links divide the quarter evenly, so the space around a link is set
+     by the track, not by its padding. The declared padding is only a floor:
+     min-width: auto stops a link shrinking under its own word, so padding wide
+     enough to look right at 1920px would push the group past its track at 992px
+     and break the very line this is drawing. Keep it small and let flex and
+     text-align do the spacing. The longest word is CONTACT, which needs about
+     46px at this size and tracking, against a 59px share at the 992px floor. */
+  /* min-width: 0 on both is the guarantee: a grid item and a flex item both
+     default to min-width: auto, so an over-wide link could otherwise push the
+     group past its track and take the rule with it. Pinned at 0, the line holds
+     no matter what the font metrics turn out to be. */
+  .cert-nav-links { min-width: 0; }
+  .cert-nav-links li { flex: 1; min-width: 0; }
+  .cert-nav-links a {
+    padding-inline: 0.2rem;
+    text-align: center;
+    white-space: nowrap;
+  }
+}
 /* Hover and current share the destination's wash, so the 2px inset rule is what
    separates them: hover is the wash alone, current is the wash plus the mark.
    That also keeps the current page legible without relying on colour alone. */
@@ -962,7 +1031,7 @@ body { margin: 0; }
 }
 
 /* The closing row lives inside the sheet, so it takes extra padding rather than
-   a margin — a margin here would tear a gap in the ruled document. It washes in
+   a margin - a margin here would tear a gap in the ruled document. It washes in
    the page hue so every page closes on the colour it opened with. */
 .cert-foot > .cell {
   padding-block: clamp(1.4rem, 3vw, 2.4rem);
@@ -1000,7 +1069,7 @@ body { margin: 0; }
   padding: 0.8rem 0.9rem;
 }
 /* A tinted halo disappears on cream, so the focused field takes a doubled ink
-   ring on every edge — a shape change, not a colour change, and no side tab. */
+   ring on every edge - a shape change, not a colour change, and no side tab. */
 .cert .form-control:focus {
   outline: none;
   border-color: var(--ink);
@@ -1079,7 +1148,7 @@ body { margin: 0; }
 }
 .c-filter:hover { color: var(--hue-deep); background: var(--hue-cell); }
 /* The selected filter is the page's one inverted control, so it inverts into
-   the hue rather than into ink — paper type on it clears 5.2:1. */
+   the hue rather than into ink - paper type on it clears 5.2:1. */
 .c-filter.is-active { background: var(--hue); color: var(--surface); border-color: var(--hue); }
 
 /* --- Project media inside a cell --------------------------------------------
@@ -1100,100 +1169,134 @@ body { margin: 0; }
 /* --- Layout helpers --------------------------------------------------------- */
 .cert-page { padding: 0; }
 
-/* Column templates. Each names the rotated-label track explicitly so the
-   narrow edge columns stay narrow at every width. */
-.g-label-1     { grid-template-columns: 2.6rem 1fr; }
-.g-label-2     { grid-template-columns: 2.6rem 1fr 2.6rem 1fr; }
-.g-brand       { grid-template-columns: 1fr auto; }
-.g-head        { grid-template-columns: auto 1fr 2.6rem 16rem; }
-/* Prose sized near its own measure so the cell does not run on past the text,
-   with the aside taking the remainder instead of a fixed narrow track. */
-.g-profile     { grid-template-columns: 2.6rem 1fr var(--aside); }
-.g-2           { grid-template-columns: 1fr 1fr; }
-/* The closing bar carries an empty rail cell so both the label rule and the
-   aside rule run unbroken to the bottom edge of the page. */
-.g-bottom      { grid-template-columns: 2.6rem 1fr var(--aside); }
-/* The rail cell is empty, so it takes no padding - .cell's default padding is
-   wider than the 2.6rem track and would push the rule off the line. It washes
-   like a .vlabel so the coloured rail reaches the bottom edge unbroken. */
-.g-bottom > .cell:first-child { padding: 0; background: var(--hue-cell); }
-.g-3           { grid-template-columns: repeat(3, 1fr); }
-.g-hero-aside  { grid-template-columns: 2.6rem 1fr var(--aside); }
-.g-project     { grid-template-columns: 2.6rem 16rem 1fr 12rem; }
-.g-foot        { grid-template-columns: 2.6rem 1fr 2.6rem 16rem; }
+/* --- Row templates ----------------------------------------------------------
+   Nine shapes, one scale. The label rail is always the first track, so the
+   coloured rail runs unbroken down the sheet, and every other track is either a
+   quarter of the remaining field or a 1fr share of it. A row is named for the
+   shape it is, never for the page that first needed it, so reaching for one on
+   a new page is a matter of picking a shape rather than borrowing a name.
+
+   Two things follow from the scale. A trio (.row-3) divides its field in
+   thirds, which are the one set of lines that do not coincide with the
+   quarters; that is deliberate, since a trio is a self-contained comparison
+   rather than part of the page's column structure. And .row-2's single rule
+   falls exactly on the second quarter, so halves and quarters share a line. */
+.row-full         { grid-template-columns: var(--rail) 1fr; }
+.row-2            { grid-template-columns: var(--rail) repeat(2, 1fr); }
+.row-3            { grid-template-columns: var(--rail) repeat(3, 1fr); }
+.row-aside-left   { grid-template-columns: var(--rail) var(--col) 1fr; }
+.row-aside-right  { grid-template-columns: var(--rail) 1fr var(--col); }
+.row-aside-both   { grid-template-columns: var(--rail) var(--col) 1fr var(--col); }
+
+/* Two labelled cells side by side. The -aside variant puts the second pair in
+   the last quarter instead of halving the field, so its rule joins the one
+   every .row-aside-right already draws. */
+.row-paired       { grid-template-columns: var(--rail) 1fr var(--rail) var(--half-inset); }
+.row-paired-aside { grid-template-columns: var(--rail) 1fr var(--rail) var(--col-inset); }
+
+/* The case-study header. It carries a second rail because the metadata cell
+   earns its own label, but its two content edges are the system's: the back
+   link is exactly as wide as the heading column of the .row-aside-left rows
+   beneath it, and the metadata cell sits on the same right-hand line as every
+   other aside on the site. */
+.row-head         { grid-template-columns: var(--rail) var(--col) 1fr var(--rail) var(--col-inset); }
+
+/* The closing band leads with an empty rail cell rather than a label, so the
+   rail's rule and its wash still reach the bottom edge of the page. .cell's
+   default padding is wider than the rail track and would push the rule off the
+   line, so this one cell takes none. */
+.row-aside-right > .cell:first-child { padding: 0; background: var(--hue-cell); }
 
 /* --- Responsive -------------------------------------------------------------
-   Below lg the multi-track rows stack. Rotated labels stay — they are the
-   system's signature — but flip to horizontal so they do not stretch rows. */
+   Below lg the multi-track rows stack and the rail narrows. Rotated labels
+   stay, being the system's signature. There are only two stacking shapes:
+
+   (a) One rail governing a stacked group. The rail spans every row it names,
+       exactly as the reference runs one edge label down a group, and the cells
+       drop into the single content column. Those rows must also declare
+       `grid-template-rows: repeat(4, auto)`, because `-1` resolves against the
+       EXPLICIT grid, so on a row with only implicit tracks the span silently
+       collapses to one row and the rail stops partway down the group. Four is
+       more than any row stacks, and a surplus `auto` row with nothing in it
+       measures 0, so the count needs no maintenance.
+   (b) Paired rail/cell rows. Natural auto-flow already alternates col 1 /
+       col 2, so no placement override is needed at all; only the rules move.
+
+   The (a) selectors key off child position rather than off `.vlabel`, because
+   the closing band's rail is an empty cell instead of a label and has to stack
+   the same way. */
 @media (max-width: 991.98px) {
-  /* The header row stacks into two full-width bands: issuer, then the record. */
-  .g-head { grid-template-columns: 2.2rem 1fr; }
-  .g-head > .cell:nth-child(1),
-  .g-head > .cell:nth-child(2) {
-    grid-column: 1 / -1;
-    border-right: 0;
-    border-bottom: 1px solid var(--rule);
+  .cert { --rail: 2.2rem; }
+
+  /* (a) rail-led groups */
+  .row-2,
+  .row-aside-left,
+  .row-aside-right,
+  .row-aside-both {
+    grid-template-columns: var(--rail) 1fr;
+    grid-template-rows: repeat(4, auto);
   }
+  .row-2           > :first-child,
+  .row-aside-left  > :first-child,
+  .row-aside-right > :first-child,
+  .row-aside-both  > :first-child { grid-row: 1 / -1; }
 
-  /* The edge column is the system's signature, so narrow widths keep it as a
-     rail rather than flattening a label into a full-width band with its type
-     stranded mid-page. Two shapes only:
-
-     (a) One label governing several stacked cells — the label spans every row
-         it names, exactly as the reference runs one edge label down a group.
-     (b) Paired label/cell rows — natural auto-flow already alternates
-         col 1 / col 2, so no placement override is needed at all. */
-  .g-label-2,
-  .g-hero-aside,
-  .g-profile,
-  .g-project,
-  .g-foot { grid-template-columns: 2.2rem 1fr; }
-
-  /* (a) label rail spans its whole group.
-     `grid-row: 1 / -1` resolves -1 against the EXPLICIT grid, so on a row with
-     only implicit tracks it collapses to a single row and the rail stops
-     partway down the group. Declaring the rows explicitly gives -1 a line to
-     land on; four is more than any row stacks, and a surplus `auto` row with
-     nothing in it measures 0. */
-  .g-hero-aside,
-  .g-profile,
-  .g-project { grid-template-rows: repeat(4, auto); }
-
-  .g-hero-aside > .vlabel,
-  .g-profile > .vlabel,
-  .g-project > .vlabel { grid-row: 1 / -1; }
-
-  .g-hero-aside > .cell,
-  .g-profile > .cell,
-  .g-project > .cell {
+  .row-2           > :not(:first-child),
+  .row-aside-left  > :not(:first-child),
+  .row-aside-right > :not(:first-child),
+  .row-aside-both  > :not(:first-child) {
     grid-column: 2;
     border-right: 0;
     border-top: 1px solid var(--rule);
   }
-  .g-hero-aside > .cell:first-of-type,
-  .g-profile > .cell:first-of-type,
-  .g-project > .cell:first-of-type { border-top: 0; }
+  .row-2           > :nth-child(2),
+  .row-aside-left  > :nth-child(2),
+  .row-aside-right > :nth-child(2),
+  .row-aside-both  > :nth-child(2) { border-top: 0; }
 
-  /* (b) paired rows — auto-flow places them; only the rules need adjusting */
-  .g-label-2 > .cell,
-  .g-foot > .cell { border-right: 0; }
+  /* The header is (a) and (b) at once: the first rail governs the back link
+     and the title, the second stays paired with the cell it names. Auto-flow
+     places that second rail correctly on its own once the cells are pinned to
+     column 2, so only the first rail needs an explicit span. */
+  .row-head {
+    grid-template-columns: var(--rail) 1fr;
+    grid-template-rows: repeat(4, auto);
+  }
+  .row-head > :first-child { grid-row: 1 / 3; }
+  .row-head > .cell {
+    grid-column: 2;
+    border-right: 0;
+    border-top: 1px solid var(--rule);
+  }
+  .row-head > .cell:nth-child(2) { border-top: 0; }
+  .row-head > .vlabel:nth-child(4) { border-top: 1px solid var(--rule); }
 
-  .g-label-2 > .vlabel:nth-child(3),
-  .g-label-2 > .cell:last-child,
-  .g-foot > .vlabel:nth-child(3),
-  .g-foot > .cell:last-child { border-top: 1px solid var(--rule); }
+  /* (b) paired rows. Auto-flow places them; only the rules need adjusting */
+  .row-paired,
+  .row-paired-aside { grid-template-columns: var(--rail) 1fr; }
+  .row-paired       > .cell,
+  .row-paired-aside > .cell { border-right: 0; }
+  .row-paired       > :nth-child(3),
+  .row-paired       > :nth-child(4),
+  .row-paired-aside > :nth-child(3),
+  .row-paired-aside > :nth-child(4) { border-top: 1px solid var(--rule); }
 }
 
 @media (max-width: 575.98px) {
-  .g-2, .g-3 { grid-template-columns: 1fr; }
-  .g-2 > .cell, .g-3 > .cell { border-right: 0; border-bottom: 1px solid var(--rule); }
-  .g-2 > .cell:last-child, .g-3 > .cell:last-child { border-bottom: 0; }
-
-  /* The rail spans both stacked cells, so its rule and its wash reach the
-     bottom edge instead of stopping halfway down the row. */
-  .g-bottom { grid-template-columns: 2.2rem 1fr; grid-template-rows: repeat(3, auto); }
-  .g-bottom > .cell:first-child { grid-row: 1 / -1; }
-  .g-bottom > .cell:last-child { grid-column: 2; border-right: 0; border-top: 1px solid var(--rule); }
+  /* Three across is the whole point of a trio, whether it is a set of figures
+     to compare or three phone screens side by side, so it holds until the
+     phone breakpoint and then stacks as an (a) group like everything else. */
+  .row-3 {
+    grid-template-columns: var(--rail) 1fr;
+    grid-template-rows: repeat(4, auto);
+  }
+  .row-3 > :first-child { grid-row: 1 / -1; }
+  .row-3 > :not(:first-child) {
+    grid-column: 2;
+    border-right: 0;
+    border-top: 1px solid var(--rule);
+  }
+  .row-3 > :nth-child(2) { border-top: 0; }
 
   .vlabel { font-size: 0.62rem; letter-spacing: 0.1em; padding: 0.5rem 0.25rem; }
 
@@ -1204,7 +1307,7 @@ body { margin: 0; }
 
 
 /* ==========================================================================
-   18. GRID — HOME SHEET & COMPONENT DETAIL
+   18. GRID - HOME SHEET & COMPONENT DETAIL
    ========================================================================== */
 
 /* Home fills the viewport beneath the shared header rail. The body is the
@@ -1273,20 +1376,23 @@ body { margin: 0; }
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(4.75rem, 1fr));
 }
 .c-stack li {
   border: 1px solid var(--rule);
   background: var(--hue-cell);
   margin: 0 -1px -1px 0;
-  text-align: center;
-  padding: 0.55rem 0.9rem;
-  font-size: 0.62rem;
-  font-weight: 500;
-  font-stretch: 75%;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 0.9rem;
   color: var(--ink-2);
+}
+.c-stack svg {
+  width: 1.35rem;
+  height: 1.35rem;
+  display: block;
+  fill: currentColor;
 }
 
 /* --- Quotes ------------------------------------------------------------------ */
@@ -1300,6 +1406,11 @@ body { margin: 0; }
   margin: 0;
   max-width: 66ch;
 }
+.c-quote p + p { margin-top: 1.6rem; }
+
+/* The line a testimonial is really about - same type as the rest of the
+   quote, just carrying the weight. */
+.c-quote .c-quote-kicker { font-weight: 700; }
 .c-quote-sm p {
   font-size: 0.95rem;
   line-height: 1.85;
@@ -1366,7 +1477,7 @@ body { margin: 0; }
    so no copy or image was touched in the conversion.
    ========================================================================== */
 
-/* The case studies take the Work hue (section 17) — they are the pages the
+/* The case studies take the Work hue (section 17) - they are the pages the
    Work index points at, so the section reads as one colour. */
 
 /* The em-dash bullet is drawn, not written, so it takes the hue. Section 12
@@ -1443,7 +1554,7 @@ body { margin: 0; }
   margin: 0 0 0.4rem;
 }
 
-/* Screenshot frames — squared off, ruled, no chrome gloss.
+/* Screenshot frames - squared off, ruled, no chrome gloss.
    A shot is evidence sitting beside the writing, not the largest object on the
    page, so every frame caps its own width and centres in its cell. A wider
    viewport then grows the sheet and its rules, never the picture. */
@@ -1451,7 +1562,7 @@ body { margin: 0; }
   --shot-cap: 34rem;
   width: 100%;
   /* A flex item sizes to min-content by default, and the address bar's mono
-     URL is one unbreakable string — without this the frame pushes past a
+     URL is one unbreakable string - without this the frame pushes past a
      narrow cell instead of shrinking inside it. */
   min-width: 0;
   max-width: min(var(--shot-cap), 100%);
@@ -1470,7 +1581,7 @@ body { margin: 0; }
 }
 
 /* Frame and address bar wash in the page hue, the same treatment the .c-shot
-   well takes on the Work index — one media language across the section. */
+   well takes on the Work index - one media language across the section. */
 .cert .shot-browser,
 .cert .shot-phone {
   border: 1px solid var(--rule);
@@ -1504,7 +1615,7 @@ body { margin: 0; }
   border: 1px solid var(--rule);
   border-radius: 0;
   padding: 0.2rem 0.7rem;
-  /* Truncate rather than widen the frame — a long path is not worth a
+  /* Truncate rather than widen the frame - a long path is not worth a
      horizontal scrollbar on a phone. */
   min-width: 0;
   overflow: hidden;
@@ -1565,41 +1676,8 @@ body { margin: 0; }
 }
 .cert .link-arrow svg { width: 14px; height: 14px; }
 
-/* Column template for a case section: label rail, heading, body */
-.g-case { grid-template-columns: 2.6rem 16rem 1fr; }
-
-/* Media rows. Screenshots are cells like any other, so a pair or a trio of
-   shots is a row of ruled cells rather than a stack of loose pictures. */
-.g-media-2 { grid-template-columns: 2.6rem 1fr 1fr; }
-.g-media-3 { grid-template-columns: 2.6rem repeat(3, 1fr); }
-
-@media (max-width: 991.98px) {
-  /* Explicit rows so the rail's `1 / -1` has a line to reach — see the note in
-     section 17's breakpoint. */
-  .g-case,
-  .g-media-2 { grid-template-columns: 2.2rem 1fr; grid-template-rows: repeat(4, auto); }
-  .g-case > .vlabel,
-  .g-media-2 > .vlabel { grid-row: 1 / -1; }
-  .g-case > .cell,
-  .g-media-2 > .cell {
-    grid-column: 2;
-    border-right: 0;
-    border-top: 1px solid var(--rule);
-  }
-  .g-case > .cell:first-of-type,
-  .g-media-2 > .cell:first-of-type { border-top: 0; }
-
-  /* Three phones stay side by side — that comparison is the point of the row */
-  .g-media-3 { grid-template-columns: 2.2rem repeat(3, 1fr); }
-}
-
-@media (max-width: 575.98px) {
-  .g-media-3 { grid-template-columns: 2.2rem 1fr; grid-template-rows: repeat(4, auto); }
-  .g-media-3 > .vlabel { grid-row: 1 / -1; }
-  .g-media-3 > .cell {
-    grid-column: 2;
-    border-right: 0;
-    border-top: 1px solid var(--rule);
-  }
-  .g-media-3 > .cell:first-of-type { border-top: 0; }
-}
+/* Case sections use the shared row templates from section 17: a case heading
+   and its prose is a .row-aside-left, and a pair or a trio of screenshots is a
+   .row-2 or a .row-3. Screenshots are cells like any other, so a media row is a
+   row of ruled cells rather than a stack of loose pictures, and it lands on the
+   same vertical lines as the prose above it. Nothing extra is needed here. */
