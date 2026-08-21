@@ -1,8 +1,8 @@
 /* ==========================================================================
-   STEFAN CARTER — PORTFOLIO INTERACTIONS
+   STEFAN CARTER - PORTFOLIO INTERACTIONS
    1. Navbar: hairline border once the page scrolls
    2. Mobile nav: close the collapse after tapping a link
-   3. Work section: category filtering with a re-entry animation
+   3. Work section: shuffled project order + category filtering
    4. Scroll-reveal via IntersectionObserver (respects reduced motion)
    5. Footer: current year
    ========================================================================== */
@@ -33,8 +33,31 @@
 
   /* --- 3. Project filtering ----------------------------------------------- */
   var filterButtons = document.querySelectorAll(".filter-btn");
-  var projectItems = document.querySelectorAll(".project-item");
   var projectGrid = document.getElementById("projectGrid");
+
+  /* Shuffle the project order on every load so no single project owns the
+     top slot. Runs before anything caches the list, and renumbers the
+     vertical labels so they still read 01, 02, 03... down the page. */
+  if (projectGrid) {
+    var shuffled = Array.prototype.slice.call(
+      projectGrid.querySelectorAll(".project-item")
+    );
+    for (var i = shuffled.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var swap = shuffled[i];
+      shuffled[i] = shuffled[j];
+      shuffled[j] = swap;
+    }
+    var frag = document.createDocumentFragment();
+    shuffled.forEach(function (item, index) {
+      var label = item.querySelector(".vlabel");
+      if (label) label.textContent = ("0" + (index + 1)).slice(-2);
+      frag.appendChild(item);
+    });
+    projectGrid.appendChild(frag);
+  }
+
+  var projectItems = document.querySelectorAll(".project-item");
 
   filterButtons.forEach(function (btn) {
     btn.addEventListener("click", function () {
