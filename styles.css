@@ -955,9 +955,20 @@ body { margin: 0; }
   margin: 0;
   padding: 0;
 }
-.cert-nav-links li { border-left: 1px solid var(--rule); }
+/* The nav's height is set by the brand (a 32px mark plus 0.9rem of padding,
+   so 60.8px), which is taller than a link's own line box and padding. The li
+   stretches to meet that as a flex item of the list, but a block-level anchor
+   inside it would stop at its own content height and leave dead space beneath
+   the word, with the hover and current-page wash stopping short of the rule
+   beside it. Making the li a flex container and the anchor a stretched item
+   hands the full height down: the wash fills its cell and the label centres in
+   it rather than hanging from the top. */
+.cert-nav-links li { display: flex; border-left: 1px solid var(--rule); }
 .cert-nav-links a {
-  display: block;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 1rem clamp(0.85rem, 2vw, 1.7rem);
   font-size: 0.62rem;
   font-weight: 600;
@@ -1016,8 +1027,8 @@ body { margin: 0; }
   .cert-nav-links { min-width: 0; }
   .cert-nav-links li { flex: 1; min-width: 0; }
   .cert-nav-links a {
+    min-width: 0;
     padding-inline: 0.2rem;
-    text-align: center;
     white-space: nowrap;
   }
 }
