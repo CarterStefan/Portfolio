@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 800" role="img" aria-label="Portrait placeholder">
+  <rect width="640" height="800" fill="#EFEADD"/>
+
+  <!-- soft accent wash behind the figure -->
+  <circle cx="320" cy="330" r="215" fill="#E3EBE3"/>
+
+  <!-- shoulders -->
+  <path d="M120 800c0-124 89-214 200-214s200 90 200 214z" fill="#D6CFBC"/>
+  <!-- head -->
+  <circle cx="320" cy="330" r="118" fill="#D6CFBC"/>
+
+  <!-- hairline detail -->
+  <path d="M202 322a118 118 0 0 1 236 0 118 118 0 0 0-236 0z" fill="#C9C1AC"/>
+
+  <text x="320" y="742" text-anchor="middle"
+        font-family="Manrope, system-ui, sans-serif" font-size="21" font-weight="600"
+        letter-spacing="3" fill="#8C8271">YOUR PHOTO HERE</text>
+</svg>

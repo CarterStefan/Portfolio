@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>InstemUX | Stefan Carter</title>
+  <meta name="description" content="Case study: InstemUX, a Figma component library powering the in-house design system. Product design by Stefan Carter.">
+  <meta name="theme-color" content="#E5EEF2">
+
+  <link rel="icon" href="../assets/img/logo.png" type="image/png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wdth,wght@75..112.5,100..800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../styles.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+
+<body id="top" class="cert page-case">
+<!--
+  THESIS: A case study held in the same hard-ruled grid as the rest of the site.
+  It refuses the centred article column and the full-bleed image essay.
+  OWN-WORLD: 1px rules in the page hue, zero radius, zero shadow, cells in #F1F7F9 on a
+  #E5EEF2 ground. Martian Mono only. Hue is rose pink #9E4E68, shared with the Work
+  index, on the label rail, the screenshot frames and the closing band.
+  STORY: The visitor reads what the project was, what was hard, and what shipped,
+  then moves to the next project or gets in touch.
+  FIRST VIEWPORT: Header rail, the project name at display scale with its summary,
+  and the client/role/timeline metadata cell beside it.
+  FORM: Hard-ruled grid system, taken from a certificate reference for its
+  styling and structure only - big blocks, hard rules, mono type. Not a
+  certificate, and it does not borrow certificate language.
+  FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+-->
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <nav class="cert-nav" aria-label="Primary">
+    <div class="cert-nav-inner">
+      <a class="cert-brand" href="/">
+        <img src="../assets/img/logo.png" alt="Stefan Carter, home" width="32" height="32">
+      </a>
+      <ul class="cert-nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/work" aria-current="page">Work</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="cert-page">
+    <main id="main-content" class="sheet sheet-in">
+
+      <div class="crow row-head">
+        <p class="vlabel">Case</p>
+        <div class="cell cell-tight">
+          <a class="c-link" href="/work"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> All work</a>
+        </div>
+        <div class="cell cell-pad-lg">
+          <p class="c-meta mb-label">Product Design, 2023</p>
+          <h1 class="c-hero">InstemUX</h1>
+          <p class="c-body cs-3">A Figma component library powering the in-house design system.</p>
+        </div>
+        <p class="vlabel">Project</p>
+        <div class="cell cell-tight">
+            <p class="c-meta mb-label">Client</p>
+            <p class="c-title cs-1 mb-gap">Instem</p>
+            <p class="c-meta mb-label">Role</p>
+            <p class="c-title cs-1 mb-gap">Product Designer</p>
+            <p class="c-meta mb-label">Timeline</p>
+            <p class="c-title cs-1 mb-gap">Ongoing</p>
+            <p class="c-meta mb-label">Category</p>
+            <p class="c-title cs-1 mb-gap">Product Design</p>
+        </div>
+      </div>
+
+      <div class="crow row-full">
+        <p class="vlabel">Preview</p>
+        <div class="cell cell-media">
+          <img class="case-img" src="../assets/img/instemux.svg"
+           alt="InstemUX design system sheet with typography, colour tokens and UI components"></div>
+      </div>
+
+    <!-- Overview -->
+      <div class="crow row-aside-left">
+        <p class="vlabel">Overview</p>
+        <div class="cell cell-pad-lg"><h2 class="c-display">The brief</h2></div>
+        <div class="cell cell-pad-lg"><p class="big-lead">
+              A growing product suite, multiple designers and no shared source of truth. InstemUX is the Figma component library and design system that brought the family of products onto one visual language.
+            </p>
+            <p>
+              I built the library component by component (tokens, variants, auto-layout, documentation) while supporting the designers and developers adopting it, so the system grew with the products instead of beside them.
+            </p></div>
+      </div>
+
+    <!-- Case study coming soon -->
+      <div class="crow row-full">
+        <p class="vlabel">Status</p>
+        <div class="cell cell-pad-lg"><p class="c-display">Case study coming soon. Full write-up in progress.</p></div>
+      </div>
+
+    <!--
+    Challenge
+      <div class="crow row-aside-left">
+        <p class="vlabel">The challenge</p>
+        <div class="cell cell-pad-lg"><h2 class="c-display">What was in the way</h2></div>
+        <div class="cell cell-pad-lg"><p>
+              The audit told a familiar design-system story:
+            </p>
+            <ul class="case-points">
+              <li>The same UI patterns rebuilt slightly differently in every product.</li>
+              <li>Design files drifting from what engineering actually shipped.</li>
+              <li>New projects starting from blank canvases instead of shared foundations.</li>
+            </ul></div>
+      </div>
+
+    Approach
+      <div class="crow row-aside-left">
+        <p class="vlabel">The approach</p>
+        <div class="cell cell-pad-lg"><h2 class="c-display">How we got there</h2></div>
+        <div class="cell cell-pad-lg"><ol class="type-rows type-rows-sm list-unstyled mb-0">
+              <li class="type-row">
+                <span class="type-row-num" aria-hidden="true">01</span>
+                <div>
+                  <h3>Interface audit</h3>
+                  <p>Catalogued components and patterns across the product suite to scope the system.</p>
+                </div>
+              </li>
+              <li class="type-row">
+                <span class="type-row-num" aria-hidden="true">02</span>
+                <div>
+                  <h3>Token foundations</h3>
+                  <p>Colour, type, spacing and elevation defined once and shared between design and code.</p>
+                </div>
+              </li>
+              <li class="type-row">
+                <span class="type-row-num" aria-hidden="true">03</span>
+                <div>
+                  <h3>Component library</h3>
+                  <p>Accessible Figma components with variants, auto-layout and usage documentation.</p>
+                </div>
+              </li>
+              <li class="type-row">
+                <span class="type-row-num" aria-hidden="true">04</span>
+                <div>
+                  <h3>Adoption &amp; governance</h3>
+                  <p>Contribution guidelines, reviews and support that keep the system alive and trusted.</p>
+                </div>
+              </li>
+            </ol></div>
+      </div>
+
+      <div class="crow row-full">
+        <p class="vlabel">Preview</p>
+        <div class="cell cell-media">
+          <img class="case-img" src="../assets/img/case-detail.svg"
+           alt="Wireframes and user-flow diagrams from the design process"></div>
+      </div>
+
+    Outcome
+    <section class="section band-light">
+      <div class="container">
+        <div class="row g-4 g-lg-5">
+          <div class="col-lg-4 reveal">
+            <p class="eyebrow">04 / The outcome</p>
+            <h2 class="case-h">What it delivered</h2>
+          </div>
+          <div class="col-lg-8 reveal">
+            <p class="big-lead">
+              InstemUX turned every new screen into an assembly of known parts: faster to design, easier to build, consistent by default.
+            </p>
+          </div>
+        </div>
+
+        <div class="row g-4 outcome-stats">
+          <div class="col-md-4 reveal">
+            <span class="stat-big">150+</span>
+            <span class="stat-big-label">Documented components and variants</span>
+          </div>
+          <div class="col-md-4 reveal">
+            <span class="stat-big">2&times;</span>
+            <span class="stat-big-label">Faster from brief to first design</span>
+          </div>
+          <div class="col-md-4 reveal">
+            <span class="stat-big">1</span>
+            <span class="stat-big-label">Shared language across the product suite</span>
+          </div>
+        </div>
+
+        <figure class="quote-lg case-quote reveal">
+          <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+          <blockquote>
+            <p>New designs come together in hours now, and they look like ours from the first draft.</p>
+          </blockquote>
+          <figcaption>
+            <span class="t-name">UX Lead</span>
+            <span class="t-role">Instem</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+    -->
+
+    <!-- Next project -->
+      <div class="crow row-full">
+        <p class="vlabel">Next</p>
+        <div class="cell cell-pad-lg">
+          <p class="c-meta mb-label">Next project</p>
+          <a class="next-link" href="/projects/nick-hampshire">Nick Hampshire</a>
+        </div>
+      </div>
+
+      <div class="crow row-full cert-foot">
+        <p class="vlabel">Get in touch</p>
+        <div class="cell cell-pad-lg">
+          <p class="c-meta mb-label">Have a project in mind?</p>
+          <a class="cert-mail" href="mailto:carter_stefan@outlook.com">carter_stefan@outlook.com</a>
+        </div>
+      </div>
+
+      <div class="crow row-aside-right">
+        <div class="cell" aria-hidden="true"></div>
+        <div class="cell cell-tight">
+          <p class="c-meta">&copy; <span id="year">2026</span> Stefan Carter</p>
+        </div>
+        <div class="cell cell-tight text-end">
+          <a class="c-link" href="#top">Back to top <svg class="c-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="20" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></a>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

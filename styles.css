@@ -3,7 +3,7 @@
    Custom styles layered on top of Bootstrap 5.
    Design direction: big, clean, editorial typography. Fraunces (serif)
    carries all headings, display type and quotes; Manrope (sans) carries body
-   copy and UI. Ornament stays minimal. Warm paper base with a muted,
+   copy and UI. Ornament stays minimal. Cool porcelain base with a muted,
    pastel moss-green accent used sparingly - a Kindle Colorsoft-inspired
    palette (soft, desaturated tones + a fine grain texture, never stark
    white or pure black).
@@ -42,15 +42,15 @@
    1. DESIGN TOKENS
    ========================================================================== */
 :root {
-  /* Neutrals - warm paper base, pastel & muted like an E Ink Kaleido panel */
-  --bg:           #F5F1E8;   /* warm paper page background              */
-  --surface:      #F9F6EF;   /* raised surfaces, a shade lighter        */
-  --band:         #ECEFE0;   /* pastel sage wash for alternate bands    */
+  /* Neutrals - cool porcelain base, pastel & muted like an E Ink Kaleido panel */
+  --bg:           #EDF3F6;   /* porcelain page background               */
+  --surface:      #F1F7F9;   /* raised surfaces, a shade lighter        */
+  --band:         #E5EEF2;   /* pastel wash behind the sheet            */
   --ink:          #2A2620;   /* soft warm near-black for headings       */
   --ink-2:        #4A4638;   /* body text                               */
   /* Darkened from #746D5B on 2026-08-09: metadata is set at the 0.62rem floor,
      and the old value fell to 4.19:1 once cells started taking a hue wash.
-     This clears 4.5:1 on paper, sage and all four washes. */
+     This clears 4.5:1 on paper, ground and all four washes. */
   --muted:        #6B6452;   /* secondary text                          */
   --line:         #E3DDC8;   /* warm sand hairline borders               */
 
@@ -58,7 +58,7 @@
   --accent:       #557160;
   --accent-dark:  #415A49;   /* hover state                             */
   --accent-soft:  #DEE8DA;   /* pale sage for chips & highlights        */
-  --on-accent:    #F8F5EC;   /* warm paper-white text/icons on accent   */
+  --on-accent:    #F1F7F9;   /* paper-white text/icons on accent        */
 
   /* RGB triplets, for rgba() mixes (glows, shadows, pulses) */
   --ink-rgb:      42, 38, 32;
@@ -695,10 +695,10 @@ body { margin: 0; }
        *-cell   a pastel wash of the hue: the third surface, used for the label
                 rail, media wells and one feature cell per page.
                 >=11:1 against --ink, >=4.5:1 against --muted. */
-  --moss:  var(--accent); --moss-deep:  #3F5849; --moss-cell:  #E6EDE2;  /* Home    5.0:1 */
-  --amber: #8A6A2A;       --amber-deep: #6E541F; --amber-cell: #F0EAD5;  /* About   4.7:1 */
-  --rose:  #9E4E68;       --rose-deep:  #823E55; --rose-cell:  #F5E3E9;  /* Work    5.2:1 */
-  --slate: #4A6A85;       --slate-deep: #35516A; --slate-cell: #E3EBF0;  /* Contact 5.3:1 */
+  --moss:  var(--accent); --moss-deep:  #3F5849; --moss-cell:  #DDEEE3;  /* Home    5.0:1 */
+  --amber: #8A6A2A;       --amber-deep: #6E541F; --amber-cell: #F3E8DB;  /* About   4.7:1 */
+  --rose:  #9E4E68;       --rose-deep:  #823E55; --rose-cell:  #FAE5EA;  /* Work    5.2:1 */
+  --slate: #4A6A85;       --slate-deep: #35516A; --slate-cell: #DFEBF9;  /* Contact 5.3:1 */
 
   /* The theme in force on this page. Moss is the default when no page class is
      set; the classes below swap the whole set, never a single token. */
@@ -1164,7 +1164,7 @@ body { margin: 0; }
 
 /* --- Project media inside a cell --------------------------------------------
    The well behind an image takes the hue wash, so a transparent asset sits on
-   the page's colour instead of on neutral sage. */
+   the page's colour instead of on the neutral ground. */
 .c-shot {
   border-bottom: 1px solid var(--rule);
   background: var(--hue-cell);
