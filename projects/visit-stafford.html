@@ -11,7 +11,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wdth,wght@75..112.5,100..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="../styles.css">
   <script>document.documentElement.classList.add('js');</script>
@@ -22,7 +22,7 @@
   THESIS: A case study held in the same hard-ruled grid as the rest of the site.
   It refuses the centred article column and the full-bleed image essay.
   OWN-WORLD: 1px rules in the page hue, zero radius, zero shadow, cells in #F1F7F9 on a
-  #E5EEF2 ground. Martian Mono only. Hue is rose pink #9E4E68, shared with the Work
+  #E5EEF2 ground. Space Mono only. Hue is rose pink #9E4E68, shared with the Work
   index, on the label rail, the screenshot frames and the closing band.
   STORY: The visitor reads what the project was, what was hard, and what shipped,
   then moves to the next project or gets in touch.
@@ -79,8 +79,18 @@
       <div class="crow row-full">
         <p class="vlabel">Preview</p>
         <div class="cell cell-media">
-          <img class="case-img" src="../assets/img/visit-stafford.svg"
-           alt="Visit Stafford website with town skyline illustration and information cards"></div>
+          <figure class="case-shot case-shot-wide">
+            <div class="shot-browser">
+              <div class="shot-bar">
+                <span class="shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                <span class="shot-url">index.html</span>
+              </div>
+              <img src="../assets/img/visit-stafford/desktop-hero.webp" width="1920" height="1200"
+                   alt="Visit Stafford homepage hero: a black and white photograph of Church Lane behind the headline &lsquo;Come for the castle. Stay for the welcome.&rsquo;, with the second line set in the yellow of the Stafford knot, two buttons, and a row of dates reading 913, 1206 and 1595">
+            </div>
+            <figcaption>One page, carrying the whole town. The hero opens on Church Lane, shot in black and white so the knot yellow is the only colour above the fold.</figcaption>
+          </figure>
+        </div>
       </div>
 
     <!-- Overview -->
@@ -93,6 +103,113 @@
             <p>
               The design challenge was breadth without clutter: residents planning a weekend, visitors passing through and organisers listing events all needed different things from the same site, mostly on their phones.
             </p></div>
+      </div>
+
+    <!-- On screen: live-site screenshots -->
+      <div class="crow row-aside-left">
+        <p class="vlabel">On screen</p>
+        <div class="cell cell-pad-lg"><h2 class="c-display">The site, up close</h2></div>
+        <div class="cell cell-pad-lg"><p class="big-lead">
+              A single scrolling page: the hook, the town, the places worth a walk, and what the weather is doing. Everything a visitor needs is one page down, and nothing meaningful hides behind a hover.
+            </p>
+        </div>
+      </div>
+
+      <div class="crow row-full">
+        <p class="vlabel">Full page</p>
+        <div class="cell cell-media">
+          <figure class="case-shot case-shot-wide reveal">
+            <div class="shot-browser shot-scroll">
+              <div class="shot-bar">
+                <span class="shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                <span class="shot-url">index.html</span>
+              </div>
+              <div class="shot-view">
+                <img src="../assets/img/visit-stafford/desktop-full.webp" width="1600" height="3969" loading="lazy"
+                     alt="The full Visit Stafford page from hero to footer: the Church Lane hero, an About the town section on a sage ground, the Eat, See and Stay tabs beside a map of the town, a live eight-day forecast, and a dark footer of outbound links">
+              </div>
+            </div>
+            <figcaption>The whole page, playing through the frame. Hover to pause. Hook, town, places, forecast.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="crow row-2">
+        <p class="vlabel">Desktop</p>
+        <div class="cell cell-media">
+          <figure class="case-shot reveal">
+            <div class="shot-browser">
+              <div class="shot-bar">
+                <span class="shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                <span class="shot-url">index.html</span>
+              </div>
+              <img src="../assets/img/visit-stafford/desktop-intro.webp" width="1920" height="1200" loading="lazy"
+                   alt="&lsquo;About the town&rsquo; section on a sage ground, headed &lsquo;Small enough to know. Old enough to keep surprising you.&rsquo; over two columns of body copy about the market square and the town&rsquo;s reputation for friendliness">
+            </div>
+            <figcaption>The town described in two columns, at a measure the eye can finish.</figcaption>
+          </figure>
+        </div>
+        <div class="cell cell-media">
+          <figure class="case-shot reveal">
+            <div class="shot-browser">
+              <div class="shot-bar">
+                <span class="shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                <span class="shot-url">index.html</span>
+              </div>
+              <img src="../assets/img/visit-stafford/desktop-weather.webp" width="1920" height="1200" loading="lazy"
+                   alt="Live eight-day weather forecast for Stafford ST16: a large card showing today at 13 degrees with high, low, wind and rain figures and the line &lsquo;You&rsquo;ll need a coat while strolling through Victoria Park&rsquo;, above six smaller day cards">
+            </div>
+            <figcaption>A live forecast, fetched on load, with a line of local advice attached to it.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="crow row-full">
+        <p class="vlabel">Places</p>
+        <div class="cell cell-media">
+          <figure class="case-shot case-shot-wide reveal">
+            <div class="shot-browser">
+              <div class="shot-bar">
+                <span class="shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                <span class="shot-url">index.html</span>
+              </div>
+              <img src="../assets/img/visit-stafford/desktop-places.webp" width="1920" height="1200" loading="lazy"
+                   alt="&lsquo;Places to eat, see and stay&rsquo; section: Eat, See and Stay tabs above a column of place cards for Pizza Express, The Swan, The Market Vaults, The Soup Kitchen, The Bear and The Sun, each with a &lsquo;Show on map&rsquo; button, beside a map of Stafford">
+            </div>
+            <figcaption>Eat, See and Stay as three tabs over one shared map. <em>Show on map</em> drops the pin without moving the reader off the section.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="crow row-3">
+        <p class="vlabel">Mobile</p>
+        <div class="cell cell-media">
+          <figure class="case-shot case-shot-phone reveal">
+            <div class="shot-phone">
+              <img src="../assets/img/visit-stafford/mobile-hero.webp" width="780" height="1688" loading="lazy"
+                   alt="Mobile hero with the stacked &lsquo;Come for the castle. Stay for the welcome.&rsquo; headline over the Church Lane photograph, a full-width yellow &lsquo;Plan your visit&rsquo; button, and the three dates listed down the page">
+            </div>
+            <figcaption>The hook</figcaption>
+          </figure>
+        </div>
+        <div class="cell cell-media">
+          <figure class="case-shot case-shot-phone reveal">
+            <div class="shot-phone">
+              <img src="../assets/img/visit-stafford/mobile-places.webp" width="780" height="1688" loading="lazy"
+                   alt="Mobile &lsquo;Places to eat, see and stay&rsquo; section with the Eat, See and Stay tabs above full-width cards for Pizza Express and The Swan, the map moved below the list">
+            </div>
+            <figcaption>Plan your visit</figcaption>
+          </figure>
+        </div>
+        <div class="cell cell-media">
+          <figure class="case-shot case-shot-phone reveal">
+            <div class="shot-phone">
+              <img src="../assets/img/visit-stafford/mobile-weather.webp" width="780" height="1688" loading="lazy"
+                   alt="Mobile forecast with today&rsquo;s card at 13 degrees, its high, low, wind and rain figures, a rain icon, and the first two of the upcoming day cards below">
+            </div>
+            <figcaption>The forecast</figcaption>
+          </figure>
+        </div>
       </div>
 
     <!-- Case study coming soon -->

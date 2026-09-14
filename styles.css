@@ -641,7 +641,7 @@ body { margin: 0; }
 .cert :where(button, input, textarea, select) { font-family: inherit; font-size: inherit; }
 
 .cert {
-  --font-mono: "Martian Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-mono: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   /* The rule colour is what makes the grid read as hard-ruled, and every one of
      the 26 rules in the system draws from this one token. It takes the page hue
@@ -661,6 +661,22 @@ body { margin: 0; }
      towards ink with color-mix(in srgb, var(--hue) 70%, var(--ink)). The warm
      sand hairline (--line) remains far too soft to carry the grid. */
   --rule: var(--hue);
+
+  /* --- The two small steps --------------------------------------------------
+     The label step is the floor of the scale and does the most work: every
+     nav link, button, filter, form label, metadata line and rotated edge
+     label is set on it, and most of those are things you click. It was
+     0.62rem (9.9px), which is under the size tracked-out uppercase mono can
+     carry, so the whole bottom of the scale read as fine print. Raised to
+     0.72rem (11.5px); the list step moves with it to keep the gap between
+     the two from closing up.
+
+     Both are tokens rather than 17 literals so the floor stays one number.
+     Anything that changes here changes the nav's fit first - see the note on
+     .cert-nav-links a about link padding being a floor rather than a spacing
+     choice. */
+  --step-label: 0.72rem;
+  --step-list:  0.88rem;
 
   /* --- The track scale ------------------------------------------------------
      Every vertical rule on the site lands on one of five lines: the label rail,
@@ -728,8 +744,8 @@ body { margin: 0; }
 .cert h1, .cert h2, .cert h3,
 .cert h4, .cert h5, .cert h6 {
   font-family: var(--font-mono);
-  font-weight: 600;
-  letter-spacing: -0.02em;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   color: var(--ink);
 }
 
@@ -782,9 +798,8 @@ body { margin: 0; }
   writing-mode: vertical-rl;
   transform: rotate(180deg);
   white-space: nowrap;
-  font-size: 0.62rem;
-  font-weight: 600;
-  font-stretch: 75%;
+  font-size: var(--step-label);
+  font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   background: var(--hue-cell);
@@ -792,13 +807,25 @@ body { margin: 0; }
 }
 
 /* --- Type scale ------------------------------------------------------------
-   Martian Mono is a wide face, so display sizes run smaller and tighter than
-   a proportional face would need at the same optical weight. */
+   Seven steps, and since 2026-09-10 only two variables to build them from.
+   Space Mono ships 400 and 700 and nothing between, with no width axis, so
+   the register that used to come from font-stretch now comes from weight,
+   tracking and case:
+
+     700  display, numeral, title, and every label
+     400  headline, body, list
+
+   The headline sitting at 400 is the deliberate part. It is the one step that
+   used to lean on width alone to separate itself from body copy, and setting
+   it large and light reads better here than making a second bold tier. Every
+   700 step above 1rem takes negative tracking; every 700 step below it is
+   uppercase and tracked out instead. Nothing is set at 500 or 600: the browser
+   would resolve those to 400 and 700 anyway, and writing them would suggest a
+   distinction the face cannot draw. */
 .c-hero {
   font-size: clamp(1.45rem, 5vw, 3.6rem);
-  font-weight: 600;
-  font-stretch: 87.5%;
-  letter-spacing: -0.035em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   line-height: 1.08;
   color: var(--ink);
   margin: 0;
@@ -806,9 +833,8 @@ body { margin: 0; }
 
 .c-display {
   font-size: clamp(1.05rem, 2.7vw, 1.85rem);
-  font-weight: 500;
-  font-stretch: 87.5%;
-  letter-spacing: -0.03em;
+  font-weight: 400;
+  letter-spacing: -0.015em;
   line-height: 1.2;
   color: var(--ink);
   margin: 0;
@@ -816,9 +842,8 @@ body { margin: 0; }
 
 .c-title {
   font-size: clamp(1.05rem, 1.7vw, 1.28rem);
-  font-weight: 600;
-  font-stretch: 87.5%;
-  letter-spacing: -0.02em;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   line-height: 1.3;
   color: var(--ink);
   margin: 0;
@@ -826,7 +851,6 @@ body { margin: 0; }
 
 .c-body {
   font-size: 0.95rem;
-  font-stretch: 100%;
   line-height: 1.75;
   color: var(--ink-2);
   margin: 0;
@@ -834,10 +858,14 @@ body { margin: 0; }
 }
 .c-body + .c-body { margin-top: 1.1rem; }
 
+/* The label step splits in two now that weight is doing the work width used
+   to do. Everything you act on - links, buttons, filters, form labels, the
+   edge labels that name a cell - sits at 700. Passive metadata sits at 400,
+   which keeps a row of facts from shouting as loudly as the link beside it.
+   Case and tracking are the same in both; only the weight separates them. */
 .c-meta {
-  font-size: 0.62rem;
-  font-weight: 500;
-  font-stretch: 75%;
+  font-size: var(--step-label);
+  font-weight: 400;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted);
@@ -849,8 +877,7 @@ body { margin: 0; }
 .c-num {
   font-size: clamp(1.6rem, 4vw, 2.8rem);
   font-weight: 700;
-  font-stretch: 87.5%;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.02em;
   line-height: 1;
   color: var(--hue-deep);
   margin: 0;
@@ -863,8 +890,7 @@ body { margin: 0; }
   list-style: none;
   margin: 0;
   padding: 0;
-  font-size: 0.82rem;
-  font-stretch: 87.5%;
+  font-size: var(--step-list);
   line-height: 1.62;
   color: var(--ink-2);
 }
@@ -877,9 +903,8 @@ body { margin: 0; }
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.62rem;
-  font-weight: 600;
-  font-stretch: 75%;
+  font-size: var(--step-label);
+  font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink);
@@ -899,9 +924,8 @@ body { margin: 0; }
   background: var(--ink);
   color: var(--surface);
   font-family: var(--font-mono);
-  font-size: 0.62rem;
-  font-weight: 600;
-  font-stretch: 75%;
+  font-size: var(--step-label);
+  font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   padding: 0.95rem 1.6rem;
@@ -970,9 +994,8 @@ body { margin: 0; }
   align-items: center;
   justify-content: center;
   padding: 1rem clamp(0.85rem, 2vw, 1.7rem);
-  font-size: 0.62rem;
-  font-weight: 600;
-  font-stretch: 75%;
+  font-size: var(--step-label);
+  font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--muted);
@@ -1019,7 +1042,7 @@ body { margin: 0; }
      enough to look right at 1920px would push the group past its track at 992px
      and break the very line this is drawing. Keep it small and let flex and
      text-align do the spacing. The longest word is CONTACT, which needs about
-     46px at this size and tracking, against a 59px share at the 992px floor. */
+     54px at this size and tracking, against a 58px share at the 992px floor. */
   /* min-width: 0 on both is the guarantee: a grid item and a flex item both
      default to min-width: auto, so an over-wide link could otherwise push the
      group past its track and take the rule with it. Pinned at 0, the line holds
@@ -1030,6 +1053,21 @@ body { margin: 0; }
     min-width: 0;
     padding-inline: 0.2rem;
     white-space: nowrap;
+    /* The one place the label step cannot be taken at face value, and the
+       tightest thing in the stylesheet. CONTACT is the longest word in the
+       bar; at the full 0.72rem step with 0.16em of tracking Space Mono sets
+       it at 62px, against the 58px share the quarter track gives it at the
+       992px floor. So the nav eases back to 0.62rem exactly where the track
+       is tightest, which brings CONTACT to 54px and leaves about 4px in
+       hand, and reaches the full step by ~1400px where there is room for it.
+
+       This clamp was added for Martian Mono, whose 75% width made the same
+       word 46px. Space Mono has no width axis to condense, so the margin it
+       leaves is now thinner: 4px, not 13px. Measure before touching the
+       size, the tracking or the padding here, and check 992px first. Below
+       992px the bar is a flex row with real padding and takes the full step
+       throughout. */
+    font-size: clamp(0.62rem, 0.377rem + 0.392vw, var(--step-label));
   }
 }
 /* Hover and current share the destination's wash, so the 2px inset rule is what
@@ -1054,9 +1092,8 @@ body { margin: 0; }
 
 .cert-mail {
   font-size: clamp(1.05rem, 2.7vw, 1.85rem);
-  font-weight: 600;
-  font-stretch: 87.5%;
-  letter-spacing: -0.03em;
+  font-weight: 700;
+  letter-spacing: -0.015em;
   color: var(--ink);
   text-decoration: none;
   border-bottom: 2px solid var(--hue);
@@ -1075,7 +1112,6 @@ body { margin: 0; }
   background: var(--surface);
   font-family: var(--font-mono);
   font-size: 0.95rem;
-  font-stretch: 100%;
   color: var(--ink);
   padding: 0.8rem 0.9rem;
 }
@@ -1102,8 +1138,7 @@ body { margin: 0; }
   box-shadow: 0 0 0 2px #8C3A2F;
 }
 .cert .form-note {
-  font-size: 0.62rem;
-  font-stretch: 75%;
+  font-size: var(--step-label);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
@@ -1130,9 +1165,8 @@ body { margin: 0; }
 
 .cert .form-label {
   display: block;
-  font-size: 0.62rem;
-  font-weight: 600;
-  font-stretch: 75%;
+  font-size: var(--step-label);
+  font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--muted);
@@ -1146,9 +1180,8 @@ body { margin: 0; }
   border-radius: 0;
   background: transparent;
   font-family: var(--font-mono);
-  font-size: 0.62rem;
-  font-weight: 600;
-  font-stretch: 75%;
+  font-size: var(--step-label);
+  font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--muted);
@@ -1309,11 +1342,11 @@ body { margin: 0; }
   }
   .row-3 > :nth-child(2) { border-top: 0; }
 
-  .vlabel { font-size: 0.62rem; letter-spacing: 0.1em; padding: 0.5rem 0.25rem; }
+  .vlabel { font-size: var(--step-label); letter-spacing: 0.1em; padding: 0.5rem 0.25rem; }
 
   /* Keep the wordmark on one line and let the four links share what is left. */
   .cert-nav-inner { padding-left: 0.7rem; gap: 0.3rem; }
-  .cert-nav-links a { padding: 0.9rem 0.4rem; font-size: 0.62rem; letter-spacing: 0.04em; }
+  .cert-nav-links a { padding: 0.9rem 0.4rem; font-size: var(--step-label); letter-spacing: 0.04em; }
 }
 
 
@@ -1357,8 +1390,7 @@ body { margin: 0; }
   list-style: none;
   margin: 0;
   padding: 0;
-  font-size: 0.82rem;
-  font-stretch: 87.5%;
+  font-size: var(--step-list);
   line-height: 2;
   color: var(--muted);
 }
@@ -1373,8 +1405,8 @@ body { margin: 0; }
 .c-now {
   border: 1px solid var(--hue);
   background: var(--hue-cell);
-  font-size: 0.62rem;
-  font-weight: 600;
+  font-size: var(--step-label);
+  font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   padding: 0.14rem 0.4rem;
@@ -1410,9 +1442,8 @@ body { margin: 0; }
 .c-quote { margin: 0; }
 .c-quote p {
   font-size: clamp(0.84rem, 1.4vw, 1.02rem);
-  font-stretch: 87.5%;
   line-height: 1.8;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.01em;
   color: var(--ink);
   margin: 0;
   max-width: 66ch;
@@ -1512,9 +1543,8 @@ body { margin: 0; }
 .cert .big-lead {
   font-family: var(--font-mono);
   font-size: clamp(1.05rem, 2.7vw, 1.85rem);
-  font-weight: 500;
-  font-stretch: 87.5%;
-  letter-spacing: -0.03em;
+  font-weight: 400;
+  letter-spacing: -0.015em;
   line-height: 1.3;
   color: var(--ink);
   margin: 0 0 1.2rem;
@@ -1551,17 +1581,15 @@ body { margin: 0; }
 }
 .cert .type-row:last-child { border-bottom: 1px solid var(--rule); }
 .cert .type-row-num {
-  font-size: 0.62rem;
-  font-weight: 600;
-  font-stretch: 75%;
+  font-size: var(--step-label);
+  font-weight: 700;
   letter-spacing: 0.14em;
   color: var(--hue);
 }
 .cert .type-row h3 {
   font-size: clamp(1.05rem, 1.7vw, 1.28rem);
-  font-weight: 600;
-  font-stretch: 87.5%;
-  letter-spacing: -0.02em;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   margin: 0 0 0.4rem;
 }
 
@@ -1618,8 +1646,7 @@ body { margin: 0; }
 /* The legacy rule leaves this a 999px pill on a --line border; against the
    washed bar both now read as foreign objects, so it squares off and re-rules. */
 .cert .shot-url {
-  font-size: 0.62rem;
-  font-stretch: 75%;
+  font-size: var(--step-label);
   letter-spacing: 0.1em;
   color: var(--muted);
   background: var(--surface);
@@ -1646,8 +1673,7 @@ body { margin: 0; }
   max-width: 50rem;
 }
 .cert figcaption {
-  font-size: 0.82rem;   /* the documented list step, not a new size */
-  font-stretch: 87.5%;
+  font-size: var(--step-list);   /* the documented list step, not a new size */
   line-height: 1.6;
   color: var(--muted);
   margin-top: 0.7rem;
@@ -1660,9 +1686,8 @@ body { margin: 0; }
   display: inline-block;
   font-family: var(--font-mono);   /* the legacy rule sets the serif face */
   font-size: clamp(1.45rem, 5vw, 3.6rem);
-  font-weight: 600;
-  font-stretch: 87.5%;
-  letter-spacing: -0.035em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   line-height: 1.08;
   color: var(--ink);
   text-decoration: none;
@@ -1675,9 +1700,8 @@ body { margin: 0; }
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.62rem;
-  font-weight: 600;
-  font-stretch: 75%;
+  font-size: var(--step-label);
+  font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink);
