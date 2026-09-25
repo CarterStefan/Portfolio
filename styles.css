@@ -16,8 +16,6 @@
    system builds on. Still load-bearing out of that half:
      - .skip-link and .visually-hidden        (section 4)
      - .reveal and its reduced-motion rules   (section 15)
-     - .project-item.is-hidden and .card-in   (section 11) - js/main.js drives
-       the Work page filter through them
      - legacy case-study class names that section 19 restyles rather than
        replaces (.case-shot, .shot-*, .type-row*, .case-points, .big-lead,
        .next-link, .link-arrow, .case-img)
@@ -28,7 +26,6 @@
    4.  Accessibility Helpers
    8.  Typographic List Rows
    10. Quotes / Testimonials
-   11. Work Page
    12. Case-Study Pages
    13. Contact Page
    15. Scroll-Reveal & Reduced Motion
@@ -328,56 +325,6 @@ body::after {
 
 
 /* ==========================================================================
-   11. WORK PAGE
-   ========================================================================== */
-
-/* Oversized page opener under the fixed nav */
-
-
-/* --- Filter pills ----------------------------------------------------------- */
-
-
-.filter-btn {
-  border: 1px solid var(--line);
-  background: var(--surface);
-  color: var(--ink-2);
-  border-radius: 999px;
-  padding: 0.5rem 1.3rem;
-  font-size: 0.9rem;
-  font-weight: 600;
-  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
-}
-.filter-btn:hover {
-  color: var(--ink);
-  border-color: #C7BCA0;
-}
-.filter-btn.is-active {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: var(--on-accent);
-}
-
-/* --- Project cards ----------------------------------------------------------- */
-
-
-/* From md up the card runs horizontally: image left, content right */
-
-
-/* On the 2-up work grid the titles run large */
-
-
-/* Filtered-out cards are removed from the flow */
-.project-item.is-hidden { display: none; }
-
-/* Cards animate back in when a filter is applied (class added by JS) */
-.project-item.card-in { animation: cardIn 0.45s ease both; }
-@keyframes cardIn {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: none; }
-}
-
-
-/* ==========================================================================
    12. CASE-STUDY PAGES
    ========================================================================== */
 
@@ -605,11 +552,8 @@ html.js .reveal.is-visible {
     transition: none;
   }
 
-  
-  .project-item.card-in { animation: none; }
 
-  
-  
+
 
   
   .next-link:hover svg,
@@ -1173,7 +1117,8 @@ body { margin: 0; }
   margin-bottom: 0.45rem;
 }
 
-/* --- Filter controls -------------------------------------------------------- */
+/* --- Discipline switch ------------------------------------------------------
+   Links between the product and web design indexes, drawn as one ruled strip. */
 .c-filters { display: flex; flex-wrap: wrap; }
 .c-filter {
   border: 1px solid var(--rule);
@@ -1184,6 +1129,7 @@ body { margin: 0; }
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+  text-decoration: none;
   color: var(--muted);
   padding: 0.7rem 1.1rem;
   margin: 0 -1px -1px 0;   /* collapse adjacent rules */
@@ -1191,9 +1137,9 @@ body { margin: 0; }
   transition: background 0.15s ease, color 0.15s ease;
 }
 .c-filter:hover { color: var(--hue-deep); background: var(--hue-cell); }
-/* The selected filter is the page's one inverted control, so it inverts into
-   the hue rather than into ink - paper type on it clears 5.2:1. */
-.c-filter.is-active { background: var(--hue); color: var(--surface); border-color: var(--hue); }
+/* The current index is the page's one inverted control, so it inverts into
+   the hue rather than into ink. Paper type on it clears 5.2:1. */
+.c-filter[aria-current="page"] { background: var(--hue); color: var(--surface); border-color: var(--hue); }
 
 /* --- Project media inside a cell --------------------------------------------
    The well behind an image takes the hue wash, so a transparent asset sits on

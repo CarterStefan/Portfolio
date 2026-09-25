@@ -2,7 +2,7 @@
    STEFAN CARTER - PORTFOLIO INTERACTIONS
    1. Navbar: hairline border once the page scrolls
    2. Mobile nav: close the collapse after tapping a link
-   3. Work section: shuffled project order + category filtering
+   3. Work indexes: shuffled project order where the grid opts in
    4. Scroll-reveal via IntersectionObserver (respects reduced motion)
    5. Footer: current year
    ========================================================================== */
@@ -31,14 +31,14 @@
     });
   }
 
-  /* --- 3. Project filtering ----------------------------------------------- */
-  var filterButtons = document.querySelectorAll(".filter-btn");
+  /* --- 3. Project order ---------------------------------------------------- */
   var projectGrid = document.getElementById("projectGrid");
 
   /* Shuffle the project order on every load so no single project owns the
-     top slot. Runs before anything caches the list, and renumbers the
-     vertical labels so they still read 01, 02, 03... down the page. */
-  if (projectGrid) {
+     top slot. Opt-in through data-shuffle: the product index keeps a fixed
+     order so Centrus always leads. Renumbers the vertical labels so they
+     still read 01, 02, 03... down the page. */
+  if (projectGrid && projectGrid.hasAttribute("data-shuffle")) {
     var shuffled = Array.prototype.slice.call(
       projectGrid.querySelectorAll(".project-item")
     );
@@ -55,45 +55,6 @@
       frag.appendChild(item);
     });
     projectGrid.appendChild(frag);
-  }
-
-  var projectItems = document.querySelectorAll(".project-item");
-
-  filterButtons.forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      var filter = btn.dataset.filter;
-
-      // Toggle the active pill (visual + assistive state)
-      filterButtons.forEach(function (b) {
-        var isActive = b === btn;
-        b.classList.toggle("is-active", isActive);
-        b.setAttribute("aria-pressed", String(isActive));
-      });
-
-      // Clear previous animation classes, then show/hide
-      projectItems.forEach(function (item) {
-        item.classList.remove("card-in");
-        var show = filter === "all" || item.dataset.category === filter;
-        item.classList.toggle("is-hidden", !show);
-      });
-
-      // Force a reflow so the entry animation restarts for visible cards
-      if (projectGrid) void projectGrid.offsetWidth;
-
-      projectItems.forEach(function (item) {
-        if (!item.classList.contains("is-hidden")) {
-          item.classList.add("card-in");
-        }
-      });
-    });
-  });
-
-  /* Preselect a filter from the URL, e.g. work.html?filter=web
-     (linked from the services rows on the home page) */
-  var presetFilter = new URLSearchParams(window.location.search).get("filter");
-  if (presetFilter) {
-    var presetBtn = document.querySelector('.filter-btn[data-filter="' + presetFilter + '"]');
-    if (presetBtn && !presetBtn.classList.contains("is-active")) presetBtn.click();
   }
 
   /* --- 4. Scroll-reveal ---------------------------------------------------- */

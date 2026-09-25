@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Product Design | Stefan Carter</title>
-  <meta name="description" content="Product design case studies by Stefan Carter for Instem: Centrus, Centrus Insights, KnowledgeScan and InstemUX.">
+  <title>Web Design | Stefan Carter</title>
+  <meta name="description" content="Web design case studies by Stefan Carter: Nick Hampshire, No Boundaries, Visit Stafford, Bird Watcher and Wrottesley Golf Club.">
   <meta name="theme-color" content="#E5EEF2">
 
   <link rel="icon" href="assets/img/logo.png" type="image/png">
@@ -14,31 +14,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
-  <script>
-    document.documentElement.classList.add('js');
-    /* Web design used to be a filter on this page. Old /work?filter=web links
-       go to its own index now. */
-    if (/[?&]filter=web(&|$)/.test(location.search)) location.replace('/web');
-  </script>
+  <script>document.documentElement.classList.add('js');</script>
 </head>
 
 <body id="top" class="cert page-work">
 <!--
   THESIS: A hard-ruled index, read as a list rather than browsed as a gallery.
   It refuses the equal-card project grid and the hover-zoom thumbnail.
-  OWN-WORLD: Hard-ruled form grid on cool Kaleido paper. 1px rules in the page hue, zero
-  radius, zero shadow, cells in #F1F7F9 on a #E5EEF2 ground. Space
-  Mono only. This page's hue is rose pink #9E4E68, shared with the web design
-  index and the nine case studies, on the label rail, the count cell and every
-  image well.
-  STORY: The visitor scans four numbered product projects, all for Instem, and
-  opens the one that matches their problem. Web design is one switch away.
+  OWN-WORLD: The product design index's twin, in the same rose pink #9E4E68:
+  both indexes sit under Work in the nav, so they share its colour rather than
+  taking a fifth hue. 1px rules in the page hue, zero radius, zero shadow,
+  Space Mono only.
+  STORY: The visitor scans five numbered sites, each designed and built end to
+  end, and opens the one closest to what they need. Product design is one
+  switch away.
   FIRST VIEWPORT: Header rail, the count and title band, the discipline switch,
   then projects 01 and 02 already visible as ruled rows.
   FORM: Hard-ruled grid system, taken from a certificate reference for its
   styling and structure only: big blocks, hard rules, mono type. Not a
   certificate, and it does not borrow certificate language.
-  FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
 -->
 
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -64,13 +58,13 @@
       <div class="crow row-aside-right">
         <p class="vlabel">Projects</p>
         <div class="cell cell-pad-lg cell-mid">
-          <h1 class="c-hero">Software for scientists.</h1>
+          <h1 class="c-hero">Websites, designed and built.</h1>
           <p class="c-body cs-3">
-            Four projects for Instem, from safety assessment platforms to the design system behind them.
+            Four client sites and one side project, from a speaking coach to a golf club.
           </p>
         </div>
         <div class="cell cell-hue cell-mid cell-centre">
-          <p class="c-num">04</p>
+          <p class="c-num">05</p>
           <p class="c-meta cs-1">Projects</p>
         </div>
       </div>
@@ -80,76 +74,87 @@
         <p class="vlabel">Browse</p>
         <div class="cell cell-tight">
           <nav class="c-filters" aria-label="Work by discipline">
-            <a class="c-filter" href="/work" aria-current="page">Product design</a>
-            <a class="c-filter" href="/web">Web design</a>
+            <a class="c-filter" href="/work">Product design</a>
+            <a class="c-filter" href="/web" aria-current="page">Web design</a>
           </nav>
         </div>
       </div>
 
-      <!-- Projects -->
-      <div id="projectGrid">
+      <!-- Projects. data-shuffle has js/main.js reorder them on every load. -->
+      <div id="projectGrid" data-shuffle>
 
         <article class="crow row-aside-both project-item">
           <p class="vlabel">01</p>
           <div class="cell cell-tight">
-            <div class="c-shot"><img src="assets/img/centrus.svg" alt="Centrus platform dashboard with an assessment workflow board and status indicators" loading="lazy"></div>
+            <div class="c-shot"><img src="assets/img/nick-hampshire/thumb.webp" alt="Nick Hampshire homepage hero: a dark stage-lit photograph of Nick mid-talk beside the headline 'Confidence in communication. Energy in leadership. Performance at your peak.'" loading="lazy"></div>
           </div>
           <div class="cell cell-mid">
-            <h2 class="c-title">Centrus</h2>
-            <p class="c-body cs-2">One platform for faster translational safety assessments.</p>
+            <h2 class="c-title">Nick Hampshire</h2>
+            <p class="c-body cs-2">A personal brand site for a speaking coach.</p>
           </div>
           <div class="cell cell-mid">
-            <p class="c-meta">Product Design</p>
-            <p class="c-meta cs-1">Client &middot; Instem</p>
-            <a class="c-link cs-3" href="/projects/centrus">Case study</a>
+            <p class="c-meta">Web Design</p>
+            <a class="c-link cs-3" href="/projects/nick-hampshire">Case study</a>
           </div>
         </article>
 
         <article class="crow row-aside-both project-item">
           <p class="vlabel">02</p>
           <div class="cell cell-tight">
-            <div class="c-shot"><img src="assets/img/centrus-insights.svg" alt="Centrus Insights dashboard with bar, line and donut charts of pre-clinical study data" loading="lazy"></div>
+            <div class="c-shot"><img src="assets/img/no-boundaries/thumb.webp" alt="No Boundaries homepage hero: a three-photograph wall of a boy bowling, a girl driving the ball off the front foot and a group of children celebrating with their arms up, under the headline &lsquo;Every child matters&rsquo;" loading="lazy"></div>
           </div>
           <div class="cell cell-mid">
-            <h2 class="c-title">Centrus Insights</h2>
-            <p class="c-body cs-2">Pre-clinical study data, made visual.</p>
+            <h2 class="c-title">No Boundaries</h2>
+            <p class="c-body cs-2">School wellbeing, through cricket.</p>
           </div>
           <div class="cell cell-mid">
-            <p class="c-meta">Product Design</p>
-            <p class="c-meta cs-1">Client &middot; Instem</p>
-            <a class="c-link cs-3" href="/projects/centrus-insights">Case study</a>
+            <p class="c-meta">Web Design</p>
+            <a class="c-link cs-3" href="/projects/no-boundaries">Case study</a>
           </div>
         </article>
 
         <article class="crow row-aside-both project-item">
           <p class="vlabel">03</p>
           <div class="cell cell-tight">
-            <div class="c-shot"><img src="assets/img/knowledgescan.svg" alt="KnowledgeScan interface with a search bar, highlighted document evidence and a ranked result list" loading="lazy"></div>
+            <div class="c-shot"><img src="assets/img/visit-stafford/thumb.webp" alt="Visit Stafford homepage hero: a black and white photograph of Church Lane under the headline &lsquo;Come for the castle. Stay for the welcome.&rsquo;" loading="lazy"></div>
           </div>
           <div class="cell cell-mid">
-            <h2 class="c-title">KnowledgeScan</h2>
-            <p class="c-body cs-2">An expert service, turned into a product.</p>
+            <h2 class="c-title">Visit Stafford</h2>
+            <p class="c-body cs-2">A front door for the town of Stafford.</p>
           </div>
           <div class="cell cell-mid">
-            <p class="c-meta">Product Design</p>
-            <p class="c-meta cs-1">Client &middot; Instem</p>
-            <a class="c-link cs-3" href="/projects/knowledgescan">Case study</a>
+            <p class="c-meta">Web Design</p>
+            <a class="c-link cs-3" href="/projects/visit-stafford">Case study</a>
           </div>
         </article>
 
         <article class="crow row-aside-both project-item">
           <p class="vlabel">04</p>
           <div class="cell cell-tight">
-            <div class="c-shot"><img src="assets/img/instemux.svg" alt="InstemUX design system sheet with typography, colour tokens and UI components" loading="lazy"></div>
+            <div class="c-shot"><img src="assets/img/bird-watcher/thumb.webp" alt="Birdwatcher landing page with the headline &lsquo;Keep a life list of the birds you&rsquo;ve seen&rsquo; beside a preview of the app led by a kingfisher" loading="lazy"></div>
           </div>
           <div class="cell cell-mid">
-            <h2 class="c-title">InstemUX</h2>
-            <p class="c-body cs-2">The Figma library behind Instem&rsquo;s design system.</p>
+            <h2 class="c-title">Bird Watcher</h2>
+            <p class="c-body cs-2">A field guide and life list for birders.</p>
           </div>
           <div class="cell cell-mid">
-            <p class="c-meta">Product Design</p>
-            <p class="c-meta cs-1">Client &middot; Instem</p>
-            <a class="c-link cs-3" href="/projects/instemux">Case study</a>
+            <p class="c-meta">Web Design</p>
+            <a class="c-link cs-3" href="/projects/bird-watcher">Case study</a>
+          </div>
+        </article>
+
+        <article class="crow row-aside-both project-item">
+          <p class="vlabel">05</p>
+          <div class="cell cell-tight">
+            <div class="c-shot"><img src="assets/img/wrottesley-golf.svg" alt="Wrottesley Golf Club website hero with golf course illustration and pro-shop product cards" loading="lazy"></div>
+          </div>
+          <div class="cell cell-mid">
+            <h2 class="c-title">Wrottesley Golf Club</h2>
+            <p class="c-body cs-2">A club website with an online pro shop.</p>
+          </div>
+          <div class="cell cell-mid">
+            <p class="c-meta">Web Design</p>
+            <a class="c-link cs-3" href="/projects/wrottesley-golf">Case study</a>
           </div>
         </article>
 
