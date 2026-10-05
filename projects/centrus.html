@@ -7,14 +7,29 @@
   <meta name="description" content="Case study: Centrus, a centralised platform for accelerating translational safety assessments. Product design by Stefan Carter.">
   <meta name="theme-color" content="#E5EEF2">
 
-  <link rel="icon" href="../assets/img/logo.png" type="image/png">
+  <link rel="canonical" href="https://stefancarter.co.uk/projects/centrus">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Stefan Carter">
+  <meta property="og:url" content="https://stefancarter.co.uk/projects/centrus">
+  <meta property="og:title" content="Centrus | Stefan Carter">
+  <meta property="og:description" content="Case study: Centrus, a centralised platform for accelerating translational safety assessments. Product design by Stefan Carter.">
+  <meta property="og:image" content="https://stefancarter.co.uk/assets/img/og/projects/centrus.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/assets/img/logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+
+  <link rel="preload" href="/assets/fonts/space-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/space-mono-700.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="../styles.css">
   <script>document.documentElement.classList.add('js');</script>
+  <link rel="expect" href="#main-content" blocking="render">
+  <script src="../js/transition.js"></script>
 </head>
 
 <body id="top" class="cert page-case">
@@ -34,6 +49,7 @@
   FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
 -->
 
+  <div class="grain" aria-hidden="true"></div>
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <nav class="cert-nav" aria-label="Primary">
@@ -80,7 +96,7 @@
         <p class="vlabel">Preview</p>
         <div class="cell cell-media">
           <img class="case-img" src="../assets/img/centrus.svg"
-           alt="Centrus platform dashboard with an assessment workflow board and status indicators"></div>
+           alt="Centrus platform dashboard with an assessment workflow board and status indicators" width="640" height="400"></div>
       </div>
 
     <!-- Overview -->
@@ -95,28 +111,31 @@
             </p></div>
       </div>
 
-    <!-- Case study coming soon -->
-      <div class="crow row-full">
-        <p class="vlabel">Status</p>
-        <div class="cell cell-pad-lg"><p class="c-display">Full case study coming soon.</p></div>
-      </div>
+    <!-- Confidentiality: Instem is a regulated-domain client. Process,
+         problem framing and role can be written about; real UI screenshots
+         and client outcome metrics cannot be published. This case carries
+         its evidence in reasoning, not in numbers or screenshots - see
+         PRODUCT.md. -->
 
-    <!--
-    Challenge
+    <!-- Challenge -->
       <div class="crow row-aside-left">
         <p class="vlabel">The challenge</p>
         <div class="cell cell-pad-lg"><h2 class="c-display">What was in the way</h2></div>
         <div class="cell cell-pad-lg"><p>
-              Discovery sessions with scientists and stakeholders surfaced the same blockers again and again:
+              Before Centrus, a translational safety assessment meant working across several disconnected systems by
+              hand:
             </p>
             <ul class="case-points">
-              <li>Evidence scattered across disconnected systems, spreadsheets and PDFs.</li>
-              <li>No shared view of an assessment&rsquo;s status, owners or open questions.</li>
-              <li>Repetitive manual steps eating time that belonged to scientific judgement.</li>
+              <li>Evidence scattered across separate tools, spreadsheets and shared drives, with no single record of
+                where an assessment stood.</li>
+              <li>No shared view of status, ownership or open questions, so toxicologists and data scientists chased
+                each other for context that should have been visible.</li>
+              <li>Reporting was a manual assembly job at the end of the process, done under time pressure, by the
+                people best placed to be doing science instead.</li>
             </ul></div>
       </div>
 
-    Approach
+    <!-- Approach -->
       <div class="crow row-aside-left">
         <p class="vlabel">The approach</p>
         <div class="cell cell-pad-lg"><h2 class="c-display">How we got there</h2></div>
@@ -125,83 +144,52 @@
                 <span class="type-row-num" aria-hidden="true">01</span>
                 <div>
                   <h3>Domain immersion</h3>
-                  <p>Interviews and workflow shadowing with safety scientists to map how assessments actually get made.</p>
+                  <p>Sessions with the toxicologists and data scientists who run these assessments, to see where the
+                    real friction was rather than assume it.</p>
                 </div>
               </li>
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">02</span>
                 <div>
-                  <h3>Workflow architecture</h3>
-                  <p>One assessment model reflected in the IA: evidence in, judgement in the middle, reporting out.</p>
+                  <h3>One workflow, not one screen</h3>
+                  <p>The information architecture follows the assessment itself: evidence gathered in, judgement
+                    applied in the middle, a report produced out. Every screen sits on that spine.</p>
                 </div>
               </li>
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">03</span>
                 <div>
-                  <h3>Prototype &amp; validate</h3>
-                  <p>Clickable prototypes tested with practising scientists and iterated until the workflow felt like theirs.</p>
+                  <h3>Prototype in front of the people who&rsquo;d use it</h3>
+                  <p>Clickable prototypes tested with practising scientists, not proxies, and revised until the
+                    workflow matched how an assessment actually gets made.</p>
                 </div>
               </li>
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">04</span>
                 <div>
-                  <h3>Ship with the design system</h3>
-                  <p>Screens built on shared InstemUX components for consistency across the Centrus suite.</p>
+                  <h3>Ship on the shared system</h3>
+                  <p>Screens built on InstemUX components, so Centrus reads as part of one product suite rather than
+                    a platform of its own.</p>
                 </div>
               </li>
             </ol></div>
       </div>
 
-      <div class="crow row-full">
-        <p class="vlabel">Preview</p>
-        <div class="cell cell-media">
-          <img class="case-img" src="../assets/img/case-detail.svg"
-           alt="Wireframes and user-flow diagrams from the design process"></div>
-      </div>
-
-    Outcome
-    <section class="section band-light">
-      <div class="container">
-        <div class="row g-4 g-lg-5">
-          <div class="col-lg-4 reveal">
-            <p class="eyebrow">04 / The outcome</p>
-            <h2 class="case-h">What it delivered</h2>
-          </div>
-          <div class="col-lg-8 reveal">
-            <p class="big-lead">
-              Centrus became the connected home for assessment work, and the foundation the wider product suite now builds on.
+    <!-- Closing -->
+      <div class="crow row-aside-left">
+        <p class="vlabel">The outcome</p>
+        <div class="cell cell-pad-lg"><h2 class="c-display">What shipped</h2></div>
+        <div class="cell cell-pad-lg"><p class="big-lead">
+              A single home for assessment work, built on the workflow scientists already had in their heads rather
+              than one imposed on them.
             </p>
-          </div>
-        </div>
-
-        <div class="row g-4 outcome-stats">
-          <div class="col-md-4 reveal">
-            <span class="stat-big">6+</span>
-            <span class="stat-big-label">Disconnected tools consolidated into one platform</span>
-          </div>
-          <div class="col-md-4 reveal">
-            <span class="stat-big">&minus;40%</span>
-            <span class="stat-big-label">Assessment turnaround time</span>
-          </div>
-          <div class="col-md-4 reveal">
-            <span class="stat-big">100%</span>
-            <span class="stat-big-label">Traceability from evidence to conclusion</span>
-          </div>
-        </div>
-
-        <figure class="quote-lg case-quote reveal">
-          <span class="quote-mark" aria-hidden="true">&ldquo;</span>
-          <blockquote>
-            <p>Centrus turned a scattered, manual process into something our scientists actually enjoy working in.</p>
-          </blockquote>
-          <figcaption>
-            <span class="t-name">Product Manager</span>
-            <span class="t-role">Instem</span>
-          </figcaption>
-        </figure>
+            <p>
+              Centrus is live and in active use, and now the foundation the wider product suite builds on. Instem&rsquo;s
+              client confidentiality means I can write about how it was designed and why, but not show the interface
+              itself or quote outcome figures. The honest version of this case study is process, not a screenshot
+              gallery.
+            </p></div>
       </div>
-    </section>
-    -->
 
     <!-- Next project -->
       <div class="crow row-full">
@@ -232,7 +220,6 @@
 
     </main>
   </div>
-
 
   <script src="../js/main.js"></script>
 </body>

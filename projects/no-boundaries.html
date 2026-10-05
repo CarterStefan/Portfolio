@@ -7,14 +7,29 @@
   <meta name="description" content="Case study: improving mental wellbeing in schools through cricket. Web design by Stefan Carter.">
   <meta name="theme-color" content="#E5EEF2">
 
-  <link rel="icon" href="../assets/img/logo.png" type="image/png">
+  <link rel="canonical" href="https://stefancarter.co.uk/projects/no-boundaries">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Stefan Carter">
+  <meta property="og:url" content="https://stefancarter.co.uk/projects/no-boundaries">
+  <meta property="og:title" content="No Boundaries | Stefan Carter">
+  <meta property="og:description" content="Case study: improving mental wellbeing in schools through cricket. Web design by Stefan Carter.">
+  <meta property="og:image" content="https://stefancarter.co.uk/assets/img/og/projects/no-boundaries.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/assets/img/logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+
+  <link rel="preload" href="/assets/fonts/space-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/space-mono-700.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="../styles.css">
   <script>document.documentElement.classList.add('js');</script>
+  <link rel="expect" href="#main-content" blocking="render">
+  <script src="../js/transition.js"></script>
 </head>
 
 <body id="top" class="cert page-case">
@@ -34,6 +49,7 @@
   FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
 -->
 
+  <div class="grain" aria-hidden="true"></div>
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <nav class="cert-nav" aria-label="Primary">
@@ -83,7 +99,7 @@
             <div class="shot-browser">
               <div class="shot-bar">
                 <span class="shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
-                <span class="shot-url">index.html</span>
+                <span class="shot-url">Home</span>
               </div>
               <img src="../assets/img/no-boundaries/desktop-hero.webp" width="1920" height="1200"
                    alt="No Boundaries homepage hero: a three-photograph wall of real cricket and wellbeing sessions behind the bold white headline 'EVERY CHILD MATTERS', with two floating capsules for the wordmark and the main nav">
@@ -172,14 +188,19 @@
             <div class="shot-browser shot-scroll">
               <div class="shot-bar">
                 <span class="shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
-                <span class="shot-url">index.html</span>
+                <span class="shot-url">Home, full page</span>
+                <button class="shot-pause" type="button" aria-pressed="false">Pause</button>
               </div>
               <div class="shot-view">
-                <img src="../assets/img/no-boundaries/desktop-full.webp" width="1600" height="6441" loading="lazy"
+                <img src="../assets/img/no-boundaries/desktop-full-1600w.webp"
+                     srcset="../assets/img/no-boundaries/desktop-full-800w.webp 800w,
+                             ../assets/img/no-boundaries/desktop-full-1600w.webp 1600w"
+                     sizes="(max-width: 991px) calc(100vw - 4rem), 50rem"
+                     width="1600" height="6441" loading="lazy"
                      alt="The full No Boundaries homepage from hero to footer: a three-photo hero wall, a navy credential strip, the offer section, a pull-quote statistic, the Physical, Mental and Social wellbeing pillars, coach bios for Adam and Nick, a vetting-checklist block, a testimonials band, and the closing enquiry CTA">
               </div>
             </div>
-            <figcaption>The full homepage. Hover to pause.</figcaption>
+            <figcaption>The full homepage.</figcaption>
           </figure>
         </div>
       </div>
@@ -191,7 +212,7 @@
             <div class="shot-browser">
               <div class="shot-bar">
                 <span class="shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
-                <span class="shot-url">index.html</span>
+                <span class="shot-url">Home, the offer</span>
               </div>
               <img src="../assets/img/no-boundaries/desktop-offer.webp" width="1920" height="1200" loading="lazy"
                    alt="'What your school gets' section listing session formats, where the programme works, who runs it and group size as four plain facts, each on its own ruled row beside the heading">
@@ -204,7 +225,7 @@
             <div class="shot-browser">
               <div class="shot-bar">
                 <span class="shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
-                <span class="shot-url">meet-the-team.html</span>
+                <span class="shot-url">Meet the team</span>
               </div>
               <img src="../assets/img/no-boundaries/desktop-inner.webp" width="1920" height="1200" loading="lazy"
                    alt="Meet The Team page headed 'Adam and Nick' with Adam London's coach profile: ECB Level 2 Cricket Coach and Director of Cricket at Richmond CC">
@@ -221,7 +242,7 @@
             <div class="shot-browser">
               <div class="shot-bar">
                 <span class="shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
-                <span class="shot-url">index.html</span>
+                <span class="shot-url">Home, the pillars</span>
               </div>
               <img src="../assets/img/no-boundaries/desktop-pillars.webp" width="1920" height="1200" loading="lazy"
                    alt="'One hour, three kinds of wellbeing' heading above three real session photographs, each sitting on a colour-coded block labelled Physical (navy), Mental (pitch green) and Social (ball red)">

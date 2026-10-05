@@ -7,14 +7,29 @@
   <meta name="description" content="Case study: a bird watching and tracking application designed and built end to end. Web design by Stefan Carter.">
   <meta name="theme-color" content="#E5EEF2">
 
-  <link rel="icon" href="../assets/img/logo.png" type="image/png">
+  <link rel="canonical" href="https://stefancarter.co.uk/projects/bird-watcher">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Stefan Carter">
+  <meta property="og:url" content="https://stefancarter.co.uk/projects/bird-watcher">
+  <meta property="og:title" content="Bird Watcher | Stefan Carter">
+  <meta property="og:description" content="Case study: a bird watching and tracking application designed and built end to end. Web design by Stefan Carter.">
+  <meta property="og:image" content="https://stefancarter.co.uk/assets/img/og/projects/bird-watcher.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/assets/img/logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+
+  <link rel="preload" href="/assets/fonts/space-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/space-mono-700.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="../styles.css">
   <script>document.documentElement.classList.add('js');</script>
+  <link rel="expect" href="#main-content" blocking="render">
+  <script src="../js/transition.js"></script>
 </head>
 
 <body id="top" class="cert page-case">
@@ -34,6 +49,7 @@
   FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
 -->
 
+  <div class="grain" aria-hidden="true"></div>
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <nav class="cert-nav" aria-label="Primary">
@@ -83,7 +99,7 @@
             <div class="shot-browser">
               <div class="shot-bar">
                 <span class="shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
-                <span class="shot-url">/</span>
+                <span class="shot-url">Home</span>
               </div>
               <img src="../assets/img/bird-watcher/desktop-hero.webp" width="1920" height="1200"
                    alt="Birdwatcher landing page: the headline &lsquo;Keep a life list of the birds you&rsquo;ve seen&rsquo; beside a small preview of the app, a dark sidebar next to four bird photographs led by a kingfisher, with Start your life list and Log in buttons below">
@@ -122,14 +138,19 @@
             <div class="shot-browser shot-scroll">
               <div class="shot-bar">
                 <span class="shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
-                <span class="shot-url">uk_birds</span>
+                <span class="shot-url">Species guide, full page</span>
+                <button class="shot-pause" type="button" aria-pressed="false">Pause</button>
               </div>
               <div class="shot-view">
-                <img src="../assets/img/bird-watcher/desktop-full.webp" width="1600" height="5776" loading="lazy"
+                <img src="../assets/img/bird-watcher/desktop-full-1600w.webp"
+                     srcset="../assets/img/bird-watcher/desktop-full-800w.webp 800w,
+                             ../assets/img/bird-watcher/desktop-full-1600w.webp 1600w"
+                     sizes="(max-width: 991px) calc(100vw - 4rem), 50rem"
+                     width="1600" height="5776" loading="lazy"
                    alt="The full field guide from top to bottom: a family filter down the left and a grid of 100 species cards, each with a photograph, common name, scientific name and family">
               </div>
             </div>
-            <figcaption>A hundred species, filtered by family. Hover to pause.</figcaption>
+            <figcaption>A hundred species, filtered by family.</figcaption>
           </figure>
         </div>
       </div>
@@ -141,7 +162,7 @@
             <div class="shot-browser">
               <div class="shot-bar">
                 <span class="shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
-                <span class="shot-url">view_bird</span>
+                <span class="shot-url">Species detail</span>
               </div>
               <img src="../assets/img/bird-watcher/desktop-bird.webp" width="1920" height="1200" loading="lazy"
                    alt="Kingfisher species page: a large photograph beside the name and Alcedo atthis, a Log a sighting button, length, wingspan and weight figures, a short description, and Feeding and Where to look sections">
@@ -154,7 +175,7 @@
             <div class="shot-browser">
               <div class="shot-bar">
                 <span class="shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
-                <span class="shot-url">my_sightings</span>
+                <span class="shot-url">My sightings</span>
               </div>
               <img src="../assets/img/bird-watcher/desktop-lifelist.webp" width="1920" height="1200" loading="lazy"
                    alt="My life list page showing 2 of 100 species as a row of dots, two filled, above entries for Barn Owl and Green Woodpecker, each with a county, a date and a Remove link">
@@ -195,14 +216,7 @@
         </div>
       </div>
 
-    <!-- Case study coming soon -->
-      <div class="crow row-full">
-        <p class="vlabel">Status</p>
-        <div class="cell cell-pad-lg"><p class="c-display">Full case study coming soon.</p></div>
-      </div>
-
-    <!--
-    Challenge
+    <!-- Challenge -->
       <div class="crow row-aside-left">
         <p class="vlabel">The challenge</p>
         <div class="cell cell-pad-lg"><h2 class="c-display">What was in the way</h2></div>
@@ -210,13 +224,16 @@
               Field testing, quite literally, shaped the priorities:
             </p>
             <ul class="case-points">
-              <li>Logging a sighting in other apps took longer than the sighting itself.</li>
-              <li>Identification help was buried behind menus when it was needed instantly.</li>
-              <li>A lifetime of sightings added up to a list, not a story.</li>
+              <li>Logging a sighting in other apps took longer than the sighting itself, so the moment was gone
+                before the app caught up.</li>
+              <li>Identification help was buried behind menus, when the whole point was needing it instantly, gloves
+                on, bird already flying off.</li>
+              <li>A lifetime of sightings added up to a list in every app I tried, not something that felt like
+                progress.</li>
             </ul></div>
       </div>
 
-    Approach
+    <!-- Approach -->
       <div class="crow row-aside-left">
         <p class="vlabel">The approach</p>
         <div class="cell cell-pad-lg"><h2 class="c-display">How we got there</h2></div>
@@ -224,84 +241,50 @@
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">01</span>
                 <div>
-                  <h3>The ten-second log</h3>
-                  <p>Species, location and count, captured on one screen with one thumb.</p>
+                  <h3>The fast log</h3>
+                  <p>Species, location and count, captured on one screen with one thumb, designed with gloves on in
+                    mind rather than a bare hand on a desk.</p>
                 </div>
               </li>
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">02</span>
                 <div>
                   <h3>Identification at hand</h3>
-                  <p>A visual species library searchable by size, colour and habitat.</p>
+                  <p>A visual species library searchable by size, colour and habitat, so identifying a bird doesn&rsquo;t
+                    mean guessing its name first.</p>
                 </div>
               </li>
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">03</span>
                 <div>
-                  <h3>Sightings as a map</h3>
-                  <p>Every log plotted over time, turning records into patterns and patches.</p>
+                  <h3>Progress you can see</h3>
+                  <p>Sightings shown as dots filling in against the full species list, not a growing table nobody
+                    wants to scroll.</p>
                 </div>
               </li>
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">04</span>
                 <div>
-                  <h3>Offline-first build</h3>
-                  <p>Fields rarely have signal; the app works anyway and syncs later.</p>
+                  <h3>Built and field-tested by the person using it</h3>
+                  <p>Every part designed, built and tried out in the field myself, birding trip by birding trip,
+                    rather than guessed at from a desk.</p>
                 </div>
               </li>
             </ol></div>
       </div>
 
-      <div class="crow row-full">
-        <p class="vlabel">Preview</p>
-        <div class="cell cell-media">
-          <img class="case-img" src="../assets/img/case-detail.svg"
-           alt="Wireframes and user-flow diagrams from the design process"></div>
-      </div>
-
-    Outcome
-    <section class="section band-light">
-      <div class="container">
-        <div class="row g-4 g-lg-5">
-          <div class="col-lg-4 reveal">
-            <p class="eyebrow">04 / The outcome</p>
-            <h2 class="case-h">What it delivered</h2>
-          </div>
-          <div class="col-lg-8 reveal">
-            <p class="big-lead">
-              What started as a personal itch became the app I would recommend to any birder, and a living case study in designing for real conditions.
+    <!-- Closing -->
+      <div class="crow row-aside-left">
+        <p class="vlabel">The outcome</p>
+        <div class="cell cell-pad-lg"><h2 class="c-display">What shipped</h2></div>
+        <div class="cell cell-pad-lg"><p class="big-lead">
+              An app built for the exact conditions it gets used in: cold, gloved, a few seconds to act before the
+              bird moves on.
             </p>
-          </div>
-        </div>
-
-        <div class="row g-4 outcome-stats">
-          <div class="col-md-4 reveal">
-            <span class="stat-big">10s</span>
-            <span class="stat-big-label">To log a sighting, gloves on</span>
-          </div>
-          <div class="col-md-4 reveal">
-            <span class="stat-big">250+</span>
-            <span class="stat-big-label">Species in the visual library</span>
-          </div>
-          <div class="col-md-4 reveal">
-            <span class="stat-big">100%</span>
-            <span class="stat-big-label">Functional offline in the field</span>
-          </div>
-        </div>
-
-        <figure class="quote-lg case-quote reveal">
-          <span class="quote-mark" aria-hidden="true">&ldquo;</span>
-          <blockquote>
-            <p>Finally an app made by someone who has actually stood in a hedge at six in the morning.</p>
-          </blockquote>
-          <figcaption>
-            <span class="t-name">Beta tester</span>
-            <span class="t-role">Bird Watcher community</span>
-          </figcaption>
-        </figure>
+            <p>
+              A personal project, designed, built and field-tested by me, end to end.
+            </p></div>
       </div>
-    </section>
-    -->
 
     <!-- Next project -->
       <div class="crow row-full">

@@ -7,14 +7,29 @@
   <meta name="description" content="Case study: KnowledgeScan, from expert service to advanced target safety assessments. Product design by Stefan Carter.">
   <meta name="theme-color" content="#E5EEF2">
 
-  <link rel="icon" href="../assets/img/logo.png" type="image/png">
+  <link rel="canonical" href="https://stefancarter.co.uk/projects/knowledgescan">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Stefan Carter">
+  <meta property="og:url" content="https://stefancarter.co.uk/projects/knowledgescan">
+  <meta property="og:title" content="KnowledgeScan | Stefan Carter">
+  <meta property="og:description" content="Case study: KnowledgeScan, from expert service to advanced target safety assessments. Product design by Stefan Carter.">
+  <meta property="og:image" content="https://stefancarter.co.uk/assets/img/og/projects/knowledgescan.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/assets/img/logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+
+  <link rel="preload" href="/assets/fonts/space-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/space-mono-700.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="../styles.css">
   <script>document.documentElement.classList.add('js');</script>
+  <link rel="expect" href="#main-content" blocking="render">
+  <script src="../js/transition.js"></script>
 </head>
 
 <body id="top" class="cert page-case">
@@ -34,6 +49,7 @@
   FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
 -->
 
+  <div class="grain" aria-hidden="true"></div>
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <nav class="cert-nav" aria-label="Primary">
@@ -80,7 +96,7 @@
         <p class="vlabel">Preview</p>
         <div class="cell cell-media">
           <img class="case-img" src="../assets/img/knowledgescan.svg"
-           alt="KnowledgeScan interface with a search bar, highlighted document evidence and a ranked result list"></div>
+           alt="KnowledgeScan interface with a search bar, highlighted document evidence and a ranked result list" width="640" height="400"></div>
       </div>
 
     <!-- Overview -->
@@ -95,28 +111,31 @@
             </p></div>
       </div>
 
-    <!-- Case study coming soon -->
-      <div class="crow row-full">
-        <p class="vlabel">Status</p>
-        <div class="cell cell-pad-lg"><p class="c-display">Full case study coming soon.</p></div>
-      </div>
+    <!-- Confidentiality: Instem is a regulated-domain client. Process,
+         problem framing and role can be written about; real UI screenshots
+         and client outcome metrics cannot be published. This case carries
+         its evidence in reasoning, not in numbers or screenshots - see
+         PRODUCT.md. -->
 
-    <!--
-    Challenge
+    <!-- Challenge -->
       <div class="crow row-aside-left">
         <p class="vlabel">The challenge</p>
         <div class="cell cell-pad-lg"><h2 class="c-display">What was in the way</h2></div>
         <div class="cell cell-pad-lg"><p>
-              Turning a service into a product surfaced hard questions:
+              Target safety assessment had been running as a service: a small number of specialists applying years of
+              judgement to each request, by hand.
             </p>
             <ul class="case-points">
-              <li>Expert judgement lived in specialists&rsquo; heads, not in any documented process.</li>
-              <li>Evidence gathering meant days of manual literature searching per target.</li>
-              <li>Every deliverable was a bespoke document, impossible to compare or reuse.</li>
+              <li>That judgement lived in people&rsquo;s heads, not in a system, so the service could not scale past
+                the number of specialists available to run it.</li>
+              <li>Every request was handled slightly differently, which made the work expert but not repeatable, and
+                hard to hand off or review.</li>
+              <li>Turning it into a product risked doing the thing expert services fear most: flattening real
+                judgement into a form that looks structured but has lost what made it useful.</li>
             </ul></div>
       </div>
 
-    Approach
+    <!-- Approach -->
       <div class="crow row-aside-left">
         <p class="vlabel">The approach</p>
         <div class="cell cell-pad-lg"><h2 class="c-display">How we got there</h2></div>
@@ -124,84 +143,52 @@
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">01</span>
                 <div>
-                  <h3>Shadow the experts</h3>
-                  <p>Sat with assessment authors through real engagements to map the implicit method.</p>
+                  <h3>Decode the judgement, don&rsquo;t template it</h3>
+                  <p>Time with the specialists who ran the service, tracing the actual reasoning behind a
+                    recommendation rather than the process they described from memory.</p>
                 </div>
               </li>
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">02</span>
                 <div>
-                  <h3>Model the assessment</h3>
-                  <p>A structured framework for targets, evidence and conclusions that mirrors expert practice.</p>
+                  <h3>Structure around the decision, not the form</h3>
+                  <p>The workflow follows how an expert actually reasons through a target: evidence weighed, a
+                    judgement formed, a report produced. The tool supports that shape rather than imposing its own.</p>
                 </div>
               </li>
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">03</span>
                 <div>
-                  <h3>Evidence workspace</h3>
-                  <p>Search, triage and cite scientific literature in one flow, with provenance kept intact.</p>
+                  <h3>Keep room for judgement the system can&rsquo;t see</h3>
+                  <p>Where the workflow could not fully capture an expert&rsquo;s reasoning, it left space for it
+                    rather than forcing a false level of structure.</p>
                 </div>
               </li>
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">04</span>
                 <div>
-                  <h3>Structured reporting</h3>
-                  <p>Assessments as living, comparable documents rather than one-off PDFs.</p>
+                  <h3>Validate against the experts&rsquo; own standard</h3>
+                  <p>Output reviewed by the same specialists whose judgement it was built from, since they were the
+                    only people qualified to say whether it still held up.</p>
                 </div>
               </li>
             </ol></div>
       </div>
 
-      <div class="crow row-full">
-        <p class="vlabel">Preview</p>
-        <div class="cell cell-media">
-          <img class="case-img" src="../assets/img/case-detail.svg"
-           alt="Wireframes and user-flow diagrams from the design process"></div>
-      </div>
-
-    Outcome
-    <section class="section band-light">
-      <div class="container">
-        <div class="row g-4 g-lg-5">
-          <div class="col-lg-4 reveal">
-            <p class="eyebrow">04 / The outcome</p>
-            <h2 class="case-h">What it delivered</h2>
-          </div>
-          <div class="col-lg-8 reveal">
-            <p class="big-lead">
-              KnowledgeScan let the team deliver assessments at a pace the service model could never reach, without diluting the expertise behind them.
+    <!-- Closing -->
+      <div class="crow row-aside-left">
+        <p class="vlabel">The outcome</p>
+        <div class="cell cell-pad-lg"><h2 class="c-display">What shipped</h2></div>
+        <div class="cell cell-pad-lg"><p class="big-lead">
+              A structured, repeatable version of a service that used to depend on a small number of specialists
+              being available.
             </p>
-          </div>
-        </div>
-
-        <div class="row g-4 outcome-stats">
-          <div class="col-md-4 reveal">
-            <span class="stat-big">Days</span>
-            <span class="stat-big-label">Per assessment, down from weeks</span>
-          </div>
-          <div class="col-md-4 reveal">
-            <span class="stat-big">3&times;</span>
-            <span class="stat-big-label">More assessments delivered per quarter</span>
-          </div>
-          <div class="col-md-4 reveal">
-            <span class="stat-big">1</span>
-            <span class="stat-big-label">Consistent, comparable report standard</span>
-          </div>
-        </div>
-
-        <figure class="quote-lg case-quote reveal">
-          <span class="quote-mark" aria-hidden="true">&ldquo;</span>
-          <blockquote>
-            <p>It captures how our best people think, and lets every assessment start from that standard.</p>
-          </blockquote>
-          <figcaption>
-            <span class="t-name">Scientific Director</span>
-            <span class="t-role">Instem</span>
-          </figcaption>
-        </figure>
+            <p>
+              KnowledgeScan is live and in use. Instem&rsquo;s client confidentiality means I can write about how the
+              expertise was decoded and structured, but not show the interface itself or publish outcome figures.
+              This case study is the reasoning behind that translation, not a tour of the product.
+            </p></div>
       </div>
-    </section>
-    -->
 
     <!-- Next project -->
       <div class="crow row-full">
@@ -232,7 +219,6 @@
 
     </main>
   </div>
-
 
   <script src="../js/main.js"></script>
 </body>

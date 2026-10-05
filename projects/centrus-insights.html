@@ -7,14 +7,29 @@
   <meta name="description" content="Case study: Centrus Insights, a data-visualisation tool exposing pre-clinical study insights. Product design by Stefan Carter.">
   <meta name="theme-color" content="#E5EEF2">
 
-  <link rel="icon" href="../assets/img/logo.png" type="image/png">
+  <link rel="canonical" href="https://stefancarter.co.uk/projects/centrus-insights">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Stefan Carter">
+  <meta property="og:url" content="https://stefancarter.co.uk/projects/centrus-insights">
+  <meta property="og:title" content="Centrus Insights | Stefan Carter">
+  <meta property="og:description" content="Case study: Centrus Insights, a data-visualisation tool exposing pre-clinical study insights. Product design by Stefan Carter.">
+  <meta property="og:image" content="https://stefancarter.co.uk/assets/img/og/projects/centrus-insights.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/assets/img/logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+
+  <link rel="preload" href="/assets/fonts/space-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/space-mono-700.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="../styles.css">
   <script>document.documentElement.classList.add('js');</script>
+  <link rel="expect" href="#main-content" blocking="render">
+  <script src="../js/transition.js"></script>
 </head>
 
 <body id="top" class="cert page-case">
@@ -34,6 +49,7 @@
   FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
 -->
 
+  <div class="grain" aria-hidden="true"></div>
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <nav class="cert-nav" aria-label="Primary">
@@ -80,7 +96,7 @@
         <p class="vlabel">Preview</p>
         <div class="cell cell-media">
           <img class="case-img" src="../assets/img/centrus-insights.svg"
-           alt="Centrus Insights dashboard with bar, line and donut charts of pre-clinical study data"></div>
+           alt="Centrus Insights dashboard with bar, line and donut charts of pre-clinical study data" width="640" height="400"></div>
       </div>
 
     <!-- Overview -->
@@ -95,28 +111,31 @@
             </p></div>
       </div>
 
-    <!-- Case study coming soon -->
-      <div class="crow row-full">
-        <p class="vlabel">Status</p>
-        <div class="cell cell-pad-lg"><p class="c-display">Full case study coming soon.</p></div>
-      </div>
+    <!-- Confidentiality: Instem is a regulated-domain client. Process,
+         problem framing and role can be written about; real UI screenshots
+         and client outcome metrics cannot be published. This case carries
+         its evidence in reasoning, not in numbers or screenshots - see
+         PRODUCT.md. -->
 
-    <!--
-    Challenge
+    <!-- Challenge -->
       <div class="crow row-aside-left">
         <p class="vlabel">The challenge</p>
         <div class="cell cell-pad-lg"><h2 class="c-display">What was in the way</h2></div>
         <div class="cell cell-pad-lg"><p>
-              Working with early users made the problems concrete:
+              A pre-clinical study can generate thousands of rows of data, and the people who need to reason about it
+              were reading that data as a table:
             </p>
             <ul class="case-points">
-              <li>Findings locked in dense tables that took experts hours to scan.</li>
-              <li>Cross-study patterns effectively invisible without manual data wrangling.</li>
-              <li>One-size-fits-all outputs serving neither specialists nor project leads.</li>
+              <li>Patterns that would jump out in a chart stayed buried in rows of numbers, so early signals were
+                found late, or not at all.</li>
+              <li>A chart is only useful if the person reading it trusts it, and a data platform aimed at scientists
+                cannot afford a visualisation that misleads, even by omission.</li>
+              <li>The audience ranged from specialists who knew the data intimately to newcomers who did not, and one
+                chart had to serve both without dumbing down for either.</li>
             </ul></div>
       </div>
 
-    Approach
+    <!-- Approach -->
       <div class="crow row-aside-left">
         <p class="vlabel">The approach</p>
         <div class="cell cell-pad-lg"><h2 class="c-display">How we got there</h2></div>
@@ -124,84 +143,53 @@
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">01</span>
                 <div>
-                  <h3>Question-led research</h3>
-                  <p>Ranked the questions scientists bring to study data, and designed a view for each.</p>
+                  <h3>Start from the question, not the data</h3>
+                  <p>Every chart began with the question a scientist was actually trying to answer, worked backwards
+                    into the right visual form, not forwards from whatever the data happened to contain.</p>
                 </div>
               </li>
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">02</span>
                 <div>
-                  <h3>A visualisation system</h3>
-                  <p>A consistent chart language (colour, scales, annotations) designed for scientific honesty.</p>
+                  <h3>Traceability as a design constraint</h3>
+                  <p>Every chart links back to the study it came from, so a scientist can move from the pattern to
+                    the underlying evidence without leaving the page.</p>
                 </div>
               </li>
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">03</span>
                 <div>
-                  <h3>Progressive depth</h3>
-                  <p>Overview first, then drill-down to individual findings, always one click from the raw data.</p>
+                  <h3>Design the uncertainty in, not out</h3>
+                  <p>Where the data was incomplete or provisional, the chart says so. A confident-looking chart built
+                    on shaky data is worse than no chart.</p>
                 </div>
               </li>
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">04</span>
                 <div>
-                  <h3>Test with real studies</h3>
-                  <p>Prototypes validated against genuine study datasets with practising toxicologists.</p>
+                  <h3>Test with people who know more than you do</h3>
+                  <p>Draft charts went in front of the toxicologists and data scientists who would use them daily,
+                    and any reading they found ambiguous was reworked before it shipped.</p>
                 </div>
               </li>
             </ol></div>
       </div>
 
-      <div class="crow row-full">
-        <p class="vlabel">Preview</p>
-        <div class="cell cell-media">
-          <img class="case-img" src="../assets/img/case-detail.svg"
-           alt="Wireframes and user-flow diagrams from the design process"></div>
-      </div>
-
-    Outcome
-    <section class="section band-light">
-      <div class="container">
-        <div class="row g-4 g-lg-5">
-          <div class="col-lg-4 reveal">
-            <p class="eyebrow">04 / The outcome</p>
-            <h2 class="case-h">What it delivered</h2>
-          </div>
-          <div class="col-lg-8 reveal">
-            <p class="big-lead">
-              Insights moved study review from scanning tables to seeing patterns, in a fraction of the time.
+    <!-- Closing -->
+      <div class="crow row-aside-left">
+        <p class="vlabel">The outcome</p>
+        <div class="cell cell-pad-lg"><h2 class="c-display">What shipped</h2></div>
+        <div class="cell cell-pad-lg"><p class="big-lead">
+              A set of chart types that hold up under a specialist&rsquo;s scrutiny and still make sense to someone
+              seeing the study for the first time.
             </p>
-          </div>
-        </div>
-
-        <div class="row g-4 outcome-stats">
-          <div class="col-md-4 reveal">
-            <span class="stat-big">&minus;60%</span>
-            <span class="stat-big-label">Time to surface a safety signal</span>
-          </div>
-          <div class="col-md-4 reveal">
-            <span class="stat-big">14</span>
-            <span class="stat-big-label">Interactive views across study data</span>
-          </div>
-          <div class="col-md-4 reveal">
-            <span class="stat-big">1 click</span>
-            <span class="stat-big-label">From any chart back to the source data</span>
-          </div>
-        </div>
-
-        <figure class="quote-lg case-quote reveal">
-          <span class="quote-mark" aria-hidden="true">&ldquo;</span>
-          <blockquote>
-            <p>For the first time, the data tells us where to look instead of the other way round.</p>
-          </blockquote>
-          <figcaption>
-            <span class="t-name">Principal Scientist</span>
-            <span class="t-role">Instem</span>
-          </figcaption>
-        </figure>
+            <p>
+              Centrus Insights is live and used to reason about real pre-clinical data. Instem&rsquo;s client
+              confidentiality means I can write about the approach and the constraints, but not show the interface
+              itself or publish outcome figures. What follows from that is a case study about judgement, not a
+              gallery of charts.
+            </p></div>
       </div>
-    </section>
-    -->
 
     <!-- Next project -->
       <div class="crow row-full">
@@ -232,7 +220,6 @@
 
     </main>
   </div>
-
 
   <script src="../js/main.js"></script>
 </body>

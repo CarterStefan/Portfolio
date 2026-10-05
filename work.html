@@ -7,11 +7,24 @@
   <meta name="description" content="Product design case studies by Stefan Carter for Instem: Centrus, Centrus Insights, KnowledgeScan and InstemUX.">
   <meta name="theme-color" content="#E5EEF2">
 
-  <link rel="icon" href="assets/img/logo.png" type="image/png">
+  <link rel="canonical" href="https://stefancarter.co.uk/work">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Stefan Carter">
+  <meta property="og:url" content="https://stefancarter.co.uk/work">
+  <meta property="og:title" content="Product Design | Stefan Carter">
+  <meta property="og:description" content="Product design case studies by Stefan Carter for Instem: Centrus, Centrus Insights, KnowledgeScan and InstemUX.">
+  <meta property="og:image" content="https://stefancarter.co.uk/assets/img/og/work.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/assets/img/logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+
+  <link rel="preload" href="/assets/fonts/space-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/space-mono-700.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="styles.css">
   <script>
@@ -20,6 +33,8 @@
        go to its own index now. */
     if (/[?&]filter=web(&|$)/.test(location.search)) location.replace('/web');
   </script>
+  <link rel="expect" href="#main-content" blocking="render">
+  <script src="js/transition.js"></script>
 </head>
 
 <body id="top" class="cert page-work">
@@ -41,6 +56,7 @@
   FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
 -->
 
+  <div class="grain" aria-hidden="true"></div>
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <nav class="cert-nav" aria-label="Primary">
@@ -60,6 +76,19 @@
   <div class="cert-page">
     <main id="main-content" class="sheet sheet-in">
 
+      <!-- Discipline switch: leads the sheet, not the index head, so a
+           visitor sees the split into Product/Web before anything else -
+           moved up on 2026-09-25 (see PRODUCT.md). -->
+      <div class="crow row-full">
+        <p class="vlabel">Browse</p>
+        <div class="cell cell-tight">
+          <nav class="c-filters" aria-label="Work by discipline">
+            <a class="c-filter" href="/work" aria-current="page">Product design</a>
+            <a class="c-filter" href="/web">Web design</a>
+          </nav>
+        </div>
+      </div>
+
       <!-- Index head -->
       <div class="crow row-aside-right">
         <p class="vlabel">Projects</p>
@@ -75,24 +104,13 @@
         </div>
       </div>
 
-      <!-- Discipline switch -->
-      <div class="crow row-full">
-        <p class="vlabel">Browse</p>
-        <div class="cell cell-tight">
-          <nav class="c-filters" aria-label="Work by discipline">
-            <a class="c-filter" href="/work" aria-current="page">Product design</a>
-            <a class="c-filter" href="/web">Web design</a>
-          </nav>
-        </div>
-      </div>
-
       <!-- Projects -->
       <div id="projectGrid">
 
         <article class="crow row-aside-both project-item">
           <p class="vlabel">01</p>
           <div class="cell cell-tight">
-            <div class="c-shot"><img src="assets/img/centrus.svg" alt="Centrus platform dashboard with an assessment workflow board and status indicators" loading="lazy"></div>
+            <div class="c-shot"><img src="assets/img/centrus.svg" alt="Centrus platform dashboard with an assessment workflow board and status indicators" width="640" height="400" loading="eager" fetchpriority="high"></div>
           </div>
           <div class="cell cell-mid">
             <h2 class="c-title">Centrus</h2>
@@ -108,7 +126,7 @@
         <article class="crow row-aside-both project-item">
           <p class="vlabel">02</p>
           <div class="cell cell-tight">
-            <div class="c-shot"><img src="assets/img/centrus-insights.svg" alt="Centrus Insights dashboard with bar, line and donut charts of pre-clinical study data" loading="lazy"></div>
+            <div class="c-shot"><img src="assets/img/centrus-insights.svg" alt="" width="640" height="400" loading="lazy"></div>
           </div>
           <div class="cell cell-mid">
             <h2 class="c-title">Centrus Insights</h2>
@@ -124,7 +142,7 @@
         <article class="crow row-aside-both project-item">
           <p class="vlabel">03</p>
           <div class="cell cell-tight">
-            <div class="c-shot"><img src="assets/img/knowledgescan.svg" alt="KnowledgeScan interface with a search bar, highlighted document evidence and a ranked result list" loading="lazy"></div>
+            <div class="c-shot"><img src="assets/img/knowledgescan.svg" alt="" width="640" height="400" loading="lazy"></div>
           </div>
           <div class="cell cell-mid">
             <h2 class="c-title">KnowledgeScan</h2>
@@ -140,7 +158,7 @@
         <article class="crow row-aside-both project-item">
           <p class="vlabel">04</p>
           <div class="cell cell-tight">
-            <div class="c-shot"><img src="assets/img/instemux.svg" alt="InstemUX design system sheet with typography, colour tokens and UI components" loading="lazy"></div>
+            <div class="c-shot"><img src="assets/img/instemux.svg" alt="" width="640" height="400" loading="lazy"></div>
           </div>
           <div class="cell cell-mid">
             <h2 class="c-title">InstemUX</h2>

@@ -9,15 +9,29 @@
     content="Stefan Carter is a product designer for the AI era. He prototypes in Claude Code, designs in Figma and ships with engineering.">
   <meta name="theme-color" content="#E5EEF2">
 
-  <link rel="icon" href="assets/img/logo.png" type="image/png">
+  <link rel="canonical" href="https://stefancarter.co.uk/about">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap"
-    rel="stylesheet">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Stefan Carter">
+  <meta property="og:url" content="https://stefancarter.co.uk/about">
+  <meta property="og:title" content="About | Stefan Carter">
+  <meta property="og:description" content="Stefan Carter is a product designer for the AI era. He prototypes in Claude Code, designs in Figma and ships with engineering.">
+  <meta property="og:image" content="https://stefancarter.co.uk/assets/img/og/about.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/assets/img/logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+
+  <link rel="preload" href="/assets/fonts/space-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/space-mono-700.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="styles.css">
   <script>document.documentElement.classList.add('js');</script>
+  <link rel="expect" href="#main-content" blocking="render">
+  <script src="js/transition.js"></script>
 </head>
 
 <body id="top" class="cert page-about">
@@ -39,6 +53,7 @@
   FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
 -->
 
+  <div class="grain" aria-hidden="true"></div>
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <nav class="cert-nav" aria-label="Primary">
@@ -189,17 +204,20 @@
         <p class="vlabel">Kudos</p>
         <div class="cell cell-pad-lg">
           <blockquote class="c-quote">
-            <p>"Stefan consistently demonstrates exceptional execution within the product team, turning ideas into
+            <p>&ldquo;Stefan consistently demonstrates exceptional execution within the product team, turning ideas into
               tangible outcomes with clarity and momentum. He has a rare ability to distill complex concepts into their
               essential components, quickly identifying issues and articulating them in a way that enables the team to
-              align and act."</p>
+              align and act.&rdquo;</p>
           </blockquote>
         </div>
         <div class="cell cell-mid">
           <p class="c-meta mb-label">Nominated by</p>
           <p class="c-title">Dr Brenda Finney</p>
           <p class="c-meta cs-2">Kudos, peer-nominated award</p>
-          <!-- TODO: add role, e.g. <p class="c-meta cs-1">Director of Product</p> -->
+          <!-- Job title not yet confirmed with Brenda. Add it here as
+               <p class="c-meta cs-1">Her actual title</p> once known - do not
+               guess one; an invented title is exactly the kind of fabricated
+               attribution PRODUCT.md rules out. -->
         </div>
       </div>
 
@@ -207,17 +225,20 @@
         <p class="vlabel">Kudos</p>
         <div class="cell cell-pad-lg">
           <blockquote class="c-quote">
-            <p>"When I first joined the team, Stefan dedicated a significant amount of time to helping me onboard, always
+            <p>&ldquo;When I first joined the team, Stefan dedicated a significant amount of time to helping me onboard, always
               taking the time to answer questions, share his knowledge, and provide guidance whenever it was needed.
               &hellip; Despite being split across multiple teams and balancing competing priorities, Stefan always puts
-              others first and gives his time and energy generously to support colleagues."</p>
+              others first and gives his time and energy generously to support colleagues.&rdquo;</p>
           </blockquote>
         </div>
         <div class="cell cell-mid">
           <p class="c-meta mb-label">Nominated by</p>
           <p class="c-title">Rachel Hemingway</p>
           <p class="c-meta cs-2">Kudos, peer-nominated award</p>
-          <!-- TODO: add role, e.g. <p class="c-meta cs-1">Product Manager</p> -->
+          <!-- Job title not yet confirmed with Rachel. Add it here as
+               <p class="c-meta cs-1">Her actual title</p> once known - do not
+               guess one; an invented title is exactly the kind of fabricated
+               attribution PRODUCT.md rules out. -->
         </div>
       </div>
 
@@ -235,7 +256,7 @@
         <div class="cell cell-tight">
           <p class="c-meta">&copy; <span id="year">2026</span> Stefan Carter</p>
         </div>
-        <div class="cell cell-tight">
+        <div class="cell cell-tight text-end">
           <a class="c-link" href="#top">Back to top <svg class="c-arrow" width="12" height="12" viewBox="0 0 24 24"
               fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
               aria-hidden="true">

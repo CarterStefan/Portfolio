@@ -7,14 +7,29 @@
   <meta name="description" content="Case study: an information website for the town of Stafford. Web design by Stefan Carter.">
   <meta name="theme-color" content="#E5EEF2">
 
-  <link rel="icon" href="../assets/img/logo.png" type="image/png">
+  <link rel="canonical" href="https://stefancarter.co.uk/projects/visit-stafford">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Stefan Carter">
+  <meta property="og:url" content="https://stefancarter.co.uk/projects/visit-stafford">
+  <meta property="og:title" content="Visit Stafford | Stefan Carter">
+  <meta property="og:description" content="Case study: an information website for the town of Stafford. Web design by Stefan Carter.">
+  <meta property="og:image" content="https://stefancarter.co.uk/assets/img/og/projects/visit-stafford.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/assets/img/logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+
+  <link rel="preload" href="/assets/fonts/space-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/space-mono-700.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="../styles.css">
   <script>document.documentElement.classList.add('js');</script>
+  <link rel="expect" href="#main-content" blocking="render">
+  <script src="../js/transition.js"></script>
 </head>
 
 <body id="top" class="cert page-case">
@@ -34,6 +49,7 @@
   FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
 -->
 
+  <div class="grain" aria-hidden="true"></div>
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <nav class="cert-nav" aria-label="Primary">
@@ -83,7 +99,7 @@
             <div class="shot-browser">
               <div class="shot-bar">
                 <span class="shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
-                <span class="shot-url">index.html</span>
+                <span class="shot-url">Home</span>
               </div>
               <img src="../assets/img/visit-stafford/desktop-hero.webp" width="1920" height="1200"
                    alt="Visit Stafford homepage hero: a black and white photograph of Church Lane behind the headline &lsquo;Come for the castle. Stay for the welcome.&rsquo;, with the second line set in the yellow of the Stafford knot, two buttons, and a row of dates reading 913, 1206 and 1595">
@@ -122,14 +138,19 @@
             <div class="shot-browser shot-scroll">
               <div class="shot-bar">
                 <span class="shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
-                <span class="shot-url">index.html</span>
+                <span class="shot-url">Home, full page</span>
+                <button class="shot-pause" type="button" aria-pressed="false">Pause</button>
               </div>
               <div class="shot-view">
-                <img src="../assets/img/visit-stafford/desktop-full.webp" width="1600" height="3969" loading="lazy"
+                <img src="../assets/img/visit-stafford/desktop-full-1600w.webp"
+                     srcset="../assets/img/visit-stafford/desktop-full-800w.webp 800w,
+                             ../assets/img/visit-stafford/desktop-full-1600w.webp 1600w"
+                     sizes="(max-width: 991px) calc(100vw - 4rem), 50rem"
+                     width="1600" height="3969" loading="lazy"
                      alt="The full Visit Stafford page from hero to footer: the Church Lane hero, an About the town section on a sage ground, the Eat, See and Stay tabs beside a map of the town, a live eight-day forecast, and a dark footer of outbound links">
               </div>
             </div>
-            <figcaption>The whole page. Hover to pause.</figcaption>
+            <figcaption>The whole page.</figcaption>
           </figure>
         </div>
       </div>
@@ -141,7 +162,7 @@
             <div class="shot-browser">
               <div class="shot-bar">
                 <span class="shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
-                <span class="shot-url">index.html</span>
+                <span class="shot-url">Home, about the town</span>
               </div>
               <img src="../assets/img/visit-stafford/desktop-intro.webp" width="1920" height="1200" loading="lazy"
                    alt="&lsquo;About the town&rsquo; section on a sage ground, headed &lsquo;Small enough to know. Old enough to keep surprising you.&rsquo; over two columns of body copy about the market square and the town&rsquo;s reputation for friendliness">
@@ -154,7 +175,7 @@
             <div class="shot-browser">
               <div class="shot-bar">
                 <span class="shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
-                <span class="shot-url">index.html</span>
+                <span class="shot-url">Home, weather</span>
               </div>
               <img src="../assets/img/visit-stafford/desktop-weather.webp" width="1920" height="1200" loading="lazy"
                    alt="Live eight-day weather forecast for Stafford ST16: a large card showing today at 13 degrees with high, low, wind and rain figures and the line &lsquo;You&rsquo;ll need a coat while strolling through Victoria Park&rsquo;, above six smaller day cards">
@@ -171,7 +192,7 @@
             <div class="shot-browser">
               <div class="shot-bar">
                 <span class="shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
-                <span class="shot-url">index.html</span>
+                <span class="shot-url">Home, places</span>
               </div>
               <img src="../assets/img/visit-stafford/desktop-places.webp" width="1920" height="1200" loading="lazy"
                    alt="&lsquo;Places to eat, see and stay&rsquo; section: Eat, See and Stay tabs above a column of place cards for Pizza Express, The Swan, The Market Vaults, The Soup Kitchen, The Bear and The Sun, each with a &lsquo;Show on map&rsquo; button, beside a map of Stafford">
@@ -212,28 +233,22 @@
         </div>
       </div>
 
-    <!-- Case study coming soon -->
-      <div class="crow row-full">
-        <p class="vlabel">Status</p>
-        <div class="cell cell-pad-lg"><p class="c-display">Full case study coming soon.</p></div>
-      </div>
-
-    <!--
-    Challenge
+    <!-- Challenge -->
       <div class="crow row-aside-left">
         <p class="vlabel">The challenge</p>
         <div class="cell cell-pad-lg"><h2 class="c-display">What was in the way</h2></div>
         <div class="cell cell-pad-lg"><p>
-              Research with residents and local businesses set the priorities:
+              Looking at how the town was represented online set the priorities:
             </p>
             <ul class="case-points">
-              <li>Information scattered across social pages, PDFs and word of mouth.</li>
-              <li>Nothing answered the visitor&rsquo;s simplest question: what is on today?</li>
-              <li>Local businesses had no easy way to be found or featured.</li>
+              <li>Information scattered across social pages, PDFs and word of mouth, with no single place that
+                answered for the town.</li>
+              <li>Nothing answered the visitor&rsquo;s simplest question on arrival: what is on today?</li>
+              <li>Local businesses had no easy way to be found or featured alongside the town&rsquo;s own attractions.</li>
             </ul></div>
       </div>
 
-    Approach
+    <!-- Approach -->
       <div class="crow row-aside-left">
         <p class="vlabel">The approach</p>
         <div class="cell cell-pad-lg"><h2 class="c-display">How we got there</h2></div>
@@ -242,83 +257,49 @@
                 <span class="type-row-num" aria-hidden="true">01</span>
                 <div>
                   <h3>Content architecture</h3>
-                  <p>Organised the town&rsquo;s content into see, do, eat, stay and what&rsquo;s on.</p>
+                  <p>The town&rsquo;s content organised into see, do, eat, stay and what&rsquo;s on, so every visitor
+                    question has an obvious place to land.</p>
                 </div>
               </li>
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">02</span>
                 <div>
                   <h3>Mobile-first, on the go</h3>
-                  <p>Designed for someone standing in the town centre asking what is near me.</p>
+                  <p>Designed for someone standing in the town centre asking what&rsquo;s near me, not for a desk
+                    browser first and a phone as an afterthought.</p>
                 </div>
               </li>
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">03</span>
                 <div>
-                  <h3>Events that stay fresh</h3>
-                  <p>A simple listings workflow so the calendar never goes stale.</p>
+                  <h3>A live forecast, not a static page</h3>
+                  <p>Real weather data pulled straight onto the homepage, since the honest answer to &ldquo;is it
+                    worth the trip today&rdquo; changes hour to hour.</p>
                 </div>
               </li>
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">04</span>
                 <div>
                   <h3>Room for every business</h3>
-                  <p>Listing templates that make the smallest caf&eacute; look as good as the biggest venue.</p>
+                  <p>Listing templates that make the smallest caf&eacute; look as good as the biggest venue, so the
+                    town&rsquo;s smaller businesses get the same shot at being found.</p>
                 </div>
               </li>
             </ol></div>
       </div>
 
-      <div class="crow row-full">
-        <p class="vlabel">Preview</p>
-        <div class="cell cell-media">
-          <img class="case-img" src="../assets/img/case-detail.svg"
-           alt="Wireframes and user-flow diagrams from the design process"></div>
-      </div>
-
-    Outcome
-    <section class="section band-light">
-      <div class="container">
-        <div class="row g-4 g-lg-5">
-          <div class="col-lg-4 reveal">
-            <p class="eyebrow">04 / The outcome</p>
-            <h2 class="case-h">What it delivered</h2>
-          </div>
-          <div class="col-lg-8 reveal">
-            <p class="big-lead">
-              Stafford now has a front door that does the town justice, and the traffic keeps growing.
+    <!-- Closing -->
+      <div class="crow row-aside-left">
+        <p class="vlabel">The outcome</p>
+        <div class="cell cell-pad-lg"><h2 class="c-display">What shipped</h2></div>
+        <div class="cell cell-pad-lg"><p class="big-lead">
+              A front door for the town that answers a visitor&rsquo;s questions on the day, not just a brochure of
+              what Stafford used to look like.
             </p>
-          </div>
-        </div>
-
-        <div class="row g-4 outcome-stats">
-          <div class="col-md-4 reveal">
-            <span class="stat-big">+150%</span>
-            <span class="stat-big-label">Organic visits year on year</span>
-          </div>
-          <div class="col-md-4 reveal">
-            <span class="stat-big">200+</span>
-            <span class="stat-big-label">Places and events listed</span>
-          </div>
-          <div class="col-md-4 reveal">
-            <span class="stat-big">70%</span>
-            <span class="stat-big-label">Of visits from mobile, designed for first</span>
-          </div>
-        </div>
-
-        <figure class="quote-lg case-quote reveal">
-          <span class="quote-mark" aria-hidden="true">&ldquo;</span>
-          <blockquote>
-            <p>It has become the answer to what is happening in Stafford, for locals as much as visitors.</p>
-          </blockquote>
-          <figcaption>
-            <span class="t-name">Town Partnership</span>
-            <span class="t-role">Visit Stafford</span>
-          </figcaption>
-        </figure>
+            <p>
+              Designed and built by me, from content architecture through to the live weather integration.
+            </p></div>
       </div>
-    </section>
-    -->
 
     <!-- Next project -->
       <div class="crow row-full">

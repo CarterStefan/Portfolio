@@ -3,6 +3,8 @@
 # Local tooling and editor config, not site content
 .claude/
 
-# Internal design/product notes — GitHub Pages would serve these publicly
+# Internal design/product notes. GitHub Pages would serve these publicly.
 PRODUCT.md
 DESIGN.md
+UI-AUDIT.md
+UI-PLAN.md

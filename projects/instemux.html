@@ -7,14 +7,29 @@
   <meta name="description" content="Case study: InstemUX, a Figma component library powering the in-house design system. Product design by Stefan Carter.">
   <meta name="theme-color" content="#E5EEF2">
 
-  <link rel="icon" href="../assets/img/logo.png" type="image/png">
+  <link rel="canonical" href="https://stefancarter.co.uk/projects/instemux">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Stefan Carter">
+  <meta property="og:url" content="https://stefancarter.co.uk/projects/instemux">
+  <meta property="og:title" content="InstemUX | Stefan Carter">
+  <meta property="og:description" content="Case study: InstemUX, a Figma component library powering the in-house design system. Product design by Stefan Carter.">
+  <meta property="og:image" content="https://stefancarter.co.uk/assets/img/og/projects/instemux.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/assets/img/logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+
+  <link rel="preload" href="/assets/fonts/space-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/space-mono-700.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="../styles.css">
   <script>document.documentElement.classList.add('js');</script>
+  <link rel="expect" href="#main-content" blocking="render">
+  <script src="../js/transition.js"></script>
 </head>
 
 <body id="top" class="cert page-case">
@@ -34,6 +49,7 @@
   FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
 -->
 
+  <div class="grain" aria-hidden="true"></div>
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <nav class="cert-nav" aria-label="Primary">
@@ -80,7 +96,7 @@
         <p class="vlabel">Preview</p>
         <div class="cell cell-media">
           <img class="case-img" src="../assets/img/instemux.svg"
-           alt="InstemUX design system sheet with typography, colour tokens and UI components"></div>
+           alt="InstemUX design system sheet with typography, colour tokens and UI components" width="640" height="400"></div>
       </div>
 
     <!-- Overview -->
@@ -95,28 +111,31 @@
             </p></div>
       </div>
 
-    <!-- Case study coming soon -->
-      <div class="crow row-full">
-        <p class="vlabel">Status</p>
-        <div class="cell cell-pad-lg"><p class="c-display">Full case study coming soon.</p></div>
-      </div>
+    <!-- Confidentiality: Instem is a regulated-domain client. Process,
+         problem framing and role can be written about; real UI screenshots
+         and client outcome metrics cannot be published. This case carries
+         its evidence in reasoning, not in numbers or screenshots - see
+         PRODUCT.md. -->
 
-    <!--
-    Challenge
+    <!-- Challenge -->
       <div class="crow row-aside-left">
         <p class="vlabel">The challenge</p>
         <div class="cell cell-pad-lg"><h2 class="c-display">What was in the way</h2></div>
         <div class="cell cell-pad-lg"><p>
-              The audit told a familiar design-system story:
+              Instem&rsquo;s product suite had grown product by product, each one solving its own problem well and
+              looking like nobody had agreed on anything:
             </p>
             <ul class="case-points">
-              <li>The same UI patterns rebuilt slightly differently in every product.</li>
-              <li>Design files drifting from what engineering actually shipped.</li>
-              <li>New projects starting from blank canvases instead of shared foundations.</li>
+              <li>Every product had drifted its own colours, spacing and component conventions, so nothing looked
+                like part of one suite.</li>
+              <li>Teams rebuilt the same components slightly differently each time, which cost design and
+                engineering effort neither had to spare.</li>
+              <li>A design system built once and left alone decays the moment the products it serves keep moving, so
+                this one had to be built to grow rather than to be finished.</li>
             </ul></div>
       </div>
 
-    Approach
+    <!-- Approach -->
       <div class="crow row-aside-left">
         <p class="vlabel">The approach</p>
         <div class="cell cell-pad-lg"><h2 class="c-display">How we got there</h2></div>
@@ -124,84 +143,52 @@
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">01</span>
                 <div>
-                  <h3>Interface audit</h3>
-                  <p>Catalogued components and patterns across the product suite to scope the system.</p>
+                  <h3>Tokens before components</h3>
+                  <p>Colour, type and spacing decided first, as the foundation every component would draw from,
+                    rather than styling each component on its own terms.</p>
                 </div>
               </li>
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">02</span>
                 <div>
-                  <h3>Token foundations</h3>
-                  <p>Colour, type, spacing and elevation defined once and shared between design and code.</p>
+                  <h3>Build from what teams already needed</h3>
+                  <p>Components built against real screens from the products already shipping, not a speculative
+                    library of everything a design system might one day need.</p>
                 </div>
               </li>
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">03</span>
                 <div>
-                  <h3>Component library</h3>
-                  <p>Accessible Figma components with variants, auto-layout and usage documentation.</p>
+                  <h3>Document for the team that didn&rsquo;t build it</h3>
+                  <p>Usage guidance written for the designer or engineer adopting a component cold, since a system
+                    nobody can use without asking is a system nobody uses.</p>
                 </div>
               </li>
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">04</span>
                 <div>
-                  <h3>Adoption &amp; governance</h3>
-                  <p>Contribution guidelines, reviews and support that keep the system alive and trusted.</p>
+                  <h3>Stay with the teams adopting it</h3>
+                  <p>Support didn&rsquo;t stop at the library. I worked with product teams through their own
+                    adoption, since that is where a system actually earns or loses trust.</p>
                 </div>
               </li>
             </ol></div>
       </div>
 
-      <div class="crow row-full">
-        <p class="vlabel">Preview</p>
-        <div class="cell cell-media">
-          <img class="case-img" src="../assets/img/case-detail.svg"
-           alt="Wireframes and user-flow diagrams from the design process"></div>
-      </div>
-
-    Outcome
-    <section class="section band-light">
-      <div class="container">
-        <div class="row g-4 g-lg-5">
-          <div class="col-lg-4 reveal">
-            <p class="eyebrow">04 / The outcome</p>
-            <h2 class="case-h">What it delivered</h2>
-          </div>
-          <div class="col-lg-8 reveal">
-            <p class="big-lead">
-              InstemUX turned every new screen into an assembly of known parts: faster to design, easier to build, consistent by default.
+    <!-- Closing -->
+      <div class="crow row-aside-left">
+        <p class="vlabel">The outcome</p>
+        <div class="cell cell-pad-lg"><h2 class="c-display">What shipped</h2></div>
+        <div class="cell cell-pad-lg"><p class="big-lead">
+              A shared visual language that Centrus, Centrus Insights and the rest of the suite now build on, rather
+              than each product inventing its own.
             </p>
-          </div>
-        </div>
-
-        <div class="row g-4 outcome-stats">
-          <div class="col-md-4 reveal">
-            <span class="stat-big">150+</span>
-            <span class="stat-big-label">Documented components and variants</span>
-          </div>
-          <div class="col-md-4 reveal">
-            <span class="stat-big">2&times;</span>
-            <span class="stat-big-label">Faster from brief to first design</span>
-          </div>
-          <div class="col-md-4 reveal">
-            <span class="stat-big">1</span>
-            <span class="stat-big-label">Shared language across the product suite</span>
-          </div>
-        </div>
-
-        <figure class="quote-lg case-quote reveal">
-          <span class="quote-mark" aria-hidden="true">&ldquo;</span>
-          <blockquote>
-            <p>New designs come together in hours now, and they look like ours from the first draft.</p>
-          </blockquote>
-          <figcaption>
-            <span class="t-name">UX Lead</span>
-            <span class="t-role">Instem</span>
-          </figcaption>
-        </figure>
+            <p>
+              InstemUX is live and still growing with the products it serves. Instem&rsquo;s client confidentiality
+              means I can write about how it was built and adopted, but not show the library itself or publish
+              outcome figures. This case study is about the system&rsquo;s design, not a component catalogue.
+            </p></div>
       </div>
-    </section>
-    -->
 
     <!-- Next project -->
       <div class="crow row-full">
@@ -232,7 +219,6 @@
 
     </main>
   </div>
-
 
   <script src="../js/main.js"></script>
 </body>

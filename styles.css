@@ -1,19 +1,20 @@
 /* ==========================================================================
-   STEFAN CARTER - PRODUCT DESIGNER PORTFOLIO (multi-page)
-   Custom styles layered on top of Bootstrap 5.
-   Design direction: big, clean, editorial typography. Fraunces (serif)
-   carries all headings, display type and quotes; Manrope (sans) carries body
-   copy and UI. Ornament stays minimal. Cool porcelain base with a muted,
-   pastel moss-green accent used sparingly - a Kindle Colorsoft-inspired
-   palette (soft, desaturated tones + a fine grain texture, never stark
-   white or pure black).
+   STEFAN CARTER - PORTFOLIO STYLESHEET (multi-page)
+   Every one of the fifteen pages runs the hard-ruled grid system (sections
+   17-19, scoped to `body.cert`): a printed-certification-document layout in
+   Space Mono, zero radius, zero shadow, unequal ruled cells and a rotated
+   edge label naming each one. No other design lives here; there is no second
+   typeface, no Bootstrap, no card-and-shadow layer underneath it.
    --------------------------------------------------------------------------
    TABLE OF CONTENTS
 
-   Every page runs the grid system (sections 17-19, scoped to `body.cert`).
-   Sections 1-16 are what remains of the previous design after the dead rules
-   were pruned; what is left is either shared plumbing or a base rule the grid
-   system builds on. Still load-bearing out of that half:
+   Sections 1-15 predate the grid system and are what survived pruning it
+   down to shared plumbing: tokens and base rules every page still resolves
+   through, plus the handful of legacy class names section 19 restyles
+   rather than replaces (kept so the nine case studies' original markup
+   never had to be rewritten). Load-bearing out of that half:
+     - the design tokens (section 1) and the self-hosted @font-face pair above it
+     - the .grain overlay                     (section 2)
      - .skip-link and .visually-hidden        (section 4)
      - .reveal and its reduced-motion rules   (section 15)
      - legacy case-study class names that section 19 restyles rather than
@@ -25,14 +26,33 @@
    3.  Shared Building Blocks
    4.  Accessibility Helpers
    8.  Typographic List Rows
-   10. Quotes / Testimonials
    12. Case-Study Pages
    13. Contact Page
    15. Scroll-Reveal & Reduced Motion
    17. Grid System
    18. Grid - Home Sheet & Component Detail
    19. Case-Study Pages In The Grid System
+   20. Page Transitions
    ========================================================================== */
+
+/* Self-hosted Space Mono, latin subset only (the two weights the site
+   actually uses). Replaces the Google Fonts <link> that used to sit in every
+   page head: one less render-blocking third-party request before first
+   paint, and no visitor IP sent to fonts.gstatic.com on page load. */
+@font-face {
+  font-family: "Space Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/fonts/space-mono-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Space Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/fonts/space-mono-700.woff2") format("woff2");
+}
 
 
 /* ==========================================================================
@@ -40,7 +60,6 @@
    ========================================================================== */
 :root {
   /* Neutrals - cool porcelain base, pastel & muted like an E Ink Kaleido panel */
-  --bg:           #EDF3F6;   /* porcelain page background               */
   --surface:      #F1F7F9;   /* raised surfaces, a shade lighter        */
   --band:         #E5EEF2;   /* pastel wash behind the sheet            */
   --ink:          #2A2620;   /* soft warm near-black for headings       */
@@ -54,25 +73,43 @@
   /* Accent (muted moss green - used sparingly) */
   --accent:       #557160;
   --accent-dark:  #415A49;   /* hover state                             */
-  --accent-soft:  #DEE8DA;   /* pale sage for chips & highlights        */
   --on-accent:    #F1F7F9;   /* paper-white text/icons on accent        */
-
-  /* RGB triplets, for rgba() mixes (glows, shadows, pulses) */
-  --ink-rgb:      42, 38, 32;
-  --accent-rgb:   85, 113, 96;
-
-  /* Shape & effects */
-  --radius:       16px;
-  --radius-lg:    24px;
-  --shadow-card:  0 24px 48px -24px rgba(var(--ink-rgb), 0.16);
 
   /* Layout */
   --nav-h:        72px;
 
-  /* Type: Fraunces (serif) carries headings & display type,
-     Manrope (sans) carries body copy and UI */
-  --font-sans:  "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-serif: "Fraunces", Georgia, "Times New Roman", serif;
+  /* The paper grain (section 2). A token so the overlay and its stand-in
+     during a page transition (section 20) paint from one definition. */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch' /%3E%3CfeColorMatrix type='saturate' values='0' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E");
+
+  /* Page transitions (section 20). Declared here rather than on .cert because
+     the ::view-transition pseudo-elements hang off <html>, not <body>, and
+     :root is the only place they inherit from.
+
+     --vt-pace scales every duration and delay at once, so the swap can be
+     made faster or slower in one number without its steps falling out of
+     proportion. Raised from 1 to 1.25 on 2026-10-05: a touch slower reads
+     better. */
+  --vt-pace:       1.25;
+  --vt-step:       calc(var(--vt-pace) * 14ms);   /* stagger between neighbouring blocks */
+  --vt-lead:       calc(var(--vt-pace) * 30ms);   /* the rail's head start on the lanes  */
+  --vt-leave:      calc(var(--vt-pace) * 190ms);  /* one old block sliding off the board */
+  --vt-arrive:     calc(var(--vt-lead) + var(--vt-leave));            /* rule 2, s.20 */
+  --vt-pack:       calc(var(--vt-pace) * 360ms);  /* one new block sliding into its lane */
+  --vt-lock-at:    calc(var(--vt-pace) * 170ms);  /* the new rail waits for the lanes    */
+  --vt-lock:       calc(var(--vt-pace) * 260ms);  /* the new rail dropping in            */
+  --vt-swap:       calc(var(--vt-pace) * 110ms);  /* the bare board starts to re-rule    */
+  --vt-rerule:     calc(var(--vt-pace) * 160ms);  /* and takes this long                 */
+  --vt-hold:       0ms;                    /* raised to --vt-arrive by html.vt-arrive */
+  --vt-ease-leave: cubic-bezier(0.4, 0, 1, 1);     /* accelerating away  */
+  --vt-ease-land:  cubic-bezier(0.16, 1, 0.3, 1);  /* the system's settle */
+
+  /* No radius, shadow or second-typeface tokens: the grid system is zero
+     radius, zero shadow and Space Mono only (--font-mono, declared on .cert
+     in section 17). The previous design's --radius, --radius-lg,
+     --shadow-card, --font-sans, --font-serif, --bg, --accent-soft and the
+     two rgb() triplets were removed on 2026-09-25 along with the last rules
+     that read them. */
 }
 
 
@@ -86,19 +123,18 @@ html {
   scroll-padding-top: calc(var(--nav-h) + 16px);
 }
 
+/* Font family and background come from .cert, which every page's body
+   carries (section 17). */
 body {
-  font-family: var(--font-sans);
-  background-color: var(--bg);
   color: var(--ink-2);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-/* All headings run in the serif; tracking is gentler than a sans needs */
+/* Heading face and weight are set by .cert h1-h6 in section 17 */
 h1, h2, h3, h4, h5, h6 {
   color: var(--ink);
-  font-family: var(--font-serif);
   font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1.15;
@@ -111,29 +147,32 @@ a:hover { color: var(--accent-dark); }
 
 ::selection { background: var(--accent); color: var(--on-accent); }
 
-/* Fine grain overlay - the soft, papery "fuzz" of an E Ink panel, laid
-   over the whole site. Fixed so it reads at a constant density regardless
-   of scroll; sits above the nav but below the skip link. Non-interactive
-   and disabled when the OS forces a high-contrast palette. */
-body::after {
-  content: "";
+/* Fine grain overlay: the soft, papery "fuzz" of an E Ink panel, laid over
+   the whole site. Fixed so it reads at a constant density regardless of
+   scroll; sits above the nav but below the skip link. Non-interactive and
+   disabled when the OS forces a high-contrast palette.
+
+   A real element (the <div class="grain"> that opens every body) rather than
+   body::after, so a page transition can keep it on top of the blocks it
+   moves. As a pseudo-element it would be baked into the page snapshot
+   beneath them, and every moving block would lose its grain and brighten
+   for the length of the swap (section 20). */
+.grain {
   position: fixed;
   inset: 0;
   z-index: 1200;
   pointer-events: none;
   opacity: 0.2;
   mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch' /%3E%3CfeColorMatrix type='saturate' values='0' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E");
+  background-image: var(--grain);
   background-size: 180px 180px;
+  view-transition-name: vt-grain;
 }
 @media (forced-colors: active) {
-  body::after { display: none; }
+  .grain { display: none; }
 }
 
 /* --- The big-type utility classes ---------------------------------------- */
-
-/* Page-opening display headline (home hero, work page header) */
-
 
 /* Large lead paragraph - the "spoken out loud" size */
 .big-lead {
@@ -144,38 +183,9 @@ body::after {
   color: var(--ink);
 }
 
-/* Accent word: serif italic with a soft highlighter sweep behind it */
-
-
 /* ==========================================================================
    3. SHARED BUILDING BLOCKS
    ========================================================================== */
-
-/* Vertical rhythm for every page band */
-.section { padding-block: clamp(4.5rem, 9vw, 7.5rem); }
-
-/* Alternating band: the faintest green wash between hairlines */
-.band-light {
-  background: var(--band);
-  border-block: 1px solid var(--line);
-}
-
-/* Small numbered label above headings */
-.eyebrow {
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 0.75rem;
-}
-
-
-/* Section header with an action on the right (e.g. "View all work") */
-
-
-/* --- Buttons -------------------------------------------------------------- */
-
 
 /* --- Arrow links ----------------------------------------------------------- */
 .link-arrow {
@@ -190,9 +200,6 @@ body::after {
 .link-arrow svg { color: var(--accent); transition: transform 0.25s ease; }
 .link-arrow:hover { color: var(--accent); }
 .link-arrow:hover svg { transform: translateX(4px); }
-
-/* Back-pointing variant ("← All work") */
-
 
 /* ==========================================================================
    4. ACCESSIBILITY HELPERS
@@ -276,60 +283,14 @@ body::after {
 
 .type-row .link-arrow { padding-top: 0.75rem; white-space: nowrap; }
 
-/* Un-numbered variant (home services): no number column in the grid */
-
-
 /* Smaller variant for numbered approach steps on case-study pages */
 .type-rows-sm .type-row h3 { font-size: clamp(1.25rem, 2.4vw, 1.6rem); }
 .type-rows-sm .type-row { padding-block: 1.5rem; }
 .type-rows-sm .type-row-num { padding-top: 0.2rem; }
 
-/* Small pill tags (kept from the service cards) */
-
-
-/* ==========================================================================
-   10. QUOTES / TESTIMONIALS
-   One oversized quote, supported by smaller ones in columns.
-   ========================================================================== */
-.quote-lg { max-width: 920px; }
-
-.quote-mark {
-  display: block;
-  font-family: var(--font-serif);
-  font-size: 3.5rem;
-  line-height: 0.6;
-  color: var(--accent);
-  margin-bottom: 1.25rem;
-}
-
-/* Big quotes are set in the serif italic - pure editorial */
-.quote-lg blockquote p {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: clamp(1.5rem, 3.4vw, 2.3rem);
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  line-height: 1.4;
-  color: var(--ink);
-  margin: 0;
-}
-
-.quote-lg figcaption { margin-top: 1.5rem; }
-
-.t-name { font-weight: 700; color: var(--ink); }
-.t-role { color: var(--muted); }
-
-/* Smaller supporting quotes.
-   max-width keeps the measure readable (~74ch) when one runs full-width
-   outside a column grid; it matches .section-lead so the two align. */
-
-
 /* ==========================================================================
    12. CASE-STUDY PAGES
    ========================================================================== */
-
-
-/* Client / Role / Timeline / Category strip */
 
 
 /* Full-width case imagery */
@@ -337,18 +298,12 @@ body::after {
   width: 100%;
   aspect-ratio: 16 / 8;
   object-fit: cover;
-  border-radius: var(--radius-lg);
   border: 1px solid var(--line);
 }
 
-/* Section headings inside a case study */
-.case-h {
-  font-size: clamp(1.9rem, 4vw, 2.8rem);
-  letter-spacing: -0.015em;
-  margin-bottom: 0;
-}
-
-/* Em-dash bullet list for challenge points */
+/* Hyphen bullet list for challenge points. Was an em dash (U+2014) until
+   2026-09-25; the global writing rule bans the character everywhere,
+   including a glyph drawn by CSS rather than typed in a document. */
 .case-points {
   list-style: none;
   margin: 2rem 0 0;
@@ -365,36 +320,11 @@ body::after {
   color: var(--ink);
 }
 .case-points li::before {
-  content: "\2014"; /* — */
+  content: "-"; /* a plain hyphen, not an em or en dash */
   color: var(--accent);
   font-weight: 700;
   flex: none;
 }
-
-/* Oversized outcome numbers */
-.outcome-stats { margin-top: clamp(2.5rem, 5vw, 3.5rem); }
-.outcome-stats > div {
-  border-top: 1px solid var(--line);
-  padding-top: 1.5rem;
-}
-.stat-big {
-  display: block;
-  font-family: var(--font-serif);
-  font-size: clamp(2.6rem, 6.5vw, 4.25rem);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.05;
-  color: var(--ink);
-}
-.stat-big-label {
-  display: block;
-  margin-top: 0.5rem;
-  font-size: 0.95rem;
-  color: var(--muted);
-  max-width: 26ch;
-}
-
-.case-quote { margin-top: clamp(3rem, 6vw, 4.5rem); }
 
 /* Giant "Next project" band - the palest green moment on the site */
 
@@ -403,7 +333,6 @@ body::after {
   display: inline-flex;
   align-items: center;
   gap: clamp(1rem, 3vw, 1.75rem);
-  font-family: var(--font-serif);
   font-size: clamp(2.2rem, 6.5vw, 4.5rem);
   font-weight: 600;
   letter-spacing: -0.015em;
@@ -438,8 +367,6 @@ body::after {
 .shot-browser {
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-card);
   overflow: hidden;
 }
 .shot-bar {
@@ -474,21 +401,45 @@ body::after {
   height: auto;
 }
 
-/* Full-page capture that scrolls itself inside the viewport */
+/* Full-page capture that scrolls itself inside the viewport. Gated on
+   html.js (no-JS visitors get a static image, never an unstoppable one) and
+   on .is-paused rather than :hover: hover is not a pause mechanism a touch
+   or keyboard visitor can reach, and WCAG 2.2.2 asks for one on anything
+   that moves on its own for longer than five seconds. .shot-pause is that
+   mechanism; see js/main.js. */
 .shot-scroll .shot-view {
   --shot-h: clamp(320px, 52vw, 620px);
   height: var(--shot-h);
   overflow: hidden;
 }
-.shot-scroll .shot-view img {
+html.js .shot-scroll .shot-view img {
   animation: shotGlide 30s ease-in-out 1.5s infinite alternate;
   will-change: transform;
 }
-.shot-scroll:hover .shot-view img { animation-play-state: paused; }
+html.js .shot-scroll.is-paused .shot-view img { animation-play-state: paused; }
 @keyframes shotGlide {
   0%, 3%    { transform: translateY(0); }
   97%, 100% { transform: translateY(calc(var(--shot-h) - 100%)); }
 }
+
+/* The pause control itself: square, ruled, same vocabulary as .c-btn so it
+   reads as part of the document rather than a bolt-on widget. Sits in the
+   browser bar after the address field, which already centres itself with
+   margin-inline: auto and leaves the bar's own edge free. */
+.shot-pause {
+  flex: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink-2);
+  padding: 0.25rem 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.shot-pause:hover,
+.shot-pause:focus-visible { color: var(--accent-dark); border-color: var(--accent); }
 
 /* Slim phone bezel for mobile captures - dark to match the client site */
 .shot-phone {
@@ -496,7 +447,6 @@ body::after {
   border: 1px solid var(--line);
   border-radius: clamp(1.6rem, 3.5vw, 2.4rem);
   padding: clamp(0.5rem, 1.2vw, 0.75rem);
-  box-shadow: var(--shadow-card);
 }
 .shot-phone img {
   display: block;
@@ -552,15 +502,10 @@ html.js .reveal.is-visible {
     transition: none;
   }
 
-
-
-
-  
   .next-link:hover svg,
-.link-arrow:hover svg {
+  .link-arrow:hover svg {
     transform: none;
   }
-  
 }
 
 
@@ -612,15 +557,18 @@ body { margin: 0; }
      label is set on it, and most of those are things you click. It was
      0.62rem (9.9px), which is under the size tracked-out uppercase mono can
      carry, so the whole bottom of the scale read as fine print. Raised to
-     0.72rem (11.5px); the list step moves with it to keep the gap between
-     the two from closing up.
+     0.72rem (11.5px), then to 0.78rem (12.5px) on 2026-09-25: still uppercase
+     and tracked, but a floor that carries the site's most-used interactive
+     label without leaning on weight and tracking alone to stay legible. The
+     list step moves with it to keep the gap between the two from closing up.
 
      Both are tokens rather than 17 literals so the floor stays one number.
      Anything that changes here changes the nav's fit first - see the note on
      .cert-nav-links a about link padding being a floor rather than a spacing
-     choice. */
-  --step-label: 0.72rem;
-  --step-list:  0.88rem;
+     choice, and the note on that rule's own font-size about why its ceiling
+     is pinned to a literal rather than to --step-label. */
+  --step-label: 0.78rem;
+  --step-list:  0.92rem;
 
   /* --- The track scale ------------------------------------------------------
      Every vertical rule on the site lands on one of five lines: the label rail,
@@ -766,8 +714,13 @@ body { margin: 0; }
    uppercase and tracked out instead. Nothing is set at 500 or 600: the browser
    would resolve those to 400 and 700 anyway, and writing them would suggest a
    distinction the face cannot draw. */
+/* Ceiling raised 3.6rem -> 4.5rem on 2026-09-25: at the old ceiling, "Stefan
+   Carter" sat well under half the height of the row-grow cell that holds it
+   on Home, and the block read as under-filled next to how big the thesis
+   comment says this system should feel. Only the ceiling moved; the floor
+   and the 5vw slope are untouched. */
 .c-hero {
-  font-size: clamp(1.45rem, 5vw, 3.6rem);
+  font-size: clamp(1.45rem, 5vw, 4.5rem);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.08;
@@ -838,12 +791,21 @@ body { margin: 0; }
   line-height: 1.62;
   color: var(--ink-2);
 }
-.c-list a { color: inherit; text-decoration: none; }
+/* display: block claims the anchor's full line box as its hit area rather
+   than just the glyphs - inline anchors otherwise size to content, which
+   left these under the 24px WCAG 2.5.8 floor despite the 1.62 line-height. */
+.c-list a {
+  display: block;
+  padding-block: 0.1rem;
+  color: inherit;
+  text-decoration: none;
+}
 .c-list a:hover,
 .c-list a:focus-visible { color: var(--hue); text-decoration: underline; }
 
 /* --- Links & buttons in the form vocabulary -------------------------------- */
 .c-link {
+  position: relative;   /* anchors the ::after hit-area extension below */
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -856,6 +818,16 @@ body { margin: 0; }
   border-bottom: 1px solid var(--hue);
   padding-bottom: 0.2rem;
   transition: color 0.15s ease;
+}
+/* The link's own box is ~18px tall - well under the 24px WCAG 2.5.8 floor,
+   and it is the most-used control on the site (every project row, every
+   footer, every case-study back-link). Padding would push the underline away
+   from the text, so the hit area is extended with a pseudo-element instead:
+   the rule stays exactly where it is, the tap target does not. */
+.c-link::after {
+  content: "";
+  position: absolute;
+  inset: -0.4rem 0;
 }
 .c-link:hover,
 .c-link:focus-visible { color: var(--hue); }
@@ -917,7 +889,14 @@ body { margin: 0; }
 }
 .cert-brand img { width: 32px; height: 32px; }
 
+/* Below 992px, where the bar is a flex row, the links share everything after
+   the mark as equal tabs instead of huddling at the right edge as four
+   word-sized buttons (since 2026-10-05). min-width stays at auto there, so
+   on a phone too narrow for four equal tabs CONTACT keeps its whole word
+   and the other three give way. From 992px the list is a grid item, where
+   flex does nothing and the quarter track below sets the width. */
 .cert-nav-links {
+  flex: 1;
   display: flex;
   list-style: none;
   margin: 0;
@@ -931,7 +910,7 @@ body { margin: 0; }
    beside it. Making the li a flex container and the anchor a stretched item
    hands the full height down: the wash fills its cell and the label centres in
    it rather than hanging from the top. */
-.cert-nav-links li { display: flex; border-left: 1px solid var(--rule); }
+.cert-nav-links li { flex: 1; display: flex; border-left: 1px solid var(--rule); }
 .cert-nav-links a {
   flex: 1;
   display: flex;
@@ -992,32 +971,39 @@ body { margin: 0; }
      group past its track and take the rule with it. Pinned at 0, the line holds
      no matter what the font metrics turn out to be. */
   .cert-nav-links { min-width: 0; }
-  .cert-nav-links li { flex: 1; min-width: 0; }
+  .cert-nav-links li { min-width: 0; }
   .cert-nav-links a {
     min-width: 0;
     padding-inline: 0.2rem;
     white-space: nowrap;
     /* The one place the label step cannot be taken at face value, and the
        tightest thing in the stylesheet. CONTACT is the longest word in the
-       bar; at the full 0.72rem step with 0.16em of tracking Space Mono sets
-       it at 62px, against the 58px share the quarter track gives it at the
-       992px floor. So the nav eases back to 0.62rem exactly where the track
-       is tightest, which brings CONTACT to 54px and leaves about 4px in
-       hand, and reaches the full step by ~1400px where there is room for it.
+       bar; at 0.72rem with 0.16em of tracking Space Mono sets it at 62px,
+       against the 58px share the quarter track gives it at the 992px floor.
+       So the nav eases back to 0.62rem exactly where the track is tightest,
+       which brings CONTACT to 54px and leaves about 4px in hand, and reaches
+       0.72rem by ~1400px where there is room for it.
+
+       The ceiling is pinned to the literal 0.72rem rather than to
+       --step-label on purpose, since 2026-09-25 when the label step rose to
+       0.78rem for the rest of the site: at 0.78rem CONTACT sets at 66px,
+       which the 992px track cannot carry, and this clamp's whole geometry
+       (the 0.62rem floor, the slope, the 1400px reach point) was measured
+       against 0.72rem. Raise the ceiling only after re-measuring this track
+       at 992px with the new size - the 4px margin doesn't have room to give.
 
        This clamp was added for Martian Mono, whose 75% width made the same
        word 46px. Space Mono has no width axis to condense, so the margin it
-       leaves is now thinner: 4px, not 13px. Measure before touching the
-       size, the tracking or the padding here, and check 992px first. Below
-       992px the bar is a flex row with real padding and takes the full step
-       throughout. */
-    font-size: clamp(0.62rem, 0.377rem + 0.392vw, var(--step-label));
+       leaves is now thinner: 4px, not 13px. Below 992px the bar is a flex
+       row whose links share the width after the mark, and takes the full
+       --step-label throughout. */
+    font-size: clamp(0.62rem, 0.377rem + 0.392vw, 0.72rem);
   }
 }
 /* Hover and current share the destination's wash, so the 2px inset rule is what
    separates them: hover is the wash alone, current is the wash plus the mark.
    That also keeps the current page legible without relying on colour alone. */
-.cert-nav-links a[aria-current="page"] {
+.cert-nav-links a[aria-current] {
   color: var(--hue-deep);
   background: var(--hue-cell);
   box-shadow: inset 0 -2px 0 var(--hue);
@@ -1290,9 +1276,12 @@ body { margin: 0; }
 
   .vlabel { font-size: var(--step-label); letter-spacing: 0.1em; padding: 0.5rem 0.25rem; }
 
-  /* Keep the wordmark on one line and let the four links share what is left. */
+  /* The links already fill the bar (see .cert-nav-links), so a phone only
+     lowers the floors: the inset and gap beside the mark, and the link
+     padding, which is a minimum here rather than the spacing. The labels
+     keep the bar's 0.16em tracking. */
   .cert-nav-inner { padding-left: 0.7rem; gap: 0.3rem; }
-  .cert-nav-links a { padding: 0.9rem 0.4rem; font-size: var(--step-label); letter-spacing: 0.04em; }
+  .cert-nav-links a { padding: 0.9rem 0.25rem; }
 }
 
 
@@ -1431,32 +1420,6 @@ body { margin: 0; }
 .c-narrow { max-width: 26ch; }
 .text-end { text-align: right; }
 
-/* --- The authored moment ----------------------------------------------------
-   The sheet prints once on load: the document settles, then the rotated
-   labels come up behind it. One orchestrated entrance, not an effect per
-   section. Content is visible by default if the animation never runs. */
-@keyframes sheet-print {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes label-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-.js .sheet-in {
-  animation: sheet-print 0.62s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-.js .sheet-in .vlabel {
-  animation: label-in 0.5s ease-out both;
-  animation-delay: 0.34s;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .js .sheet-in,
-  .js .sheet-in .vlabel { animation: none; }
-}
-
 
 /* ==========================================================================
    19. CASE-STUDY PAGES IN THE GRID SYSTEM
@@ -1468,8 +1431,8 @@ body { margin: 0; }
 /* The case studies take the Work hue (section 17) - they are the pages the
    Work index points at, so the section reads as one colour. */
 
-/* The em-dash bullet is drawn, not written, so it takes the hue. Section 12
-   colours it with the previous system's --accent; this wins on specificity. */
+/* The bullet is drawn, not written, so it takes the hue. Section 12 colours
+   it with the previous system's --accent; this wins on specificity. */
 .cert .case-points li::before { color: var(--hue); }
 
 /* Bootstrap is gone from these pages, so its row/col classes are inert.
@@ -1505,10 +1468,14 @@ body { margin: 0; }
 }
 .cert .cell p:not([class]) + p:not([class]) { margin-top: 1.1rem; }
 
+/* border-bottom: 0 on both lists: the legacy section 12 rules draw a
+   full-width --line (sand) rule under the list, which sat beneath the
+   last item's own --rule and read as a second, fainter line. */
 .cert .case-points {
   list-style: none;
   margin: 1.2rem 0 0;
   padding: 0;
+  border-bottom: 0;
 }
 .cert .case-points li {
   border-top: 1px solid var(--rule);
@@ -1517,7 +1484,7 @@ body { margin: 0; }
 .cert .case-points li:last-child { border-bottom: 1px solid var(--rule); }
 
 /* Numbered approach steps */
-.cert .type-rows { list-style: none; margin: 0; padding: 0; }
+.cert .type-rows { list-style: none; margin: 0; padding: 0; border-bottom: 0; }
 .cert .type-row {
   display: grid;
   grid-template-columns: 2.6rem 1fr;
@@ -1571,6 +1538,7 @@ body { margin: 0; }
 .cert .shot-phone {
   border: 1px solid var(--rule);
   border-radius: 0;
+  box-shadow: none;   /* the legacy rule gave both frames a soft drop shadow */
   background: var(--hue-cell);
   overflow: hidden;
 }
@@ -1606,6 +1574,22 @@ body { margin: 0; }
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+/* Squared off and ruled like .shot-url beside it, hover taking the page hue
+   like every other small control in the grid system (.c-filter, .c-link). */
+.cert .shot-pause {
+  border: 1px solid var(--rule);
+  border-radius: 0;
+  background: var(--surface);
+  font-family: var(--font-mono);
+  font-size: var(--step-label);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0.2rem 0.6rem;
+}
+.cert .shot-pause:hover,
+.cert .shot-pause:focus-visible { color: var(--hue-deep); background: var(--hue-cell); border-color: var(--rule); }
 .cert .shot-view,
 .cert .shot-scroll { display: block; }
 /* The self-scrolling full-page capture reads as a window, so its window is
@@ -1662,3 +1646,190 @@ body { margin: 0; }
    .row-2 or a .row-3. Screenshots are cells like any other, so a media row is a
    row of ruled cells rather than a stack of loose pictures, and it lands on the
    same vertical lines as the prose above it. Nothing extra is needed here. */
+
+
+/* ==========================================================================
+   20. PAGE TRANSITIONS
+   The one authored motion on the site, made of the grid itself. Rows are
+   lanes, cells are blocks, and the label rail is the key piece: first out,
+   last in, like clearing an Unblock Me board and packing it again.
+
+     Unlock   the old rail column drops off the bottom of the board
+     Clear    old lanes slide out sideways, alternating direction by lane
+     Re-rule  the bare board's rules and the nav switch to the new page
+     Pack     new lanes slide in from alternating sides
+     Lock     each new rail slides down into its lane and seats it
+
+   Only the outgoing page is snapshotted. js/transition.js names the blocks
+   in view as a page is left and tags each one's direction and stagger as a
+   view-transition-class, and the pseudo-element rules below move them. The
+   incoming page is never snapshotted: its real DOM runs Pack and Lock as
+   ordinary keyframes, seen live through the transition. That is why the
+   same entrance plays on a direct load, and in browsers without
+   cross-document transitions (Firefox), which simply skip the first half.
+
+   Two ordering rules keep blocks from passing through each other, so
+   neither is a matter of taste:
+     1. Within a lane, the block nearest the exit leaves first and the
+        farthest block arrives first. Reverse either and a block that
+        started earlier, so is moving faster, overtakes its neighbour.
+     2. --vt-arrive is --vt-lead plus --vt-leave, and both halves share
+        --vt-step, so each old lane is off the board before the new lane in
+        the same band starts. Lanes alternate direction, so without this
+        they would meet head on.
+
+   Everything moves on the translate property, never transform: .vlabel's
+   rotate(180deg) lives on transform, and translate composes outside it in
+   screen space. Reduced motion gets neither half.
+   ========================================================================== */
+
+@keyframes vt-leave { to   { translate: var(--dx, 0) var(--dy, 0); } }
+@keyframes vt-pack  { from { translate: var(--from, -100vw) 0; } }
+@keyframes vt-lock  { from { translate: 0 -100%; } }
+
+/* Lane order, and the side each lane packs in from. --r inherits from a row
+   to its cells, and the project indexes continue the count through their
+   #projectGrid wrapper. Even rows come from the right, so neighbouring lanes
+   alternate. */
+.sheet-in > :nth-child(2)    { --r: 1; }
+.sheet-in > :nth-child(3)    { --r: 2; }
+.sheet-in > :nth-child(4)    { --r: 3; }
+.sheet-in > :nth-child(5)    { --r: 4; }
+.sheet-in > :nth-child(6)    { --r: 5; }
+.sheet-in > :nth-child(7)    { --r: 6; }
+#projectGrid > :nth-child(2) { --r: 3; }
+#projectGrid > :nth-child(3) { --r: 4; }
+#projectGrid > :nth-child(4) { --r: 5; }
+:where(.sheet-in, #projectGrid) > :nth-child(even) { --from: 100vw; }
+
+/* Packing order, rule 1: the farthest block in a lane lands first. Rows from
+   the left count back from their far end; rows from the right count on from
+   the first block after the rail. Where a row's cells stack on narrow
+   screens, this just cascades the stack bottom-up or top-down. */
+:where(.sheet-in, #projectGrid) > .crow:nth-child(odd)  > :nth-last-child(2) { --c: 1; }
+:where(.sheet-in, #projectGrid) > .crow:nth-child(odd)  > :nth-last-child(3) { --c: 2; }
+:where(.sheet-in, #projectGrid) > .crow:nth-child(odd)  > :nth-last-child(4) { --c: 3; }
+:where(.sheet-in, #projectGrid) > .crow:nth-child(even) > :nth-child(3)      { --c: 1; }
+:where(.sheet-in, #projectGrid) > .crow:nth-child(even) > :nth-child(4)      { --c: 2; }
+:where(.sheet-in, #projectGrid) > .crow:nth-child(even) > :nth-child(5)      { --c: 3; }
+
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+
+  /* --- Pack and Lock: the incoming page fills its lanes -------------------- */
+
+  /* Blocks waiting at ±100vw would otherwise widen the page. clip rather than
+     hidden, so .cert-page does not become a scroll container. */
+  .js .cert-page { overflow-x: clip; }
+
+  /* The first seven rows and the first four project rows: more than any first
+     screen holds. Deeper rows sit still, which saves the long case studies
+     from animating dozens of blocks nobody can see. Each of these rows clips
+     its own content, so a rail waiting above its lane stays hidden in that
+     lane instead of showing over the rows above it. */
+  .js :where(.sheet-in > .crow:nth-child(-n+7), #projectGrid > .crow:nth-child(-n+4)) {
+    overflow: clip;
+  }
+  .js :where(.sheet-in > .crow:nth-child(-n+7), #projectGrid > .crow:nth-child(-n+4)) > *,
+  .js .sheet-in > .cert-form > .form-stack {
+    animation: vt-pack var(--vt-pack) var(--vt-ease-land) backwards;
+    animation-delay: calc(var(--vt-hold) + min(var(--r, 0) + var(--c, 0), 6) * var(--vt-step));
+  }
+
+  /* The rail goes in last: every lane's rail at once, each sliding down into
+     its lane from the lane's top rule. It paints above the cells: a lane
+     packing in from the left crosses the rail column, and its last block is
+     still easing the final few pixels into place as the rail comes down. The
+     rail covers that tail, and the block stops exactly at the rail's edge. */
+  .js :where(.sheet-in > .crow:nth-child(-n+7), #projectGrid > .crow:nth-child(-n+4)) > :first-child {
+    position: relative;
+    z-index: 1;
+    animation-name: vt-lock;
+    animation-duration: var(--vt-lock);
+    animation-delay: calc(var(--vt-hold) + var(--vt-lock-at));
+  }
+
+  /* While a transition is still clearing the old page, js/transition.js sets
+     this and the whole entrance waits for the board (rule 2). */
+  html.vt-arrive { --vt-hold: var(--vt-arrive); }
+
+  /* --- Unlock and Clear: the outgoing page's blocks leave ------------------ */
+
+  /* Nothing fades. A block keeps its snapshot until it is off the board, and
+     the surface fill makes a transparent cell as opaque as the sheet it sat
+     on, so the re-ruling board never shows through a block still leaving. */
+  ::view-transition-old(*.vt-block) {
+    animation: none;
+    background-color: var(--surface);
+  }
+
+  /* The group moves, not the image inside it. The group's transform carries
+     a label's rotate(180deg), and translate composes outside that in screen
+     space, so down is down for a rotated rail too. */
+  ::view-transition-group(*.vt-block) {
+    z-index: 1;
+    animation: vt-leave var(--vt-leave) var(--vt-ease-leave) both;
+    animation-delay: calc(var(--vt-lead) + var(--s, 0) * var(--vt-step));
+  }
+  /* The rail is the key: it goes first, and the lanes beside it follow. */
+  ::view-transition-group(*.vt-rail) {
+    z-index: 2;
+    --dy: 100vh;
+    animation-delay: 0ms;
+  }
+  ::view-transition-group(*.vt-r)  { --dx: 100vw; }
+  ::view-transition-group(*.vt-l)  { --dx: -100vw; }
+  ::view-transition-group(*.vt-s1) { --s: 1; }
+  ::view-transition-group(*.vt-s2) { --s: 2; }
+  ::view-transition-group(*.vt-s3) { --s: 3; }
+  ::view-transition-group(*.vt-s4) { --s: 4; }
+  ::view-transition-group(*.vt-s5) { --s: 5; }
+  ::view-transition-group(*.vt-s6) { --s: 6; }
+
+  /* --- Re-rule: the bare board and the nav switch over --------------------- */
+
+  /* Everything not named, which by now is the sheet's surface, its lane rules
+     and the ground, crosses to the new page once the board is mostly clear.
+     That is the moment the lanes take the new page's lines and hue. */
+  ::view-transition-group(root) {
+    animation-delay: var(--vt-swap);
+    animation-duration: var(--vt-rerule);
+  }
+
+  /* The outgoing nav, named only on the way out (js/transition.js), sits
+     above the moving blocks so they pass under it, including the part of a
+     row scrolled beneath the sticky bar. Once they have gone it fades to the
+     new page's bar, which is already in place underneath. The incoming bar
+     is never named: WebKit draws a named element's new state as an empty
+     image for part of the swap, which blanked the whole bar mid-transition. */
+  ::view-transition-group(vt-nav) {
+    z-index: 3;
+    animation-delay: var(--vt-arrive);
+    animation-duration: var(--vt-rerule);
+  }
+
+  /* The grain, on top of everything that moves. The group paints it from the
+     same token as .grain instead of showing snapshots of it, so it matches the
+     live overlay exactly, whatever a browser bakes into a snapshot. */
+  ::view-transition-group(vt-grain) {
+    z-index: 4;
+    background-image: var(--grain);
+    background-size: 180px 180px;
+    opacity: 0.2;
+    mix-blend-mode: multiply;
+    animation: none;
+  }
+  ::view-transition-image-pair(vt-grain) { display: none; }
+}
+
+/* Below 992px every label stacks into the rail column, so every label locks
+   with the rail instead of packing in with its row. */
+@media (prefers-reduced-motion: no-preference) and (max-width: 991.98px) {
+  .js :where(.sheet-in > .crow:nth-child(-n+7), #projectGrid > .crow:nth-child(-n+4)) > .vlabel {
+    position: relative;
+    z-index: 1;
+    animation-name: vt-lock;
+    animation-duration: var(--vt-lock);
+    animation-delay: calc(var(--vt-hold) + var(--vt-lock-at));
+  }
+}

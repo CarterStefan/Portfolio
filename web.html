@@ -7,14 +7,29 @@
   <meta name="description" content="Web design case studies by Stefan Carter: Nick Hampshire, No Boundaries, Visit Stafford, Bird Watcher and Wrottesley Golf Club.">
   <meta name="theme-color" content="#E5EEF2">
 
-  <link rel="icon" href="assets/img/logo.png" type="image/png">
+  <link rel="canonical" href="https://stefancarter.co.uk/web">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Stefan Carter">
+  <meta property="og:url" content="https://stefancarter.co.uk/web">
+  <meta property="og:title" content="Web Design | Stefan Carter">
+  <meta property="og:description" content="Web design case studies by Stefan Carter: Nick Hampshire, No Boundaries, Visit Stafford, Bird Watcher and Wrottesley Golf Club.">
+  <meta property="og:image" content="https://stefancarter.co.uk/assets/img/og/web.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/assets/img/logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+
+  <link rel="preload" href="/assets/fonts/space-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/space-mono-700.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="styles.css">
   <script>document.documentElement.classList.add('js');</script>
+  <link rel="expect" href="#main-content" blocking="render">
+  <script src="js/transition.js"></script>
 </head>
 
 <body id="top" class="cert page-work">
@@ -35,6 +50,7 @@
   certificate, and it does not borrow certificate language.
 -->
 
+  <div class="grain" aria-hidden="true"></div>
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <nav class="cert-nav" aria-label="Primary">
@@ -45,7 +61,7 @@
       <ul class="cert-nav-links">
         <li><a href="/">Home</a></li>
         <li><a href="/about">About</a></li>
-        <li><a href="/work" aria-current="page">Work</a></li>
+        <li><a href="/work" aria-current="true">Work</a></li>
         <li><a href="/contact">Contact</a></li>
       </ul>
     </div>
@@ -53,6 +69,19 @@
 
   <div class="cert-page">
     <main id="main-content" class="sheet sheet-in">
+
+      <!-- Discipline switch: leads the sheet, not the index head, so a
+           visitor sees the split into Product/Web before anything else -
+           moved up on 2026-09-25 (see PRODUCT.md). -->
+      <div class="crow row-full">
+        <p class="vlabel">Browse</p>
+        <div class="cell cell-tight">
+          <nav class="c-filters" aria-label="Work by discipline">
+            <a class="c-filter" href="/work">Product design</a>
+            <a class="c-filter" href="/web" aria-current="page">Web design</a>
+          </nav>
+        </div>
+      </div>
 
       <!-- Index head -->
       <div class="crow row-aside-right">
@@ -69,24 +98,17 @@
         </div>
       </div>
 
-      <!-- Discipline switch -->
-      <div class="crow row-full">
-        <p class="vlabel">Browse</p>
-        <div class="cell cell-tight">
-          <nav class="c-filters" aria-label="Work by discipline">
-            <a class="c-filter" href="/work">Product design</a>
-            <a class="c-filter" href="/web" aria-current="page">Web design</a>
-          </nav>
-        </div>
-      </div>
-
-      <!-- Projects. data-shuffle has js/main.js reorder them on every load. -->
-      <div id="projectGrid" data-shuffle>
+      <!-- Projects, in a fixed order: Nick Hampshire and No Boundaries lead,
+           since they are the two finished case studies on the site. Used to
+           shuffle on every load (data-shuffle, handled by js/main.js); dropped
+           on 2026-09-25 so the strongest evidence does not rotate away from
+           the top four loads in five. -->
+      <div id="projectGrid">
 
         <article class="crow row-aside-both project-item">
           <p class="vlabel">01</p>
           <div class="cell cell-tight">
-            <div class="c-shot"><img src="assets/img/nick-hampshire/thumb.webp" alt="Nick Hampshire homepage hero: a dark stage-lit photograph of Nick mid-talk beside the headline 'Confidence in communication. Energy in leadership. Performance at your peak.'" loading="lazy"></div>
+            <div class="c-shot"><img src="assets/img/nick-hampshire/thumb.webp" alt="Nick Hampshire homepage hero: a dark stage-lit photograph of Nick mid-talk beside the headline 'Confidence in communication. Energy in leadership. Performance at your peak.'" width="960" height="600" loading="eager" fetchpriority="high"></div>
           </div>
           <div class="cell cell-mid">
             <h2 class="c-title">Nick Hampshire</h2>
@@ -101,7 +123,7 @@
         <article class="crow row-aside-both project-item">
           <p class="vlabel">02</p>
           <div class="cell cell-tight">
-            <div class="c-shot"><img src="assets/img/no-boundaries/thumb.webp" alt="No Boundaries homepage hero: a three-photograph wall of a boy bowling, a girl driving the ball off the front foot and a group of children celebrating with their arms up, under the headline &lsquo;Every child matters&rsquo;" loading="lazy"></div>
+            <div class="c-shot"><img src="assets/img/no-boundaries/thumb.webp" alt="No Boundaries homepage hero: a three-photograph wall of a boy bowling, a girl driving the ball off the front foot and a group of children celebrating with their arms up, under the headline &lsquo;Every child matters&rsquo;" width="960" height="600" loading="lazy"></div>
           </div>
           <div class="cell cell-mid">
             <h2 class="c-title">No Boundaries</h2>
@@ -116,7 +138,7 @@
         <article class="crow row-aside-both project-item">
           <p class="vlabel">03</p>
           <div class="cell cell-tight">
-            <div class="c-shot"><img src="assets/img/visit-stafford/thumb.webp" alt="Visit Stafford homepage hero: a black and white photograph of Church Lane under the headline &lsquo;Come for the castle. Stay for the welcome.&rsquo;" loading="lazy"></div>
+            <div class="c-shot"><img src="assets/img/visit-stafford/thumb.webp" alt="Visit Stafford homepage hero: a black and white photograph of Church Lane under the headline &lsquo;Come for the castle. Stay for the welcome.&rsquo;" width="960" height="600" loading="lazy"></div>
           </div>
           <div class="cell cell-mid">
             <h2 class="c-title">Visit Stafford</h2>
@@ -131,7 +153,7 @@
         <article class="crow row-aside-both project-item">
           <p class="vlabel">04</p>
           <div class="cell cell-tight">
-            <div class="c-shot"><img src="assets/img/bird-watcher/thumb.webp" alt="Birdwatcher landing page with the headline &lsquo;Keep a life list of the birds you&rsquo;ve seen&rsquo; beside a preview of the app led by a kingfisher" loading="lazy"></div>
+            <div class="c-shot"><img src="assets/img/bird-watcher/thumb.webp" alt="Birdwatcher landing page with the headline &lsquo;Keep a life list of the birds you&rsquo;ve seen&rsquo; beside a preview of the app led by a kingfisher" width="960" height="600" loading="lazy"></div>
           </div>
           <div class="cell cell-mid">
             <h2 class="c-title">Bird Watcher</h2>
@@ -146,7 +168,7 @@
         <article class="crow row-aside-both project-item">
           <p class="vlabel">05</p>
           <div class="cell cell-tight">
-            <div class="c-shot"><img src="assets/img/wrottesley-golf.svg" alt="Wrottesley Golf Club website hero with golf course illustration and pro-shop product cards" loading="lazy"></div>
+            <div class="c-shot"><img src="assets/img/wrottesley-golf.svg" alt="Wrottesley Golf Club website hero with golf course illustration and pro-shop product cards" width="640" height="400" loading="lazy"></div>
           </div>
           <div class="cell cell-mid">
             <h2 class="c-title">Wrottesley Golf Club</h2>

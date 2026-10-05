@@ -1,63 +1,14 @@
 /* ==========================================================================
    STEFAN CARTER - PORTFOLIO INTERACTIONS
-   1. Navbar: hairline border once the page scrolls
-   2. Mobile nav: close the collapse after tapping a link
-   3. Work indexes: shuffled project order where the grid opts in
-   4. Scroll-reveal via IntersectionObserver (respects reduced motion)
-   5. Footer: current year
+   1. Scroll-reveal via IntersectionObserver (respects reduced motion)
+   2. Footer: current year
+   3. Contact form: fetch submit with an inline status message
+   4. Self-scrolling captures: a real pause control, not hover-only
    ========================================================================== */
 (function () {
   "use strict";
 
-  /* --- 1. Navbar scroll state -------------------------------------------- */
-  var nav = document.querySelector(".site-nav");
-  if (nav) {
-    var onScroll = function () {
-      nav.classList.toggle("is-scrolled", window.scrollY > 8);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-  }
-
-  /* --- 2. Auto-close the mobile menu on link click ------------------------ */
-  var navMenu = document.getElementById("navMenu");
-  if (navMenu && window.bootstrap) {
-    navMenu.querySelectorAll("a").forEach(function (link) {
-      link.addEventListener("click", function () {
-        if (navMenu.classList.contains("show")) {
-          bootstrap.Collapse.getOrCreateInstance(navMenu, { toggle: false }).hide();
-        }
-      });
-    });
-  }
-
-  /* --- 3. Project order ---------------------------------------------------- */
-  var projectGrid = document.getElementById("projectGrid");
-
-  /* Shuffle the project order on every load so no single project owns the
-     top slot. Opt-in through data-shuffle: the product index keeps a fixed
-     order so Centrus always leads. Renumbers the vertical labels so they
-     still read 01, 02, 03... down the page. */
-  if (projectGrid && projectGrid.hasAttribute("data-shuffle")) {
-    var shuffled = Array.prototype.slice.call(
-      projectGrid.querySelectorAll(".project-item")
-    );
-    for (var i = shuffled.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var swap = shuffled[i];
-      shuffled[i] = shuffled[j];
-      shuffled[j] = swap;
-    }
-    var frag = document.createDocumentFragment();
-    shuffled.forEach(function (item, index) {
-      var label = item.querySelector(".vlabel");
-      if (label) label.textContent = ("0" + (index + 1)).slice(-2);
-      frag.appendChild(item);
-    });
-    projectGrid.appendChild(frag);
-  }
-
-  /* --- 4. Scroll-reveal ---------------------------------------------------- */
+  /* --- 1. Scroll-reveal ---------------------------------------------------- */
   var reveals = document.querySelectorAll(".reveal");
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -79,7 +30,57 @@
     reveals.forEach(function (el) { el.classList.add("is-visible"); });
   }
 
-  /* --- 5. Footer year ------------------------------------------------------ */
+  /* --- 2. Footer year ------------------------------------------------------ */
   var year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
+
+  /* --- 3. Contact form ------------------------------------------------------
+     Progressive enhancement over the plain POST: without JS the form still
+     submits to Formspree and Formspree's own confirmation page is shown.
+     With JS, the submit is intercepted so the visitor never leaves the sheet,
+     and #cf-status (role="status", aria-live="polite") reports the outcome to
+     everyone, not just sighted users watching the button. */
+  var form = document.getElementById("contactForm");
+  var status = document.getElementById("cf-status");
+
+  if (form && status && window.fetch) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var btn = form.querySelector("button[type=submit]");
+      status.textContent = "Sending.";
+      btn.disabled = true;
+
+      fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" }
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error(String(res.status));
+          form.reset();
+          status.textContent = "Sent. I will come back to you shortly.";
+        })
+        .catch(function () {
+          status.textContent =
+            "That did not send. Email carter_stefan@outlook.com instead.";
+        })
+        .then(function () { btn.disabled = false; });
+    });
+  }
+
+  /* --- 4. Pause control for self-scrolling captures --------------------------
+     .shot-scroll's glide only runs once html.js is present (see styles.css),
+     so a no-JS visitor gets a static image and never needs this control. With
+     JS, the animation is gated on .is-paused rather than :hover, since hover
+     is not a pause mechanism a touch or keyboard visitor can reach - WCAG
+     2.2.2 asks for exactly this. */
+  document.querySelectorAll(".shot-pause").forEach(function (btn) {
+    var frame = btn.closest(".shot-scroll");
+    if (!frame) return;
+    btn.addEventListener("click", function () {
+      var paused = frame.classList.toggle("is-paused");
+      btn.setAttribute("aria-pressed", String(paused));
+      btn.textContent = paused ? "Play" : "Pause";
+    });
+  });
 })();

@@ -7,14 +7,29 @@
   <meta name="description" content="Case study: website and online store for Wrottesley Golf Club. Web design by Stefan Carter.">
   <meta name="theme-color" content="#E5EEF2">
 
-  <link rel="icon" href="../assets/img/logo.png" type="image/png">
+  <link rel="canonical" href="https://stefancarter.co.uk/projects/wrottesley-golf">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Stefan Carter">
+  <meta property="og:url" content="https://stefancarter.co.uk/projects/wrottesley-golf">
+  <meta property="og:title" content="Wrottesley Golf Club | Stefan Carter">
+  <meta property="og:description" content="Case study: website and online store for Wrottesley Golf Club. Web design by Stefan Carter.">
+  <meta property="og:image" content="https://stefancarter.co.uk/assets/img/og/projects/wrottesley-golf.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/assets/img/logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+
+  <link rel="preload" href="/assets/fonts/space-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/space-mono-700.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="../styles.css">
   <script>document.documentElement.classList.add('js');</script>
+  <link rel="expect" href="#main-content" blocking="render">
+  <script src="../js/transition.js"></script>
 </head>
 
 <body id="top" class="cert page-case">
@@ -34,6 +49,7 @@
   FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
 -->
 
+  <div class="grain" aria-hidden="true"></div>
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <nav class="cert-nav" aria-label="Primary">
@@ -80,7 +96,7 @@
         <p class="vlabel">Preview</p>
         <div class="cell cell-media">
           <img class="case-img" src="../assets/img/wrottesley-golf.svg"
-           alt="Wrottesley Golf Club website hero with golf course illustration and pro-shop product cards"></div>
+           alt="Wrottesley Golf Club website hero with golf course illustration and pro-shop product cards" width="640" height="400"></div>
       </div>
 
     <!-- Overview -->
@@ -95,28 +111,24 @@
             </p></div>
       </div>
 
-    <!-- Case study coming soon -->
-      <div class="crow row-full">
-        <p class="vlabel">Status</p>
-        <div class="cell cell-pad-lg"><p class="c-display">Full case study coming soon.</p></div>
-      </div>
-
-    <!--
-    Challenge
+    <!-- Challenge -->
       <div class="crow row-aside-left">
         <p class="vlabel">The challenge</p>
         <div class="cell cell-pad-lg"><h2 class="c-display">What was in the way</h2></div>
         <div class="cell cell-pad-lg"><p>
-              The club committee&rsquo;s wishlist mapped cleanly to three problems:
+              The club&rsquo;s existing site was working against the business rather than for it:
             </p>
             <ul class="case-points">
-              <li>A dated site that undersold a genuinely beautiful course.</li>
-              <li>Membership enquiries arriving by phone, if they arrived at all.</li>
-              <li>A well-stocked pro shop invisible to anyone not standing in it.</li>
+              <li>The site looked older than the club felt, and a first-time visitor deciding whether to book a round
+                had no reason to trust it.</li>
+              <li>The pro shop only opened when someone was behind the till, so a member wanting a glove or a box of
+                balls on a Tuesday evening was out of luck.</li>
+              <li>Visitors and members wanted different things from the same homepage: one group needed convincing,
+                the other just needed the tee sheet and the shop.</li>
             </ul></div>
       </div>
 
-    Approach
+    <!-- Approach -->
       <div class="crow row-aside-left">
         <p class="vlabel">The approach</p>
         <div class="cell cell-pad-lg"><h2 class="c-display">How we got there</h2></div>
@@ -124,84 +136,42 @@
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">01</span>
                 <div>
-                  <h3>Lead with the course</h3>
-                  <p>Photography-first design that lets the parkland do the selling.</p>
+                  <h3>Design for two visits, not one</h3>
+                  <p>The homepage leads with the course and the club for a first-time visitor, then gets out of the
+                    way fast for a member who already knows what they want.</p>
                 </div>
               </li>
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">02</span>
                 <div>
-                  <h3>Clear visitor journeys</h3>
-                  <p>Green fees, opening times and how to find us, answered without hunting.</p>
+                  <h3>A shop that doesn&rsquo;t keep hours</h3>
+                  <p>The pro shop moved online in full, not as an afterthought bolted onto a brochure site, so it
+                    could sell whenever a member happened to think of it.</p>
                 </div>
               </li>
               <li class="type-row">
                 <span class="type-row-num" aria-hidden="true">03</span>
                 <div>
-                  <h3>Membership funnel</h3>
-                  <p>From curiosity to enquiry in two clicks, with options explained plainly.</p>
-                </div>
-              </li>
-              <li class="type-row">
-                <span class="type-row-num" aria-hidden="true">04</span>
-                <div>
-                  <h3>The 24/7 pro shop</h3>
-                  <p>An integrated store bringing club stock online with simple fulfilment.</p>
+                  <h3>Design, build and ship, solo</h3>
+                  <p>One person end to end: design, front-end build and launch, on an eight-week timeline set by the
+                    club&rsquo;s own calendar.</p>
                 </div>
               </li>
             </ol></div>
       </div>
 
-      <div class="crow row-full">
-        <p class="vlabel">Preview</p>
-        <div class="cell cell-media">
-          <img class="case-img" src="../assets/img/case-detail.svg"
-           alt="Wireframes and user-flow diagrams from the design process"></div>
-      </div>
-
-    Outcome
-    <section class="section band-light">
-      <div class="container">
-        <div class="row g-4 g-lg-5">
-          <div class="col-lg-4 reveal">
-            <p class="eyebrow">04 / The outcome</p>
-            <h2 class="case-h">What it delivered</h2>
-          </div>
-          <div class="col-lg-8 reveal">
-            <p class="big-lead">
-              The club&rsquo;s online presence finally matches the course, and the shop now sells while the clubhouse sleeps.
+    <!-- Closing -->
+      <div class="crow row-aside-left">
+        <p class="vlabel">The outcome</p>
+        <div class="cell cell-pad-lg"><h2 class="c-display">What shipped</h2></div>
+        <div class="cell cell-pad-lg"><p class="big-lead">
+              A site that welcomes a stranger and gets out of a member&rsquo;s way, with a shop that&rsquo;s open
+              whenever they are.
             </p>
-          </div>
-        </div>
-
-        <div class="row g-4 outcome-stats">
-          <div class="col-md-4 reveal">
-            <span class="stat-big">+60%</span>
-            <span class="stat-big-label">Membership enquiries after launch</span>
-          </div>
-          <div class="col-md-4 reveal">
-            <span class="stat-big">24/7</span>
-            <span class="stat-big-label">Pro shop trading hours</span>
-          </div>
-          <div class="col-md-4 reveal">
-            <span class="stat-big">1st</span>
-            <span class="stat-big-label">Online store in the club&rsquo;s history</span>
-          </div>
-        </div>
-
-        <figure class="quote-lg case-quote reveal">
-          <span class="quote-mark" aria-hidden="true">&ldquo;</span>
-          <blockquote>
-            <p>Members love it, visitors find us, and the shop takes orders at midnight. What more could we ask.</p>
-          </blockquote>
-          <figcaption>
-            <span class="t-name">Club Secretary</span>
-            <span class="t-role">Wrottesley Golf Club</span>
-          </figcaption>
-        </figure>
+            <p>
+              Designed, built and shipped by me alone, front to back, in eight weeks.
+            </p></div>
       </div>
-    </section>
-    -->
 
     <!-- Next project -->
       <div class="crow row-full">
@@ -232,7 +202,6 @@
 
     </main>
   </div>
-
 
   <script src="../js/main.js"></script>
 </body>
