@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Preclinical Insights | Stefan Carter</title>
+  <meta name="description" content="Case study: Preclinical Insights, a toxicology data product taken from beta to MVP with four early-adopter customers. Product design and research by Stefan Carter.">
+  <meta name="theme-color" content="#EEF3F6">
+
+  <link rel="canonical" href="https://stefancarter.co.uk/projects/preclinical-insights">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Stefan Carter">
+  <meta property="og:url" content="https://stefancarter.co.uk/projects/preclinical-insights">
+  <meta property="og:title" content="Preclinical Insights | Stefan Carter">
+  <meta property="og:description" content="Case study: Preclinical Insights, a toxicology data product taken from beta to MVP with four early-adopter customers. Product design and research by Stefan Carter.">
+  <meta property="og:image" content="https://stefancarter.co.uk/assets/img/og/projects/preclinical-insights.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/assets/img/logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+
+  <link rel="preload" href="/assets/fonts/space-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/space-mono-700.woff2" as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="../styles.css">
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="expect" href="#main-content" blocking="render">
+  <script src="../js/transition.js"></script>
+</head>
+
+<body id="top" class="cert page-case">
+<!--
+  THESIS: A case study held in the same hard-ruled grid as the rest of the site.
+  It refuses the centred article column and the full-bleed image essay.
+  OWN-WORLD: 1px rules in the page hue, zero radius, zero shadow, cells in #FAFCFD on a
+  #EEF3F6 ground. Space Mono only. Hue is rose pink #9E4E68, shared with the Work
+  index, on the label rail, the screenshot frames and the closing band.
+  STORY: The visitor reads what the project was, what was hard, and what shipped,
+  then moves to the next project or gets in touch.
+  FIRST VIEWPORT: Header rail, the project name at display scale with its summary,
+  and the client/role/timeline metadata cell beside it, then two customer quotes
+  so the verdict lands before the story.
+  FORM: Hard-ruled grid system, taken from a certificate reference for its
+  styling and structure only - big blocks, hard rules, mono type. Not a
+  certificate, and it does not borrow certificate language.
+  FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+-->
+
+  <div class="grain" aria-hidden="true"></div>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <nav class="cert-nav" aria-label="Primary">
+    <div class="cert-nav-inner">
+      <a class="cert-brand" href="/">
+        <img src="../assets/img/logo.png" alt="Stefan Carter, home" width="32" height="32">
+      </a>
+      <ul class="cert-nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/work" aria-current="page">Work</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="cert-page">
+    <main id="main-content" class="sheet sheet-in">
+
+      <div class="crow row-head">
+        <p class="vlabel">Case</p>
+        <div class="cell cell-tight">
+          <a class="c-link" href="/work"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Product design</a>
+        </div>
+        <div class="cell cell-pad-lg">
+          <p class="c-meta mb-label">Product Design, 2026</p>
+          <h1 class="c-hero">Preclinical Insights</h1>
+          <p class="c-body cs-3">A toxicology data product, taken from beta to MVP in customers&rsquo; own hands.</p>
+        </div>
+        <p class="vlabel">Project</p>
+        <div class="cell cell-tight">
+            <p class="c-meta mb-label">Client</p>
+            <p class="c-title cs-1 mb-gap">Instem</p>
+            <p class="c-meta mb-label">Role</p>
+            <p class="c-title cs-1 mb-gap">Product Designer</p>
+            <p class="c-meta mb-label">Timeline</p>
+            <p class="c-title cs-1 mb-gap">10-week programme</p>
+            <p class="c-meta mb-label">Category</p>
+            <p class="c-title cs-1 mb-gap">Product Design</p>
+        </div>
+      </div>
+
+    <!-- The verdict first: what customers said, before how it was made -->
+      <div class="crow row-2">
+        <p class="vlabel">In their words</p>
+        <div class="cell cell-pad-lg c-rail">
+          <blockquote class="c-quote c-quote-lead">
+            <p>&ldquo;In one page you have all for this animal, so you can compare&hellip; it is really, really
+              useful.&rdquo;</p>
+          </blockquote>
+          <div>
+            <p class="c-title">Study Director</p>
+            <p class="c-meta cs-1">Early adopter, CRO</p>
+          </div>
+        </div>
+        <div class="cell cell-pad-lg c-rail">
+          <blockquote class="c-quote c-quote-lead">
+            <p>&ldquo;We have truly felt that you have valued all our feedback&hellip; a true pleasure working with
+              you.&rdquo;</p>
+          </blockquote>
+          <div>
+            <p class="c-title">Written feedback</p>
+            <p class="c-meta cs-1">Early adopter, CRO</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="crow row-full">
+        <p class="vlabel">Preview</p>
+        <div class="cell cell-media">
+          <figure class="case-shot case-shot-wide">
+            <img class="case-img" src="../assets/img/preclinical-insights.svg"
+             alt="Illustration of a study-data dashboard with bar, line and donut charts" width="640" height="400">
+            <figcaption>An illustration, not a screenshot. The real interface stays confidential.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+    <!-- Confidentiality: product and system names are generic on purpose,
+         and no real UI or outcome metrics appear. See PRODUCT.md. -->
+
+    <!-- At a glance: research volume, not product outcomes -->
+      <div class="crow row-4">
+        <p class="vlabel">At a glance</p>
+        <div class="cell">
+          <p class="c-num">4</p>
+          <p class="c-meta cs-2">Partner organisations</p>
+          <p class="c-body cs-2">Three CROs and one global pharma.</p>
+        </div>
+        <div class="cell">
+          <p class="c-num">10</p>
+          <p class="c-meta cs-2">Weeks in use</p>
+          <p class="c-body cs-2">In their own environment, on their own work.</p>
+        </div>
+        <div class="cell">
+          <p class="c-num">18</p>
+          <p class="c-meta cs-2">Recorded sessions</p>
+          <p class="c-body cs-2">Roughly 21 hours with around 26 customer participants.</p>
+        </div>
+        <div class="cell">
+          <p class="c-num">121</p>
+          <p class="c-meta cs-2">Opportunities</p>
+          <p class="c-body cs-2">Scored and prioritised for the MVP release.</p>
+        </div>
+      </div>
+
+    <!-- Overview -->
+      <div class="crow row-aside-left">
+        <p class="vlabel">Overview</p>
+        <div class="cell cell-pad-lg"><h2 class="c-display">The brief</h2></div>
+        <div class="cell cell-pad-lg"><p class="big-lead">
+              Turn a crowded proof-of-concept into a focused MVP, and prove it with real customers before the full build.
+            </p>
+            <p>
+              Study data lives in a GLP system of record, and getting insight out of it is slow and manual. Our
+              proof-of-concept could visualise some of it, but had more graphs than anyone could use. My first design
+              job was subtraction: five core graphs, matched to how a scientist actually reviews a study.
+            </p>
+            <p>
+              I owned the design research and the design of the MVP, from framing the questions to a prioritised plan
+              for the release.
+            </p></div>
+      </div>
+
+    <!-- The two givens the design worked within -->
+      <div class="crow row-2">
+        <p class="vlabel">Constraints</p>
+        <div class="cell cell-pad-lg">
+          <p class="c-meta mb-label">Read-only</p>
+          <h2 class="c-title">The system of record stays the source of truth</h2>
+          <p class="c-body cs-2">
+            A support tool, never a record itself, and demonstrably faithful to the raw data.
+          </p>
+        </div>
+        <div class="cell cell-pad-lg">
+          <p class="c-meta mb-label">White-labelled</p>
+          <h2 class="c-title">A third-party platform, made ours</h2>
+          <p class="c-body cs-2">
+            I kept the white-labelling in line with <a href="/projects/instemux">our in-house design system</a>: the
+            type, colour, components and patterns of the rest of the suite. Anything that looks bolted on makes people
+            doubt the data too.
+          </p>
+        </div>
+      </div>
+
+    <!-- Challenge -->
+      <div class="crow row-aside-left">
+        <p class="vlabel">The challenge</p>
+        <div class="cell cell-pad-lg"><h2 class="c-display">What was in the way</h2></div>
+        <div class="cell cell-pad-lg"><p>
+              Reviewing a study meant exporting data, rebuilding tables and graphs in Excel, and pasting screenshots
+              into PowerPoint. Slow, error-prone, and static at the end of it. Three groups carried the cost:
+            </p>
+            <ul class="case-points">
+              <li>Study directors, rebuilding welfare checks and sponsor updates by hand.</li>
+              <li>Pathologists, assembling incidence tables, then checking them again.</li>
+              <li>IT and data teams, answerable for security and provenance.</li>
+            </ul>
+            <p class="c-body cs-4">
+              The goal was never to replace expert judgement. It was a faster, trustworthy second pair of eyes.
+            </p></div>
+      </div>
+
+      <div class="crow row-aside-right">
+        <p class="vlabel">In their words</p>
+        <div class="cell cell-pad-lg">
+          <blockquote class="c-quote">
+            <p>&ldquo;It&rsquo;s a dead PDF, so you cannot click on any data point&hellip; you have to sit with multiple
+              PDFs open to get the same information.&rdquo;</p>
+          </blockquote>
+        </div>
+        <div class="cell cell-mid">
+          <p class="c-meta mb-label">Early adopter</p>
+          <p class="c-title">Study Director</p>
+          <p class="c-meta cs-2">CRO</p>
+        </div>
+      </div>
+
+    <!-- Programme and synthesis -->
+      <div class="crow row-aside-left">
+        <p class="vlabel">The programme</p>
+        <div class="cell cell-pad-lg"><h2 class="c-display">Real use, not imagined use</h2></div>
+        <div class="cell cell-pad-lg"><p class="big-lead">
+              Not a workshop or a screen review. Four customers lived with the beta in their own environment, on their
+              real work.
+            </p>
+            <p>
+              I ran one plan the same way for all four: the same questions, the same studies and graphs, one analysis
+              framework. That made 554 datapoints comparable. I turned them into 121 opportunities scored by customer
+              value, so the roadmap followed evidence rather than the loudest voice.
+            </p></div>
+      </div>
+
+    <!-- The MVP -->
+      <div class="crow row-aside-left">
+        <p class="vlabel">The MVP</p>
+        <div class="cell cell-pad-lg"><h2 class="c-display">Five graphs, done well</h2></div>
+        <div class="cell cell-pad-lg"><p class="big-lead">
+              The clearest win was the subject view: everything about one animal on a single page.
+            </p>
+            <p>
+              Lab results, body weight, clinical incidence and pathology findings sit together instead of across
+              separate tables. Around it, interactive lab graphs make outliers jump out in seconds, and I designed for
+              trust:
+            </p>
+            <ul class="case-points">
+              <li>A data-volume barometer and clear filters, so users know what they&rsquo;re looking at.</li>
+              <li>Saved, shareable explorations instead of &ldquo;summarise, screenshot, email&rdquo;.</li>
+              <li>Visible provenance and an explicit read-only boundary.</li>
+            </ul></div>
+      </div>
+
+    <!-- Subject view, request to release. Weeks count from the request;
+         calendar dates are left off so the release can't be dated. -->
+      <div class="crow row-4">
+        <p class="vlabel">Subject view</p>
+        <div class="cell">
+          <p class="c-meta">Week 0</p>
+          <h3 class="c-title cs-2">Asked for</h3>
+          <p class="c-body cs-1">Raised by a customer in an early session.</p>
+        </div>
+        <div class="cell">
+          <p class="c-meta">Week 2</p>
+          <h3 class="c-title cs-2">Shaped</h3>
+          <p class="c-body cs-1">Designed with the cohort.</p>
+        </div>
+        <div class="cell">
+          <p class="c-meta">Week 4</p>
+          <h3 class="c-title cs-2">Shipped</h3>
+          <p class="c-body cs-1">Released mid-programme.</p>
+        </div>
+        <div class="cell">
+          <p class="c-meta">Programme close</p>
+          <h3 class="c-title cs-2">Valued</h3>
+          <p class="c-body cs-1">Praised by all four organisations.</p>
+        </div>
+      </div>
+
+    <!-- The heat map: the decision that was wrong first -->
+      <div class="crow row-aside-left">
+        <p class="vlabel">Heat map</p>
+        <div class="cell cell-pad-lg"><h2 class="c-display">A decision I got wrong first</h2></div>
+        <div class="cell cell-pad-lg"><p class="big-lead">
+              Pathologists called my first heat map &ldquo;messy&rdquo;. They were right.
+            </p>
+            <p>
+              Pathologists in three of the four organisations pushed back, so I reframed it and held it out of the MVP,
+              rather than ship a graph the experts wouldn&rsquo;t trust.
+            </p></div>
+      </div>
+
+      <div class="crow row-2">
+        <p class="vlabel">Revision</p>
+        <div class="cell cell-pad-lg">
+          <p class="c-meta mb-label">Version one</p>
+          <h3 class="c-title">Severity blended in</h3>
+          <ul class="case-points">
+            <li>Severity mixed with location and distribution</li>
+            <li>Read as &ldquo;messy&rdquo; by pathologists</li>
+            <li>Potentially misleading</li>
+          </ul>
+        </div>
+        <div class="cell cell-pad-lg">
+          <p class="c-meta mb-label">Redesign</p>
+          <h3 class="c-title">Reframed</h3>
+          <ul class="case-points">
+            <li>Built on affected-animal incidence</li>
+            <li>Severity-first logic</li>
+            <li>Pathologist-led, held back from the MVP</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="crow row-3">
+        <p class="vlabel">Findings</p>
+        <div class="cell cell-pad-lg">
+          <p class="c-meta mb-label">All four partners</p>
+          <h3 class="c-title">Winners</h3>
+          <ul class="case-points">
+            <li>The subject view</li>
+            <li>Interactive clinical-pathology and lab-results graphs</li>
+            <li>Saved, shareable explorations</li>
+          </ul>
+        </div>
+        <div class="cell cell-pad-lg">
+          <p class="c-meta mb-label">Three of four</p>
+          <h3 class="c-title">The detractor</h3>
+          <ul class="case-points">
+            <li>The histopathology heat map</li>
+            <li>Redesign it, don&rsquo;t ship it as it is</li>
+          </ul>
+        </div>
+        <div class="cell cell-pad-lg">
+          <p class="c-meta mb-label">Must hold</p>
+          <h3 class="c-title">Non-negotiables</h3>
+          <ul class="case-points">
+            <li>Data fidelity and provenance</li>
+            <li>The read-only, GLP boundary</li>
+            <li>Security, segregation and governance</li>
+          </ul>
+        </div>
+      </div>
+
+    <!-- The clearest signal -->
+      <div class="crow row-aside-left">
+        <p class="vlabel">Key signal</p>
+        <div class="cell cell-pad-lg"><h2 class="c-display">The clearest signal</h2></div>
+        <div class="cell cell-pad-lg"><p class="big-lead">
+              Is this normal?
+            </p>
+            <p>
+              A liver enzyme reading or an organ weight means little until you can compare it with what&rsquo;s normal.
+              That comparison is historical control data. All four organisations raised it independently, as a
+              must-have before they would switch tools: &ldquo;the basis for everything&rdquo;.
+            </p>
+            <p>
+              The design implication: overlay those ranges on the core graphs, so a bare number becomes an answer.
+            </p></div>
+      </div>
+
+    <!-- Closing -->
+      <div class="crow row-aside-left">
+        <p class="vlabel">The outcome</p>
+        <div class="cell cell-pad-lg"><h2 class="c-display">What shipped</h2></div>
+        <div class="cell cell-pad-lg"><p class="big-lead">
+              The MVP led with what the research proved, and made trust visible.
+            </p>
+            <p>
+              The subject view, interactive lab graphs, filtering and shareable links shipped to the early-adopter
+              cohort, read-only with visible provenance. The contested heat map waited for its redesign.
+            </p>
+            <p>
+              It launched without tracking, so there are no impact figures yet. Next comes proving it, starting with
+              time to insight and reporting time saved, and a deep dive into historical control data.
+            </p></div>
+      </div>
+
+      <div class="crow row-aside-left">
+        <p class="vlabel">Hindsight</p>
+        <div class="cell cell-pad-lg"><h2 class="c-display">What I&rsquo;d do differently</h2></div>
+        <div class="cell cell-pad-lg"><ul class="case-points">
+              <li>Load customers&rsquo; own data from day one, so they judge it on their own studies.</li>
+              <li>Instrument the product from the start.</li>
+            </ul></div>
+      </div>
+
+    <!-- Next project -->
+      <div class="crow row-full">
+        <p class="vlabel">Next</p>
+        <div class="cell cell-pad-lg">
+          <p class="c-meta mb-label">Next project</p>
+          <a class="next-link" href="/projects/knowledgescan">KnowledgeScan</a>
+        </div>
+      </div>
+
+      <div class="crow row-full cert-foot">
+        <p class="vlabel">Get in touch</p>
+        <div class="cell cell-pad-lg">
+          <p class="c-meta mb-label">Want to talk?</p>
+          <a class="cert-mail" href="mailto:carter_stefan@outlook.com">carter_stefan@outlook.com</a>
+        </div>
+      </div>
+
+      <div class="crow row-aside-right">
+        <div class="cell" aria-hidden="true"></div>
+        <div class="cell cell-tight">
+          <p class="c-meta">&copy; <span id="year">2026</span> Stefan Carter</p>
+        </div>
+        <div class="cell cell-tight text-end">
+          <a class="c-link" href="#top">Back to top <svg class="c-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="20" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></a>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

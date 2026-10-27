@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Contact | Stefan Carter</title>
   <meta name="description" content="Get in touch with Stefan Carter, product designer. Start a project, ask a question or just say hello.">
-  <meta name="theme-color" content="#E5EEF2">
+  <meta name="theme-color" content="#EEF3F6">
 
   <link rel="canonical" href="https://stefancarter.co.uk/contact">
 
@@ -37,7 +37,7 @@
   THESIS: The page is the form, held in one hard-ruled grid. It refuses the
   centred card and the decorative split-screen hero.
   OWN-WORLD: Hard-ruled form grid on cool Kaleido paper. 1px rules in the page hue, zero
-  radius, zero shadow, cells in #F1F7F9 on a #E5EEF2 ground. Space
+  radius, zero shadow, cells in #FAFCFD on a #EEF3F6 ground. Space
   Mono only. This page's hue is slate blue #4A6A85, washing the invitation cell
   above the form and the direct-contact cell below it, so the form is framed
   in colour top and bottom.
@@ -82,15 +82,13 @@
         </div>
       </div>
 
-      <!-- The form posts to Formspree. REPLACE "your-form-id" BELOW WITH A REAL
-           FORM ID FROM formspree.io/forms BEFORE THIS GOES LIVE - it is still
-           the documentation placeholder, so submissions currently go nowhere.
-           js/main.js intercepts the submit when JS is available and reports
-           success or failure in #cf-status; without JS the plain POST still
-           reaches Formspree and Formspree's own confirmation page is shown.
-           Until a real ID is set, the mailto link below is the only working
-           route. -->
-      <form class="cert-form" id="contactForm" action="https://formspree.io/f/your-form-id" method="POST">
+      <!-- The form posts to Formspree, which emails each enquiry to the address
+           on Stefan's Formspree account (form "mljgbyaq", managed at
+           formspree.io/forms). js/main.js intercepts the submit when JS is
+           available and reports success or failure in #cf-status; without JS
+           the plain POST still reaches Formspree and Formspree's own
+           confirmation page is shown. -->
+      <form class="cert-form" id="contactForm" action="https://formspree.io/f/mljgbyaq" method="POST">
         <div class="form-stack">
 
           <div class="form-field">
@@ -112,6 +110,10 @@
                to humans, filled in by most simple bots. Formspree drops any
                submission where this is non-empty. -->
           <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="visually-hidden" aria-hidden="true">
+
+          <!-- Subject line of the notification email. Formspree fills in the
+               sender's name; the "email" field above sets the Reply-To. -->
+          <input type="hidden" name="subject" value="Portfolio enquiry from {{ name }}">
 
           <button class="c-btn c-btn-block" type="submit">Send message</button>
 
