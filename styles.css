@@ -2223,6 +2223,23 @@ body { margin: 0; }
   .page-home .cell-portrait .c-portrait { aspect-ratio: 1; }
 }
 
+/* Stacked below lg, the portrait would sit straight under the opening and
+   push the rest of the page a screen down. At those widths it moves to the
+   foot of the page instead: each page carries a second copy in a closing
+   .row-portrait, and the cell in the opening row drops out. Whichever copy
+   is hidden measures nothing, so js/main.js leaves it unprinted until a
+   resize brings it into view. */
+.row-portrait { display: none; }
+@media (max-width: 991.98px) {
+  .row-portrait { display: grid; }
+  .crow:not(.row-portrait) > .cell-portrait { display: none; }
+}
+/* On Home the closing row is the last one, so while it is hidden the row
+   above it is the last that shows and drops its bottom rule. */
+@media (min-width: 992px) {
+  .crow:has(+ .row-portrait:last-child) { border-bottom: 0; }
+}
+
 /* --- The nav's rail -----------------------------------------------------------
    The brand takes the rail's track in the rail's black, so the rail runs
    unbroken from the top of every page to the bottom. */
