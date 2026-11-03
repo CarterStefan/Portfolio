@@ -6,7 +6,8 @@
    (styles.css section 20); this only tells it which blocks to move.
    1. Leaving: name the nav and the blocks in view, and tag how each exits
    2. Arriving: hold the entrance until the old blocks are off the board
-   3. Clicks during the swap: pass them on to the link under the pointer
+   3. Clicks during the swap and the entrance: pass them on to the link
+      under the pointer
    4. Prefetch on hover, so a swap starts the moment a link is pressed
    ========================================================================== */
 (function () {
@@ -136,6 +137,14 @@
     /* The nav sits over the sheet, so a point on it can only mean the nav. */
     var nav = document.querySelector(".cert-nav");
     var scope = nav && hit(nav.getBoundingClientRect()) ? nav : document.querySelector(".sheet");
+    /* A project row is one link: its case-study link is stretched over the
+       whole row by a pseudo-element (styles.css, section 21), and a
+       pseudo-element has no box to measure. */
+    var rows = scope ? scope.querySelectorAll(".project-item") : [];
+    for (var r = 0; r < rows.length; r++) {
+      var rowLink = rows[r].querySelector("a[href]");
+      if (rowLink && hit(rows[r].getBoundingClientRect())) return rowLink;
+    }
     var links = scope ? scope.querySelectorAll("a[href]") : [];
     for (var i = 0; i < links.length; i++) {
       /* A row clips the blocks still sliding into it. */
@@ -168,6 +177,22 @@
     var link = linkAt(e.clientX, e.clientY);
     if (link) link.click();
   }, true);
+
+  /* The entrance has the same problem on a smaller scale. A project row's
+     link is stretched over the row by a positioned pseudo-element, and while
+     the row's cells are still sliding in, each moving cell becomes that
+     pseudo-element's containing block. For the first half-second of a page
+     the link covers only its own cell, so a click on the title lands on the
+     row and is passed on from here. Registered from <head> so it is live
+     from the first frame. Plain clicks only, as above; once the row has
+     settled, the stretched link takes modified clicks itself. */
+  document.addEventListener("click", function (e) {
+    if (e.defaultPrevented || e.button || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+    var row = e.target.closest && e.target.closest(".project-item");
+    if (!row || e.target.closest("a, button")) return;
+    var link = row.querySelector("a[href]");
+    if (link) link.click();
+  });
 
   /* --- 4. Prefetch on hover ---------------------------------------------------
      A transition can only start once the next page has arrived, so the

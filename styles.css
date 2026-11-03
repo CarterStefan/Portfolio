@@ -33,6 +33,7 @@
    18. Grid - Home Sheet & Component Detail
    19. Case-Study Pages In The Grid System
    20. Page Transitions
+   21. Black Ink Trial
    ========================================================================== */
 
 /* Self-hosted Space Mono, latin subset only (the two weights the site
@@ -555,6 +556,8 @@ body { margin: 0; }
      towards ink with color-mix(in srgb, var(--hue) 70%, var(--ink)). The warm
      sand hairline (--line) remains far too soft to carry the grid. */
   --rule: var(--hue);
+  /* Its weight, likewise one number for every rule in the system. */
+  --rule-w: 1px;
 
   /* --- The two small steps --------------------------------------------------
      The label step is the floor of the scale and does the most work: every
@@ -658,7 +661,7 @@ body { margin: 0; }
    One ruled document. Cells carry right/bottom rules and the sheet closes
    the outer edge, so rules never double up. */
 .sheet {
-  border: 1px solid var(--rule);
+  border: var(--rule-w) solid var(--rule);
   border-inline: 0;
   background: var(--surface);
   width: 100%;
@@ -666,12 +669,12 @@ body { margin: 0; }
 
 .crow {
   display: grid;
-  border-bottom: 1px solid var(--rule);
+  border-bottom: var(--rule-w) solid var(--rule);
 }
 .crow:last-child { border-bottom: 0; }
 
 .cell {
-  border-right: 1px solid var(--rule);
+  border-right: var(--rule-w) solid var(--rule);
   padding: clamp(1rem, 2vw, 1.6rem);
   min-width: 0;           /* let long mono strings wrap instead of blowing out */
   overflow-wrap: break-word;  /* and break one only if it cannot fit whole */
@@ -696,7 +699,7 @@ body { margin: 0; }
    in the page hue draws a continuous coloured rail down the whole sheet -
    the loudest the colour gets, and the reason it needs no help elsewhere. */
 .vlabel {
-  border-right: 1px solid var(--rule);
+  border-right: var(--rule-w) solid var(--rule);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -849,7 +852,7 @@ body { margin: 0; }
 .c-btn {
   display: inline-block;
   align-self: start;   /* do not stretch to the full width of a flex cell */
-  border: 1px solid var(--rule);
+  border: var(--rule-w) solid var(--rule);
   border-radius: 0;
   background: var(--ink);
   color: var(--surface);
@@ -877,7 +880,7 @@ body { margin: 0; }
 
 /* --- Certificate chrome: nav + footer -------------------------------------- */
 .cert-nav {
-  border-bottom: 1px solid var(--rule);
+  border-bottom: var(--rule-w) solid var(--rule);
   background: var(--surface);
   position: sticky;
   top: 0;
@@ -924,7 +927,7 @@ body { margin: 0; }
    beside it. Making the li a flex container and the anchor a stretched item
    hands the full height down: the wash fills its cell and the label centres in
    it rather than hanging from the top. */
-.cert-nav-links li { flex: 1; display: flex; border-left: 1px solid var(--rule); }
+.cert-nav-links li { flex: 1; display: flex; border-left: var(--rule-w) solid var(--rule); }
 .cert-nav-links a {
   flex: 1;
   display: flex;
@@ -1049,7 +1052,7 @@ body { margin: 0; }
 .cert .form-control {
   display: block;
   width: 100%;
-  border: 1px solid var(--rule);
+  border: var(--rule-w) solid var(--rule);
   border-radius: 0;
   background: var(--surface);
   font-family: var(--font-mono);
@@ -1091,7 +1094,7 @@ body { margin: 0; }
    here competed with the field borders and made the form hard to read, so it
    becomes a single band: one centred column of stacked fields, closed top and
    bottom by the sheet's own rules. */
-.cert-form { border-bottom: 1px solid var(--rule); }
+.cert-form { border-bottom: var(--rule-w) solid var(--rule); }
 
 .form-stack {
   max-width: 44rem;   /* border-box, so the fields land near 38rem inside */
@@ -1119,7 +1122,7 @@ body { margin: 0; }
    Links between the product and web design indexes, drawn as one ruled strip. */
 .c-filters { display: flex; flex-wrap: wrap; }
 .c-filter {
-  border: 1px solid var(--rule);
+  border: var(--rule-w) solid var(--rule);
   border-radius: 0;
   background: transparent;
   font-family: var(--font-mono);
@@ -1143,7 +1146,7 @@ body { margin: 0; }
    The well behind an image takes the hue wash, so a transparent asset sits on
    the page's colour instead of on the neutral ground. */
 .c-shot {
-  border-bottom: 1px solid var(--rule);
+  border-bottom: var(--rule-w) solid var(--rule);
   background: var(--hue-cell);
   aspect-ratio: 16 / 10;
   overflow: hidden;
@@ -1238,7 +1241,7 @@ body { margin: 0; }
   .row-aside-both  > :not(:first-child) {
     grid-column: 2;
     border-right: 0;
-    border-top: 1px solid var(--rule);
+    border-top: var(--rule-w) solid var(--rule);
   }
   .row-2           > :nth-child(2),
   .row-aside-left  > :nth-child(2),
@@ -1257,10 +1260,10 @@ body { margin: 0; }
   .row-head > .cell {
     grid-column: 2;
     border-right: 0;
-    border-top: 1px solid var(--rule);
+    border-top: var(--rule-w) solid var(--rule);
   }
   .row-head > .cell:nth-child(2) { border-top: 0; }
-  .row-head > .vlabel:nth-child(4) { border-top: 1px solid var(--rule); }
+  .row-head > .vlabel:nth-child(4) { border-top: var(--rule-w) solid var(--rule); }
 
   /* A run of four folds to two by two here, with the rest of the multi-cell
      rows, rather than holding out like a trio: a quarter cell just above the
@@ -1274,7 +1277,7 @@ body { margin: 0; }
   .row-4 > :first-child { grid-row: 1 / -1; }
   .row-4 > :nth-child(3),
   .row-4 > :nth-child(5) { border-right: 0; }
-  .row-4 > :nth-child(n+4) { border-top: 1px solid var(--rule); }
+  .row-4 > :nth-child(n+4) { border-top: var(--rule-w) solid var(--rule); }
 
   /* (b) paired rows. Auto-flow places them; only the rules need adjusting */
   .row-paired,
@@ -1284,7 +1287,7 @@ body { margin: 0; }
   .row-paired       > :nth-child(3),
   .row-paired       > :nth-child(4),
   .row-paired-aside > :nth-child(3),
-  .row-paired-aside > :nth-child(4) { border-top: 1px solid var(--rule); }
+  .row-paired-aside > :nth-child(4) { border-top: var(--rule-w) solid var(--rule); }
 }
 
 @media (max-width: 575.98px) {
@@ -1299,7 +1302,7 @@ body { margin: 0; }
   .row-3 > :not(:first-child) {
     grid-column: 2;
     border-right: 0;
-    border-top: 1px solid var(--rule);
+    border-top: var(--rule-w) solid var(--rule);
   }
   .row-3 > :nth-child(2) { border-top: 0; }
 
@@ -1394,7 +1397,7 @@ body { margin: 0; }
   grid-template-columns: repeat(auto-fill, minmax(4.75rem, 1fr));
 }
 .c-stack li {
-  border: 1px solid var(--rule);
+  border: var(--rule-w) solid var(--rule);
   background: var(--hue-cell);
   margin: 0 -1px -1px 0;
   display: flex;
@@ -1526,10 +1529,10 @@ body { margin: 0; }
   border-bottom: 0;
 }
 .cert .case-points li {
-  border-top: 1px solid var(--rule);
+  border-top: var(--rule-w) solid var(--rule);
   padding: 0.8rem 0;
 }
-.cert .case-points li:last-child { border-bottom: 1px solid var(--rule); }
+.cert .case-points li:last-child { border-bottom: var(--rule-w) solid var(--rule); }
 
 /* Numbered approach steps */
 .cert .type-rows { list-style: none; margin: 0; padding: 0; border-bottom: 0; }
@@ -1537,10 +1540,10 @@ body { margin: 0; }
   display: grid;
   grid-template-columns: 2.6rem 1fr;
   gap: 1rem;
-  border-top: 1px solid var(--rule);
+  border-top: var(--rule-w) solid var(--rule);
   padding: 1.1rem 0;
 }
-.cert .type-row:last-child { border-bottom: 1px solid var(--rule); }
+.cert .type-row:last-child { border-bottom: var(--rule-w) solid var(--rule); }
 /* Steps introduced by a sentence take the same clearance .case-points does */
 .cert * + .type-rows { margin-top: 1.2rem; }
 .cert .type-row-num {
@@ -1586,7 +1589,7 @@ body { margin: 0; }
    well takes on the Work index - one media language across the section. */
 .cert .shot-browser,
 .cert .shot-phone {
-  border: 1px solid var(--rule);
+  border: var(--rule-w) solid var(--rule);
   border-radius: 0;
   box-shadow: none;   /* the legacy rule gave both frames a soft drop shadow */
   background: var(--hue-cell);
@@ -1596,14 +1599,14 @@ body { margin: 0; }
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  border-bottom: 1px solid var(--rule);
+  border-bottom: var(--rule-w) solid var(--rule);
   padding: 0.5rem 0.7rem;
   background: var(--hue-cell);
 }
 .cert .shot-dots { display: flex; gap: 0.3rem; }
 .cert .shot-dots span {
   width: 6px; height: 6px;
-  border: 1px solid var(--rule);
+  border: var(--rule-w) solid var(--rule);
   border-radius: 0;
   background: transparent;
 }
@@ -1614,7 +1617,7 @@ body { margin: 0; }
   letter-spacing: 0.1em;
   color: var(--muted);
   background: var(--surface);
-  border: 1px solid var(--rule);
+  border: var(--rule-w) solid var(--rule);
   border-radius: 0;
   padding: 0.2rem 0.7rem;
   /* Truncate rather than widen the frame - a long path is not worth a
@@ -1627,7 +1630,7 @@ body { margin: 0; }
 /* Squared off and ruled like .shot-url beside it, hover taking the page hue
    like every other small control in the grid system (.c-filter, .c-link). */
 .cert .shot-pause {
-  border: 1px solid var(--rule);
+  border: var(--rule-w) solid var(--rule);
   border-radius: 0;
   background: var(--surface);
   font-family: var(--font-mono);
@@ -1648,7 +1651,7 @@ body { margin: 0; }
 .cert .case-shot img,
 .cert .case-img { display: block; width: 100%; height: auto; }
 .cert .case-img {
-  border: 1px solid var(--rule);
+  border: var(--rule-w) solid var(--rule);
   border-radius: 0;              /* the legacy rule rounds it; the sheet does not */
   max-width: 50rem;
 }
@@ -1890,3 +1893,391 @@ body { margin: 0; }
     animation-delay: calc(var(--vt-hold) + var(--vt-lock-at));
   }
 }
+
+
+/* ==========================================================================
+   21. BLACK INK TRIAL
+   The brutalist direction, on trial since 2026-11-02 on design/brutalist.
+   Nothing above was restyled for it: this section only overrides, so the
+   trial reads in one place and comes out in one cut. If it is kept, fold
+   these values back into sections 1 and 17 and retire this section.
+
+   The structure is the decoration, at full volume. White paper, true black
+   ink and 2px black rules; the label rail turns solid black. Each section
+   keeps its colour, but as one hard block at full strength rather than a
+   tint spread over many surfaces. Interaction inverts, it never fades.
+   ========================================================================== */
+
+.cert {
+  --surface: #FFFFFF;
+  --band:    #FFFFFF;
+  --ink:     #000000;
+  --ink-2:   #000000;
+  --muted:   #5C5C5C;   /* passive metadata only, 6.7:1 on paper */
+
+  --rule:   var(--ink);
+  --rule-w: 2px;
+
+  /* The four section colours, as Risograph ink tones. Black type sits on
+     all four: green 6.8:1, sunflower 11.9:1, pink 6.8:1, blue 6.7:1. */
+  --moss-block:  #00A95C;
+  --amber-block: #FFB511;
+  --rose-block:  #FF48B0;
+  --slate-block: #4A90FF;
+  --block: var(--moss-block);
+}
+
+/* The hue set collapses to ink and paper, so every underline, bullet, mark
+   and wash that took the section colour is now black or white. Colour
+   survives only where --block is asked for. The selectors repeat section
+   17's so they outrank it. */
+.cert,
+.cert.page-about,
+.cert.page-work,
+.cert.page-case,
+.cert.page-contact { --hue: var(--ink); --hue-deep: var(--ink); --hue-cell: var(--surface); }
+
+.cert.page-about   { --block: var(--amber-block); }
+.cert.page-work,
+.cert.page-case    { --block: var(--rose-block); }
+.cert.page-contact { --block: var(--slate-block); }
+
+.grain { display: none; }
+
+/* The nav's own bottom rule closes the top of the sheet, so the two no
+   longer stack into a double-weight line beneath it. */
+.sheet { border-top: 0; }
+
+/* A cell draws its rule inside its right edge, but the nav draws its rule
+   inside the link's left edge, so the two land a rule's width apart. That
+   was invisible at 1px and is a visible jog at 2px. Pulling the first link
+   back by one rule puts its line on the cell's line below. */
+@media (min-width: 992px) {
+  .cert-nav-links li:first-child { margin-left: calc(-1 * var(--rule-w)); }
+}
+
+/* Ruled chips collapse their shared edges by overlapping one rule's width.
+   Section 17 hard-codes that as 1px, which doubles the line at 2px. */
+.c-stack li,
+.c-filter { margin: 0 calc(-1 * var(--rule-w)) calc(-1 * var(--rule-w)) 0; }
+
+/* --- Surfaces --------------------------------------------------------------- */
+
+/* The rail, and the empty cell that carries it through the closing band */
+.vlabel,
+.row-aside-right > .cell:first-child { background: var(--ink); color: var(--surface); }
+
+/* The page's one block of colour */
+.cell-hue { background: var(--block); --muted: var(--ink); }
+
+/* The contact band reverses out. The row is filled too: the rail is 41.6px
+   wide, and at a fractional edge two black cells otherwise leave a hairline
+   of paper between them. */
+.cert-foot,
+.cert-foot > .cell { background: var(--ink); color: var(--surface); --muted: #BDBDBD; }
+
+/* Nothing is centred: every cell hangs from the left edge */
+.cell-centre { text-align: left; align-items: flex-start; }
+
+/* The badge, reduced to one colour and reversed out of the rail (below) */
+.cert-brand img {
+  width: min(32px, calc(var(--rail) - 0.5rem));
+  height: auto;
+  filter: grayscale(1) contrast(10) invert(1);
+}
+
+/* The Instem illustrations stand in for UI that cannot be shown, and their
+   sage and sand read as a leftover palette here. Real screenshots are
+   raster, so this never touches client work. */
+.cert img[src$=".svg"] { filter: grayscale(1); }
+
+/* --- Type --------------------------------------------------------------------- */
+
+/* Headlines take a much louder step, capped by the cell they sit in so the
+   longest single word in any of them (KnowledgeScan, 7.7em at this
+   tracking) still clears its cell without breaking. */
+.cell:has(.c-hero) { container-type: inline-size; }
+.c-hero {
+  font-size: min(clamp(2rem, 7vw, 6.5rem), 12.5cqi);
+  line-height: 1;
+}
+
+/* The name runs the full width of its cell on one line, sitting on the
+   rule beneath it. Space Mono advances 0.592em a character at this
+   tracking, so "Stefan Carter" is 7.696em: 12.95cqi fills the cell. */
+.page-home .cell:has(.c-hero) { justify-content: flex-end; }
+.page-home .c-hero {
+  font-size: 12.95cqi;
+  line-height: 0.9;
+  white-space: nowrap;
+}
+/* On a phone it takes a word a line instead ("Stefan" is 3.552em) */
+@media (max-width: 575.98px) {
+  .page-home .c-hero { font-size: 28cqi; white-space: normal; }
+}
+
+/* Sized to its cell, which lost a quarter to the portrait, so the longer
+   clause ("Products, researched and prototyped.", 21.3em at this tracking)
+   stays on one line wherever there is room for it. */
+.page-home .cell:has(.c-statement-pair) { container-type: inline-size; }
+.page-home .c-statement-pair {
+  font-size: clamp(1.15rem, 4.6cqi, 3rem);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  max-width: none;
+}
+
+.cert-mail { font-size: clamp(1.1rem, 4.4vw, 4rem); }
+
+.c-ladder s { text-decoration-thickness: 2px; }
+.c-now { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+
+/* --- Reading ------------------------------------------------------------------
+   A rule means one thing on this page: the edge of a block. Lists and
+   numbered steps drew their own rules between items, at the same 2px black
+   as the grid, so a reader could not tell the next point from the next
+   section. Inside a cell, space now does that job and nothing is ruled.
+
+   Running text also steps up from 0.95rem: a monospace face sets fewer
+   letters per line than a proportional one at the same size, and at 15px
+   long paragraphs read as fine print. */
+.cert { --step-read: 1.0625rem; }
+
+.c-body,
+.c-quote p,
+.cert .cell p:not([class]),
+.cert .cell li:not([class]) {
+  font-size: var(--step-read);
+  line-height: 1.7;
+  max-width: 60ch;
+}
+
+.cert .case-points li,
+.cert .case-points li:last-child,
+.cert .type-row,
+.cert .type-row:last-child { border: 0; padding: 0; }
+.cert .case-points li + li { margin-top: 1rem; }
+.cert .type-row + .type-row { margin-top: 2rem; }
+
+/* On a phone the step number's own column left the text about twenty
+   characters a line, so the number sits above its title instead. */
+@media (max-width: 575.98px) {
+  .cert { --step-read: 1rem; }
+  .cert .type-row { grid-template-columns: 1fr; gap: 0.3rem; }
+}
+
+/* One outline per screenshot. The address is plain text and the window
+   dots are solid, so the only box inside a frame is the Pause control,
+   which is boxed because it is a button. */
+.cert .shot-url { border: 0; background: none; padding-inline: 0; }
+.cert .shot-dots span { border: 0; background: var(--ink); }
+
+/* A phone capture kept the rounded corners of the old dark bezel inside a
+   square ruled box, a frame within a frame. It is one outline now too. */
+.cert .shot-phone { padding: 0; }
+.cert .shot-phone img { border-radius: 0; }
+
+/* --- Links and controls: hover inverts ------------------------------------ */
+
+.c-link,
+.cert .link-arrow,
+.cert figcaption a,
+.cert .cell p a:not([class]) { border-bottom-width: 2px; }
+
+.c-link,
+.c-list a,
+.c-btn,
+.c-filter,
+.cert-nav-links a { transition: none; }
+
+/* The spread shadow is not a shadow: it is the inverted block bleeding a
+   little past the glyphs, so the type does not touch its own edge. */
+.c-link:hover, .c-link:focus-visible,
+.cert-mail:hover, .cert-mail:focus-visible,
+.cert .next-link:hover, .cert .next-link:focus-visible,
+.cert .link-arrow:hover, .cert .link-arrow:focus-visible,
+.cert figcaption a:hover, .cert figcaption a:focus-visible,
+.cert .cell p a:not([class]):hover,
+.cert .cell p a:not([class]):focus-visible {
+  background: var(--ink);
+  color: var(--surface);
+  box-shadow: 0 0 0 0.25rem var(--ink);
+}
+.cert .link-arrow svg { color: currentColor; }
+
+/* On the reversed band the inversion runs the other way */
+.cert-foot .cert-mail { color: var(--surface); border-bottom-color: var(--surface); }
+.cert-foot .cert-mail:hover,
+.cert-foot .cert-mail:focus-visible {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 0 0 0.25rem var(--surface);
+}
+.cert-foot a:focus-visible { outline-color: var(--surface); }
+
+/* List links invert as full-width bars. The negative margin lets the bar
+   bleed past the text without moving it off the cell's edge. */
+.c-list a {
+  margin-inline: -0.4rem;
+  padding-inline: 0.4rem;
+}
+.c-list a:hover,
+.c-list a:focus-visible { background: var(--ink); color: var(--surface); text-decoration: none; }
+
+.c-btn { border-color: var(--ink); }
+.c-btn:hover,
+.c-btn:focus-visible { background: var(--surface); color: var(--ink); }
+
+/* Selected is inverted, and hovering previews it */
+.c-filter { color: var(--ink); }
+.c-filter:hover,
+.c-filter[aria-current="page"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+
+/* The nav keeps its colour key in one place only: the page you are on
+   takes its section's block, with a heavy bar so it never rests on colour
+   alone. Hover inverts like everything else. */
+.cert-nav-links a[href="/"]        { --block: var(--moss-block); }
+.cert-nav-links a[href="/about"]   { --block: var(--amber-block); }
+.cert-nav-links a[href="/work"]    { --block: var(--rose-block); }
+.cert-nav-links a[href="/contact"] { --block: var(--slate-block); }
+
+.cert-nav-links a { color: var(--ink); }
+.cert-nav-links a:hover,
+.cert-nav-links a:focus-visible { background: var(--ink); color: var(--surface); }
+.cert-nav-links a[aria-current] {
+  background: var(--block);
+  color: var(--ink);
+  box-shadow: inset 0 -4px 0 var(--ink);
+}
+
+/* --- Project index rows ---------------------------------------------------
+   A row is one target. Its case-study link stretches over the whole row,
+   and the whole row inverts under the pointer, so the hover never promises
+   a click it cannot take. */
+.project-item { position: relative; cursor: pointer; }
+.project-item .c-link { position: static; }
+.project-item .c-link::after { inset: 0; }
+
+.project-item .c-title {
+  font-size: clamp(1.3rem, 2.6vw, 2.4rem);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.project-item > .vlabel { font-size: 1.35rem; letter-spacing: 0; line-height: 1; }
+
+.project-item:hover,
+.project-item:focus-within,
+.project-item:hover > .cell,
+.project-item:focus-within > .cell { background: var(--ink); }
+.project-item:hover :is(.c-title, .c-body, .c-meta, .c-link),
+.project-item:focus-within :is(.c-title, .c-body, .c-meta, .c-link) { color: var(--surface); }
+.project-item:hover .c-link,
+.project-item:focus-within .c-link { border-bottom-color: var(--surface); }
+.project-item .c-link:focus-visible { outline-color: var(--surface); }
+
+/* Halftone prints. js/main.js lays a square halftone print over each index
+   thumbnail and over the portrait. A thumbnail's print starts as blank paper
+   rather than transparent, so a slow image never flashes in colour before it
+   is reprinted, and the real image shows through while its row is inverted.
+   Prints are drawn at the screen's own density; pixelated only keeps the
+   square edges hard if the browser rescales one by a fraction of a pixel. */
+.project-item .c-shot { position: relative; }
+.c-print {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--surface);
+  image-rendering: pixelated;
+}
+.project-item:hover .c-print,
+.project-item:focus-within .c-print { visibility: hidden; }
+
+/* The portrait is an inked illustration on white, printed in black squares
+   straight onto its cell's section colour: its white is bare paper, so the
+   colour shows through wherever there is no ink. The image stays in the
+   page under the print for anyone who cannot see the canvas, and is only
+   made transparent once the print is down. Without script it multiplies
+   onto the colour instead, which drops its white the same way. */
+.c-portrait { position: relative; background: none; }
+.c-portrait img { mix-blend-mode: multiply; }
+.c-portrait .c-print { background: none; }
+.c-portrait.is-printed img { opacity: 0; }
+
+/* A portrait cell is filled edge to edge by its print. On wide screens the
+   row decides the cell's height, so the portrait is laid over the whole
+   cell rather than sized by a ratio; stacked on a narrow screen there is no
+   row height to fill and it takes its own 4:5. */
+.cell-portrait { position: relative; padding: 0; }
+.cell-portrait .c-portrait { position: absolute; inset: 0; aspect-ratio: auto; }
+@media (max-width: 991.98px) {
+  .cell-portrait .c-portrait { position: relative; inset: auto; aspect-ratio: 4 / 5; }
+}
+
+/* Home's cell is wide and short, and filling it would crop through the
+   face. With white as bare paper the portrait does not have to fill it: the
+   whole head sits centred in the cell with the green around it, and on a
+   phone takes a square rather than the full 4:5. */
+.page-home .c-portrait img { object-fit: contain; object-position: 50% 50%; }
+@media (max-width: 991.98px) {
+  .page-home .cell-portrait .c-portrait { aspect-ratio: 1; }
+}
+
+/* --- The nav's rail -----------------------------------------------------------
+   The brand takes the rail's track in the rail's black, so the rail runs
+   unbroken from the top of every page to the bottom. */
+.cert-nav-inner { padding-left: 0; gap: 0; }
+.cert-nav-inner .cert-brand {
+  flex: 0 0 var(--rail);
+  justify-content: center;
+  padding-inline: 0;
+  background: var(--ink);
+}
+
+/* The brand no longer spans the field, so the links are placed on the last
+   quarter explicitly rather than left to auto-placement. */
+@media (min-width: 992px) {
+  .cert-nav-inner .cert-brand { grid-column: 1; padding-left: 0; }
+  .cert-nav-links { grid-column: 3; }
+}
+
+/* --- Motion: mechanical, never smooth -------------------------------------
+   The page transition keeps section 20's choreography but moves in hard
+   steps, like a split-flap board or a print carriage: a block leaves in
+   four jumps and lands in five. Leaving jumps at once, so the board answers
+   the click; landing holds its last step until the block is home, so rule
+   2's arithmetic (section 20) still holds. */
+:root {
+  --vt-ease-leave: steps(4, jump-start);
+  --vt-ease-land:  steps(5, jump-end);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* The bare board and the outgoing nav cut over instead of cross-fading */
+  ::view-transition-old(root),
+  ::view-transition-new(root),
+  ::view-transition-old(vt-nav) { animation-timing-function: steps(1, jump-end); }
+
+  /* The nav's bottom rule doubles as a reading gauge: a heavy bar that
+     advances across it in forty hard steps as the page scrolls. A page too
+     short to scroll has no active timeline, so the bar never shows. */
+  @supports (animation-timeline: scroll()) {
+    .cert-nav::after {
+      content: "";
+      position: absolute;
+      inset-inline: 0;
+      bottom: calc(-1 * var(--rule-w));
+      height: 6px;
+      background: var(--ink);
+      transform-origin: left;
+      scale: 0 1;
+      animation: c-read steps(40, jump-none) both;
+      animation-timeline: scroll(root);
+    }
+  }
+}
+@keyframes c-read { to { scale: 1 1; } }
+
+/* Screenshots waiting below the fold arrive whole: a cut where section 15
+   fades and lifts them. */
+html.js .reveal { transform: none; transition: none; }
