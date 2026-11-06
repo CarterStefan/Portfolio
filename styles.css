@@ -34,6 +34,8 @@
    19. Case-Study Pages In The Grid System
    20. Page Transitions
    21. Black Ink Trial
+   22. Landing Reel
+   23. Coming Soon
    ========================================================================== */
 
 /* Self-hosted Space Mono, latin subset only (the two weights the site
@@ -2311,3 +2313,446 @@ body { margin: 0; }
 /* Screenshots waiting below the fold arrive whole: a cut where section 15
    fades and lifts them. */
 html.js .reveal { transform: none; transition: none; }
+
+
+/* ==========================================================================
+   22. LANDING REEL
+   About twelve seconds on Home for a visitor arriving from outside the
+   site. The gate is in index.html's <head>, the motion in js/intro.js.
+   It is about the person first: the name, then a plate with the portrait
+   and what I do, the words changing at a reading pace. Below those sits
+   one ruled board of the nine projects, three plates to a row, which a
+   camera flicks along like a print carriage: along a row, back to the
+   start of the next, then out to the whole board, which holds. The board
+   then leaves in lanes, as any page does (section 20), and Home packs in
+   behind it.
+
+   It is built from the site's own parts: the black rail, 2px rules, Space
+   Mono, the four ink blocks and the halftone squares of section 21. Each
+   plate takes one block, as the page's one block of colour. The reel runs
+   on a 30 frame a second clock, so even the camera moves in frames, as
+   the rest of the site's motion steps rather than glides. The hand-over
+   to Home is the one exception: it glides, so the reel settles into the
+   page instead of clattering into it.
+
+   A plate is the size of the screen beside the rail, and everything on it
+   is sized in its container units, so the reel composes itself at any
+   size. A portrait plate stacks: name, picture, words.
+   ========================================================================== */
+
+.intro { display: none; }
+
+html.intro-on .intro {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 1500;          /* over the nav and the grain, under the skip link */
+  overflow: hidden;
+  background: var(--surface);
+  touch-action: none;     /* a swipe skips the reel rather than scrolling under it */
+  user-select: none;
+}
+
+/* Home's own entrance waits under the reel, parked at its first frame, and
+   runs as the board leaves. A paused animation that has not started yet
+   stays relevant, so js/main.js still holds the portrait's print until its
+   cell has landed. */
+html.intro-hold .sheet-in > .crow > * { animation-play-state: paused; }
+
+/* After the reel that entrance glides: the system's settle curve, which
+   section 21 replaced with steps, at a calmer pace. Every --vt-* duration
+   follows the pace, so the lanes keep their proportions. js/intro.js drops
+   this once the entrance has landed, and the site steps again. */
+html.intro-land {
+  --vt-pace: 1.6;
+  --vt-ease-land: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* The paper goes the moment the board starts to leave, while the plates
+   still cover the whole screen, so the page is only ever uncovered by a
+   plate moving off it */
+html.intro-on .intro.is-clear { background: none; }
+
+.intro-stage { position: absolute; inset: 0; }
+
+/* --- The rail ----------------------------------------------------------------
+   The site's black rail. It names what is beside it, as on every page
+   (Portfolio by the name, Practice by what I do), then carries an index of
+   the nine plates, where the plate on screen takes its block. The labels
+   are set like .vlabel. The mark at its head is a piece of its own, in
+   the very cell the nav's mark fills, so it stays put while the rail comes
+   and goes and hands over to the nav's without a flicker. The rail is a
+   layer of its own because it moves the whole height of the screen. */
+.intro-rail {
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 3;
+  width: var(--rail);
+  padding-top: var(--intro-nav, 3.8rem);
+  display: flex;
+  flex-direction: column;
+  background: var(--ink);
+  will-change: transform;
+}
+.intro-brand {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  width: var(--rail);
+  height: var(--intro-nav, 3.8rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink);
+}
+.intro-brand img {
+  width: min(32px, calc(var(--rail) - 0.5rem));
+  height: auto;
+  filter: grayscale(1) contrast(10) invert(1);
+}
+.intro-rail-label {
+  position: absolute;
+  inset: var(--intro-nav, 3.8rem) 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  font-size: var(--step-rail);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--surface);
+}
+.intro-index { margin-block: auto; }
+.intro-index li {
+  padding-block: 0.35rem;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--surface);
+}
+.intro-index li.is-on { background: var(--block); color: var(--ink); }
+
+/* --- The board ---------------------------------------------------------------
+   js/intro.js moves the board under a fixed field, so the camera is one
+   transform. --rw is the rule weight in board pixels: it grows as the
+   camera pulls back, so a rule always lands on screen at the system's 2px. */
+.intro-field {
+  position: absolute;
+  inset: 0 0 0 var(--rail);
+  overflow: hidden;
+}
+.intro-board {
+  --rw: var(--rule-w);
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+}
+
+.intro-plate {
+  position: absolute;
+  left: calc(var(--c) * var(--pw));
+  top: calc(var(--r) * var(--ph));
+  width: var(--pw);
+  height: var(--ph);
+  overflow: hidden;
+  container-type: size;
+  background: var(--surface);
+}
+/* Half a rule on every edge, so neighbouring plates share one whole rule */
+.intro-plate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border: calc(var(--rw) / 2) solid var(--ink);
+}
+
+/* A project plate is two rows: its name across the top, sitting on the
+   rule, and its picture across the full width beneath. It flicks past too
+   fast for anything more to be read, so it carries nothing more. */
+.intro-grid {
+  --pad: 3cqw;
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 30cqh 1fr;
+}
+
+/* The plate's own rules are drawn rather than bordered, so --rw can change
+   their weight without moving a line of the type beside them. */
+.intro-rule { position: absolute; z-index: 1; background: var(--ink); }
+.intro-rule-a { inset: 30cqh 0 auto 0; height: var(--rw); translate: 0 -50%; }
+
+/* --- The name ----------------------------------------------------------------
+   Each name fills the row's width on one line, the way the name on Home
+   does, unless the row's height stops it first. Space Mono advances 0.592em
+   a character at this tracking; the sums below allow 0.6 so a name that
+   fills its row never meets the edge. --chars is the name's length. Each
+   letter is its own box so it can drop into the line, which clips above
+   its top edge and leaves room below for descenders. */
+.intro-head {
+  grid-column: 1 / -1;
+  min-width: 0;
+  display: flex;
+  align-items: flex-end;
+  padding-inline: var(--pad);
+}
+.intro-title {
+  padding-bottom: 0.14em;
+  font-size: min(calc((100cqw - 2 * var(--pad)) / (var(--chars) * 0.6)), 22cqh);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--ink);
+}
+.intro-tl { display: inline-block; clip-path: inset(0 -0.2em -0.45em -0.2em); }
+.intro-ch { display: inline-block; }
+
+/* --- The picture -------------------------------------------------------------
+   The plate's block, with the picture printed onto it in black squares
+   (the block is the paper), and for a live site, the capture itself. It
+   spans the width: on a wide screen it is cropped top and bottom, and on a
+   phone it sits on the block like a print on a mat (js/intro.js, fit()). */
+.intro-shot {
+  position: relative;
+  overflow: hidden;
+  background: var(--block);
+}
+.intro-print {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* A box drawn round one thing, side by side in its block, with what it
+   is on a tab at its corner: the reel's one annotation, round the award. */
+.intro-note {
+  --mw: clamp(3px, 0.32cqw, 6px);
+  position: absolute;
+  z-index: 1;
+}
+.intro-side { position: absolute; background: var(--block); }
+.intro-side:nth-child(1) { inset: 0 0 auto 0; height: var(--mw); transform-origin: 0 50%; }
+.intro-side:nth-child(2) { inset: 0 0 0 auto; width: var(--mw); transform-origin: 50% 0; }
+.intro-side:nth-child(3) { inset: auto 0 0 0; height: var(--mw); transform-origin: 100% 50%; }
+.intro-side:nth-child(4) { inset: 0 auto 0 0; width: var(--mw); transform-origin: 50% 100%; }
+.intro-chip {
+  position: absolute;
+  left: 0;
+  bottom: 100%;
+  padding: 0.35em 0.6em;
+  background: var(--block);
+  color: var(--ink);
+  font-size: max(var(--step-label), 1.05cqw);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* --- Who: the name ---------------------------------------------------------------
+   The first plate, two lines above what I do. The name is printed from the
+   same squares before it is set as type, sitting on the foot of the plate
+   as the name on Home sits on its rule, as big as six letters across the
+   plate allow. */
+.intro-plate.is-open .intro-grid {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--pad) var(--pad) max(var(--pad), 3.6rem);
+}
+.intro-open {
+  font-size: min(calc((100cqw - 2 * var(--pad)) / (6 * 0.6)), 34cqh);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  color: var(--ink);
+}
+.intro-ob { display: block; }
+.intro-swarm {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+
+/* --- Who: what I do --------------------------------------------------------------
+   The second plate: the words on the left, the portrait on the right in the
+   last stretch of the plate, as on Home. Each word is set in the one size
+   its longest line allows (--say-chars, from js/intro.js), sits on the foot
+   of the plate and is run over with a highlighter in its ink, a line at a
+   time. Its letters drop in and out of their lines, which clip at the top
+   as the names on the plates do. The portrait is printed in black squares
+   onto the same ink, which rolls up from the foot of the cell as each word
+   arrives. */
+.intro-plate.is-about .intro-grid {
+  grid-template-columns: 62cqw 1fr;
+  grid-template-rows: 100%;
+}
+.intro-rule-b { inset: 0 auto 0 62cqw; width: var(--rw); translate: -50% 0; }
+.intro-say {
+  --say: min(calc((62cqw - 2 * var(--pad)) / (var(--say-chars) * 0.6)), 13cqh);
+  position: relative;
+  min-width: 0;
+  padding: var(--pad);
+}
+.intro-by {
+  font-size: max(var(--step-label), 0.9cqw);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.intro-word {
+  position: absolute;
+  left: var(--pad);
+  bottom: max(var(--pad), 3.6rem);
+  font-size: var(--say);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--ink);
+}
+.intro-wl {
+  display: block;
+  width: fit-content;
+  margin-top: 0.1em;
+  clip-path: inset(0 -0.2em -0.45em -0.2em);
+  background: linear-gradient(var(--block), var(--block)) 0 0 / 0% 100% no-repeat;
+}
+.intro-wc { display: inline-block; }
+/* The role carries the career path's Now, as its chip */
+.intro-tag {
+  display: inline-block;
+  margin-bottom: 0.15em;
+  padding: 0.3em 0.55em;
+  background: var(--ink);
+  color: var(--surface);
+  font-size: max(var(--step-label), 1.05cqw);
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.intro-word > .intro-note { inset: -0.04em -0.22em -0.2em; }
+.intro-me {
+  position: relative;
+  overflow: hidden;
+  background: var(--base, var(--moss-block));
+}
+.intro-wash {
+  position: absolute;
+  inset: 0;
+  background: var(--wash, var(--moss-block));
+  clip-path: inset(100% 0 0 0);
+}
+
+/* --- Portrait plates ---------------------------------------------------------
+   A project plate puts its name over two lines where it has two words, and
+   its picture fills the rest. What I do puts the portrait on top and the
+   words beneath it. */
+@container (orientation: portrait) {
+  .intro-grid {
+    --pad: 5cqw;
+    grid-template-rows: 22cqh 1fr;
+  }
+  .intro-title {
+    white-space: normal;
+    font-size: min(calc((100cqw - 2 * var(--pad)) / (var(--chars-n) * 0.6)), calc(16cqh / var(--lines-n)));
+  }
+  .intro-tl { display: block; }
+  .intro-sp { display: none; }
+  .intro-rule-a { top: 22cqh; }
+  .intro-by { font-size: max(var(--step-label), 2.6cqw); }
+
+  .intro-plate.is-about .intro-grid {
+    grid-template-columns: 100%;
+    grid-template-rows: 42cqh 1fr;
+  }
+  .intro-rule-b {
+    inset: 42cqh 0 auto 0;
+    width: auto;
+    height: var(--rw);
+    translate: 0 -50%;
+  }
+  .intro-me { grid-row: 1; }
+  .intro-say {
+    --say: calc((100cqw - 2 * var(--pad)) / (var(--say-chars) * 0.6));
+    grid-row: 2;
+  }
+  .intro-tag { font-size: max(var(--step-label), 2.4cqw); }
+}
+
+/* --- Skip ----------------------------------------------------------------------
+   The reel moves on its own for twelve seconds, so it needs a real way out
+   (WCAG 2.2.2). Escape, a click, a scroll or moving focus into the page
+   skip it too, straight to the board leaving. The focus ring sits inside
+   the button, which is flush with the corner of the screen. */
+.intro-skip { position: absolute; right: 0; bottom: 0; z-index: 4; }
+.intro .intro-skip.c-btn:focus-visible { outline: 2px solid var(--surface); outline-offset: -6px; }
+.intro.is-leaving .intro-skip { visibility: hidden; }
+
+@media print {
+  html.intro-on .intro { display: none; }
+}
+
+
+/* ==========================================================================
+   23. COMING SOON
+   While js/soon.js keeps the live site on Home alone (html.soon), Home keeps
+   the name, the practice and the portrait, and gives up the nav and the
+   career and selected work band for one that says the website is coming
+   soon, so the page carries no links at all. None of this shows anywhere
+   else, or on your own machine unless you ask for it with ?soon.
+   ========================================================================== */
+
+.row-soon { display: none; }
+html.soon .row-soon { display: grid; }
+html.soon .cert-nav,
+html.soon .soon-hide { display: none; }
+
+/* With no nav, the reel has no brand cell to hand its mark over to */
+html.soon .intro-brand { display: none; }
+
+/* The band takes the career row's lane in Home's entrance (section 20), in
+   from the left, so the rows still alternate; and the portrait row behind
+   it keeps the lane it had before the band was added, so the whole site
+   arrives exactly as it did. */
+.sheet-in > .row-soon { --r: 2; --from: -100vw; }
+.sheet-in > .row-portrait { --r: 3; --from: 100vw; }
+
+/* The band sits between the career row and the portrait row. Wherever it is
+   hidden, the career row is still the last row showing on a wide screen,
+   so it drops its rule as section 21 has it do. */
+@media (min-width: 992px) {
+  .crow:has(+ .row-soon + .row-portrait:last-child) { border-bottom: 0; }
+}
+
+/* Without the career band the page can be shorter than a phone's screen,
+   so the practice row grows to fill it. Below lg that row stacks into four
+   auto tracks (section 17), and the growth would land in the empty ones,
+   leaving paper under the green; the first track takes all of it. */
+@media (max-width: 991.98px) {
+  html.soon .row-aside-right.row-grow { grid-template-rows: 1fr repeat(3, auto); }
+}
+
+/* The message, large and reversed out of the band like the closing band on
+   every other page */
+.row-soon > .cell { container-type: inline-size; }
+.c-soon {
+  font-size: clamp(1.5rem, 5.5cqi, 4.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: var(--surface);
+}

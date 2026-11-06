@@ -27,7 +27,38 @@
   <link rel="preload" href="/assets/fonts/space-mono-700.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="styles.css">
-  <script>document.documentElement.classList.add('js');</script>
+  <script src="/js/soon.js"></script>
+  <script>
+    document.documentElement.classList.add('js');
+    /* The landing reel (js/intro.js, styles.css section 22) plays for a
+       visitor arriving from outside the site, once a session, and never
+       for reduced motion, forced colours or Save-Data. /?intro plays it
+       regardless. It is settled here, before the first paint, so the page
+       never shows before the reel covers it. */
+    (function (root) {
+      var seen = false;
+      var fromSite = false;
+      try { seen = sessionStorage.getItem('sc-intro') === '1'; } catch (e) {}
+      try { fromSite = new URL(document.referrer).origin === location.origin; } catch (e) {}
+      /* While the live site is Home alone (js/soon.js) it has no links to
+         arrive by, so a referrer from the site can only be an old address
+         sending its visitor here: they are arriving from outside. */
+      if (root.classList.contains('soon')) fromSite = false;
+      var asked = /[?&]intro\b/.test(location.search);
+      var quiet = matchMedia('(prefers-reduced-motion: reduce), (forced-colors: active)').matches ||
+        !!(navigator.connection && navigator.connection.saveData);
+      if (!asked && (seen || fromSite || quiet)) return;
+      root.classList.add('intro-on', 'intro-hold', 'intro-land');
+      var script = document.createElement('script');
+      script.src = '/js/intro.js';
+      document.head.appendChild(script);
+      /* If the reel has not taken over by now it is not coming, so give
+         the page back rather than leave it covered. */
+      setTimeout(function () {
+        if (!root.classList.contains('intro-live')) root.classList.remove('intro-on', 'intro-hold', 'intro-land');
+      }, 3000);
+    })(document.documentElement);
+  </script>
   <link rel="expect" href="#main-content" blocking="render">
   <script src="js/transition.js"></script>
 </head>
@@ -50,6 +81,14 @@
   certificate, and it does not borrow certificate language.
   FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
 -->
+
+  <!-- The landing reel: hidden unless the gate in <head> turns it on, and
+       filled by js/intro.js. The stage only repeats what the site already
+       says, so it is hidden from assistive technology; the button is not. -->
+  <div class="intro">
+    <div class="intro-stage" aria-hidden="true"></div>
+    <button class="c-btn intro-skip" type="button">Skip intro</button>
+  </div>
 
   <div class="grain" aria-hidden="true"></div>
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -97,8 +136,9 @@
         </div>
       </div>
 
-      <!-- Career and selected work -->
-      <div class="crow row-paired-aside">
+      <!-- Career and selected work. Set aside on the live site while it is
+           coming soon (js/soon.js), with the band below in its place. -->
+      <div class="crow row-paired-aside soon-hide">
         <p class="vlabel">Career</p>
         <div class="cell">
           <p class="c-meta mb-label">Path</p>
@@ -122,6 +162,15 @@
             <li><a href="/projects/bird-watcher">Bird Watcher</a></li>
             <li><a href="/projects/wrottesley-golf">Wrottesley Golf Club</a></li>
           </ul>
+        </div>
+      </div>
+
+      <!-- Coming soon: shown only while js/soon.js keeps the live site on
+           Home alone (styles.css section 23) -->
+      <div class="crow row-full cert-foot row-soon">
+        <p class="vlabel">Status</p>
+        <div class="cell cell-pad-lg">
+          <p class="c-soon">Website coming soon.</p>
         </div>
       </div>
 
