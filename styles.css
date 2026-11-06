@@ -2223,6 +2223,19 @@ body { margin: 0; }
   .page-home .cell-portrait .c-portrait { aspect-ratio: 1; }
 }
 
+/* About's cell is tall and narrow, and the head nearly fills its own image,
+   so covering the cell cut into the crown and the beard. Here too the whole
+   head is shown, set in from every edge of the cell by a generous margin of
+   amber so it never meets the rules. */
+.page-about .cell-portrait { --portrait-pad: clamp(1.6rem, 4vw, 3.2rem); }
+.page-about .c-portrait img { object-fit: contain; object-position: 50% 50%; }
+@media (min-width: 992px) {
+  .page-about .cell-portrait .c-portrait { inset: var(--portrait-pad); }
+}
+@media (max-width: 991.98px) {
+  .page-about .cell-portrait { padding: var(--portrait-pad); }
+}
+
 /* Stacked below lg, the portrait would sit straight under the opening and
    push the rest of the page a screen down. At those widths it moves to the
    foot of the page instead: each page carries a second copy in a closing
