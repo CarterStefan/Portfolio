@@ -107,11 +107,28 @@
      a hard edge, and is redrawn whenever its well changes size. Hovering or
      focusing a project row hides its print and the real image shows through
      (styles.css, section 21). Without script, or if a browser will not let
-     the canvas be read back, the images are simply the images. */
+     the canvas be read back, the images are simply the images.
+
+     Once printed, the portrait follows the pointer about the page: the face
+     turns toward it, and (with LOOK_EYES) a pair of eyes behind the glasses
+     watches it. */
   var HALFTONE_CELL = 3;       /* CSS px a side: smaller is closer to the image */
   var ASSEMBLE_MS = 650;       /* one square's pull into place */
   var ASSEMBLE_STAGGER = 250;  /* the spread of start times across the squares */
-  var MAGNET_REACH = 14;       /* cells: how far the pointer's magnet reaches */
+  var LOOK_TURN = 0.3;        /* how far the face turns, as a share of the head's radius */
+  var LOOK_PITCH = 0.6;        /* nodding is stiffer than turning: a share of the turn */
+  var LOOK_REACH = 360;        /* CSS px from the face at which the look is half its full */
+  var LOOK_EASE = 0.14;        /* share of the remaining turn made in each 60th of a second */
+  var LOOK_EYES = false;       /* pupils behind the glasses that watch, and blink */
+  var BLINK_MS = 170;          /* one blink, closed and open again */
+
+  /* The portrait in its own pixels (assets/img/stefan/portrait.webp, 692 by
+     947): the head, and the inside of each lens of the glasses. */
+  var FACE = { cx: 345, cy: 473, rx: 279, ry: 407 };
+  var LENSES = [
+    { cx: 217, cy: 445, rx: 93, ry: 64 },
+    { cx: 487, cy: 445, rx: 93, ry: 64 }
+  ];
 
   /* Lay a print out: which squares it has, how big, and where each sits at
      rest, in device pixels. Nothing is drawn here (see drawPrint). Returns
@@ -195,6 +212,9 @@
     canvas.width = Math.round(w * dpr);
     canvas.height = Math.round(h * dpr);
 
+    // Every cell's square size, ink or not, so the portrait's turn can read
+    // any cell of the print from any other.
+    var grid = new Uint16Array(cols * rows);
     var cellCol = [];
     var cellRow = [];
     var lefts = [];
@@ -210,6 +230,7 @@
         // square wherever a fractional grid origin falls.
         var size = Math.round(cell * Math.sqrt(ink) * dpr);
         if (size < 1) continue;
+        grid[r * cols + c] = size;
         cellCol.push(c);
         cellRow.push(r);
         lefts.push((ox + (c + 0.5) * cell) * dpr - size / 2);
@@ -224,7 +245,13 @@
       ground: inkOnly ? null : reversed ? "#000" : "#fff",
       ink: reversed ? "#fff" : "#000",
       cell: cell,
+      dpr: dpr,
       step: cell * dpr,
+      // Where the picture itself lies in the well, in CSS px.
+      imgX: (w - iw * scale) * focus[0],
+      imgY: (h - ih * scale) * focus[1],
+      imgScale: scale,
+      grid: grid,
       ox: ox,
       oy: oy,
       cols: cols,
@@ -297,61 +324,191 @@
       }
       drawPrint(p);
       if (moving) requestAnimationFrame(frame);
-      else state.phase = "done";
+      else {
+        state.phase = "done";
+        if (state.redraw) state.redraw();
+      }
     };
     requestAnimationFrame(frame);
   };
 
-  /* The portrait's magnet: squares within reach of the pointer are pushed
-     straight away from it, the nearest furthest, and drop back home the
-     moment it moves on. As with the entrance, every push is a whole number
-     of cells. Only once the portrait has assembled. */
-  var magnetise = function (well, state) {
-    var px = 0;
-    var py = 0;
-    var near = false;
+  /* The portrait's gaze. The head is taken as a ball: turning it moves each
+     point by how far that point stands out toward the viewer, so the
+     glasses and beard swing furthest, the outline of the head stays put,
+     and the side it turns toward gathers up while the far side opens out.
+     The grid never moves. Each cell instead prints the square of the cell
+     the turn brings into it, so the picture steps through the grid like the
+     rest of the site and no gaps open between squares.
+
+     With LOOK_EYES, a pupil behind each lens looks further than the head
+     turns, and now and then blinks. */
+  var drawLook = function (state) {
+    var p = state.print;
+    var look = state.look;
+    var ctx = p.ctx;
+    var cols = p.cols;
+    var rows = p.rows;
+    var dpr = p.dpr;
+    var cell = p.cell;
+    var toCol = function (x) { return (p.imgX + x * p.imgScale - p.ox) / cell; };
+    var toRow = function (y) { return (p.imgY + y * p.imgScale - p.oy) / cell; };
+    var toCells = function (d) { return d * p.imgScale / cell; };
+
+    var hcx = toCol(FACE.cx);
+    var hcy = toRow(FACE.cy);
+    var hrx = toCells(FACE.rx);
+    var hry = toCells(FACE.ry);
+    var turnX = LOOK_TURN * hrx * look.x;
+    var turnY = LOOK_TURN * LOOK_PITCH * hry * look.y;
+    var depth = function (c, r) {
+      var nx = (c - hcx) / hrx;
+      var ny = (r - hcy) / hry;
+      var q = 1 - nx * nx - ny * ny;
+      return q > 0 ? Math.sqrt(q) : 0;
+    };
+
+    ctx.clearRect(0, 0, p.canvas.width, p.canvas.height);
+    ctx.fillStyle = p.ink;
+    for (var r = 0; r < rows; r++) {
+      var top = (p.oy + (r + 0.5) * cell) * dpr;
+      for (var c = 0; c < cols; c++) {
+        var z = depth(c + 0.5, r + 0.5);
+        var sc = c;
+        var sr = r;
+        if (z) {
+          sc = c - Math.round(z * turnX);
+          sr = r - Math.round(z * turnY);
+          if (sc < 0 || sc >= cols || sr < 0 || sr >= rows) continue;
+        }
+        var size = p.grid[sr * cols + sc];
+        if (!size) continue;
+        ctx.fillRect(Math.round((p.ox + (c + 0.5) * cell) * dpr - size / 2), Math.round(top - size / 2), size, size);
+      }
+    }
+    if (!LOOK_EYES) return;
+
+    // The pupils: solid discs of whole squares, carried with the face and
+    // then turned within their lenses, each with a catchlight left unprinted.
+    var full = Math.round(cell * dpr);
+    var open = 1 - state.blink;
+    LENSES.forEach(function (lens) {
+      var lc = toCol(lens.cx);
+      var lr = toRow(lens.cy);
+      var lrx = toCells(lens.rx);
+      var lry = toCells(lens.ry);
+      var z = depth(lc, lr);
+      var radius = lry * 0.34;
+      var px = lc + z * turnX + look.x * (lrx - radius) * 0.7;
+      var py = lr + z * turnY + look.y * (lry - radius) * 0.55;
+      var ry = Math.max(radius * open, 0.5);
+      var glintX = px - radius * 0.4;
+      var glintY = py - radius * 0.4;
+      // Too small a pupil keeps no catchlight: it would read as a notch.
+      var glint = open > 0.6 && radius >= 3 ? Math.max(radius * 0.22, 0.75) : 0;
+      for (var r = Math.floor(py - radius); r <= Math.ceil(py + radius); r++) {
+        for (var c = Math.floor(px - radius); c <= Math.ceil(px + radius); c++) {
+          var ax = (c + 0.5 - px) / radius;
+          var ay = (r + 0.5 - py) / ry;
+          if (ax * ax + ay * ay > 1) continue;
+          var gx = c + 0.5 - glintX;
+          var gy = r + 0.5 - glintY;
+          if (gx * gx + gy * gy < glint * glint) continue;
+          ctx.fillRect(Math.round((p.ox + c * cell) * dpr), Math.round((p.oy + r * cell) * dpr), full, full);
+        }
+      }
+    });
+  };
+
+  var follow = function (well, state) {
+    var look = state.look = { x: 0, y: 0, tx: 0, ty: 0 };
+    state.blink = 1;          /* the eyes open once the portrait has assembled */
+    var blinkFrom = 0;
+    var last = 0;
     var queued = 0;
 
-    var apply = function () {
-      queued = 0;
-      var p = state.print;
-      if (!p || state.phase !== "done") return;
-      var reach = MAGNET_REACH;
-      for (var i = 0; i < p.n; i++) {
-        var ax = p.col[i] + 0.5 - px;
-        var ay = p.row[i] + 0.5 - py;
-        var dx = 0;
-        var dy = 0;
-        if (near && ax < reach && ax > -reach && ay < reach && ay > -reach) {
-          var d = Math.sqrt(ax * ax + ay * ay);
-          if (d > 0 && d < reach) {
-            var push = (reach - d) * 0.8 / d;
-            dx = Math.round(ax * push);
-            dy = Math.round(ay * push);
-          }
-        }
-        p.dx[i] = dx;
-        p.dy[i] = dy;
-      }
-      drawPrint(p);
+    var live = function () {
+      return state.print && state.phase === "done";
     };
-    var queue = function () {
-      if (!queued) queued = requestAnimationFrame(apply);
+    var onScreen = function () {
+      var box = well.getBoundingClientRect();
+      return box.bottom > 0 && box.top < window.innerHeight && box.width > 0;
     };
 
-    well.addEventListener("pointermove", function (e) {
+    var frame = function (now) {
+      queued = 0;
+      if (!live()) return;
+      var dt = last ? Math.min(now - last, 100) : 16.7;
+      last = now;
+      var ease = 1 - Math.pow(1 - LOOK_EASE, dt / 16.7);
+      look.x += (look.tx - look.x) * ease;
+      look.y += (look.ty - look.y) * ease;
+      var settled = Math.abs(look.tx - look.x) < 0.002 && Math.abs(look.ty - look.y) < 0.002;
+      if (settled) {
+        look.x = look.tx;
+        look.y = look.ty;
+      }
+      if (blinkFrom) {
+        var t = (now - blinkFrom) / BLINK_MS;
+        if (t >= 1) {
+          state.blink = 0;
+          blinkFrom = 0;
+        } else {
+          state.blink = state.blinkOpening ? 1 - t : 1 - Math.abs(1 - 2 * t);
+        }
+      }
+      drawLook(state);
+      if (!settled || blinkFrom) queue();
+      else last = 0;
+    };
+    var queue = function () {
+      if (!queued) queued = requestAnimationFrame(frame);
+    };
+
+    var blink = function (opening) {
+      if (!LOOK_EYES || blinkFrom || !live()) return;
+      state.blinkOpening = opening;
+      blinkFrom = performance.now();
+      queue();
+    };
+    var blinkLater = function () {
+      setTimeout(function () {
+        if (!document.hidden && onScreen()) blink(false);
+        blinkLater();
+      }, 2500 + Math.random() * 4500);
+    };
+
+    // Called whenever the print is drawn afresh: on assembly and on resize.
+    state.redraw = function () {
+      if (!live()) return;
+      if (state.blink === 1 && !blinkFrom) blink(true);
+      drawLook(state);
+    };
+
+    var aim = function (x, y) {
       var p = state.print;
       if (!p) return;
-      var box = p.canvas.getBoundingClientRect();
-      px = (e.clientX - box.left - p.ox) / p.cell;
-      py = (e.clientY - box.top - p.oy) / p.cell;
-      near = true;
-      queue();
+      var box = well.getBoundingClientRect();
+      // From between the eyes.
+      var ex = box.left + p.imgX + (LENSES[0].cx + LENSES[1].cx) / 2 * p.imgScale;
+      var ey = box.top + p.imgY + LENSES[0].cy * p.imgScale;
+      var dx = x - ex;
+      var dy = y - ey;
+      var k = 1 / (Math.sqrt(dx * dx + dy * dy) + LOOK_REACH);
+      look.tx = dx * k;
+      look.ty = dy * k;
+      if (live() && onScreen()) queue();
+    };
+
+    window.addEventListener("pointermove", function (e) {
+      if (e.pointerType === "mouse" || e.pointerType === "pen") aim(e.clientX, e.clientY);
+    }, { passive: true });
+    // The pointer has left the window: look back out of the page.
+    document.documentElement.addEventListener("pointerleave", function () {
+      look.tx = 0;
+      look.ty = 0;
+      if (live()) queue();
     });
-    well.addEventListener("pointerleave", function () {
-      near = false;
-      queue();
-    });
+    if (LOOK_EYES) blinkLater();
   };
 
   var wells = document.querySelectorAll(".project-item .c-shot, .c-portrait");
@@ -392,6 +549,7 @@
         state.phase = "done";
       }
       drawPrint(p);
+      if (state.redraw) state.redraw();
       // A transparent print needs the image under it hidden (styles.css).
       well.classList.add("is-printed");
       maybeAssemble(state);
@@ -426,7 +584,7 @@
       img.addEventListener("load", function () { relayout(well); });
       reprint.observe(well);
       if (arrive) arrive.observe(well);
-      if (inkOnly && finePointer && !reduceMotion) magnetise(well, state);
+      if (inkOnly && finePointer && !reduceMotion) follow(well, state);
     });
   }
 })();
