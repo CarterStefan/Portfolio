@@ -49,9 +49,14 @@
         !!(navigator.connection && navigator.connection.saveData);
       if (!asked && (seen || fromSite || quiet)) return;
       root.classList.add('intro-on', 'intro-hold', 'intro-land');
-      var script = document.createElement('script');
-      script.src = '/js/intro.js';
-      document.head.appendChild(script);
+      /* The engraver first: a script added here runs as soon as it arrives
+         unless told to keep its place */
+      ['/js/engrave.js', '/js/intro.js'].forEach(function (src) {
+        var script = document.createElement('script');
+        script.src = src;
+        script.async = false;
+        document.head.appendChild(script);
+      });
       /* If the reel has not taken over by now it is not coming, so give
          the page back rather than leave it covered. */
       setTimeout(function () {
@@ -119,14 +124,14 @@
       </div>
 
       <!-- The practice, and the portrait beside it in the last quarter,
-           printed as a halftone onto the same green by js/main.js.
+           printed as an engraving onto the same green by js/main.js.
            Stacked below lg it moves to the closing row instead. -->
       <div class="crow row-aside-right row-grow">
         <p class="vlabel">Practice</p>
         <div class="cell cell-hue cell-pad-lg cell-mid cell-centre">
           <p class="c-display c-statement c-statement-pair">
-            <span>Websites, designed and shipped.</span>
-            <span>Products, researched and prototyped.</span>
+            <span>Websites designed and shipped.</span>
+            <span>Products researched and designed in code.</span>
           </p>
         </div>
         <div class="cell cell-hue cell-portrait">
@@ -188,6 +193,7 @@
     </main>
   </div>
 
+  <script src="js/engrave.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
