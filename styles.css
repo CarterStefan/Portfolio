@@ -2,9 +2,10 @@
    STEFAN CARTER - PORTFOLIO STYLESHEET (multi-page)
    Every one of the fifteen pages runs the hard-ruled grid system (sections
    17-19, scoped to `body.cert`): a printed-certification-document layout in
-   Space Mono, zero radius, zero shadow, unequal ruled cells and a rotated
-   edge label naming each one. No other design lives here; there is no second
-   typeface, no Bootstrap, no card-and-shadow layer underneath it.
+   Space Mono with block-print headings in Anybody, zero radius, zero shadow,
+   unequal ruled cells and a rotated edge label naming each one. No other
+   design lives here; there is no Bootstrap and no card-and-shadow layer
+   underneath it.
    --------------------------------------------------------------------------
    TABLE OF CONTENTS
 
@@ -55,6 +56,15 @@
   font-weight: 700;
   font-display: swap;
   src: url("/assets/fonts/space-mono-700.woff2") format("woff2");
+}
+/* The heading face: Anybody, cut at extra condensed (62.5) and its heaviest weight. The file holds
+   that one cut, so the weight range stops the browser faking a bolder one. */
+@font-face {
+  font-family: "Anybody";
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url("/assets/fonts/anybody-condensed-black.woff2") format("woff2");
 }
 
 
@@ -112,9 +122,9 @@
   --vt-ease-leave: cubic-bezier(0.4, 0, 1, 1);     /* accelerating away  */
   --vt-ease-land:  cubic-bezier(0.16, 1, 0.3, 1);  /* the system's settle */
 
-  /* No radius, shadow or second-typeface tokens: the grid system is zero
-     radius, zero shadow and Space Mono only (--font-mono, declared on .cert
-     in section 17). The previous design's --radius, --radius-lg,
+  /* No radius or shadow tokens: the grid system is zero radius and zero
+     shadow. Its two faces, --font-mono and --font-head, are declared on .cert
+     in section 17. The previous design's --radius, --radius-lg,
      --shadow-card, --font-sans, --font-serif, --bg, --accent-soft and the
      two rgb() triplets were removed on 2026-09-25 along with the last rules
      that read them. */
@@ -540,6 +550,14 @@ body { margin: 0; }
 .cert {
   --font-mono: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
+  /* Block-print headings: heavy capitals packed so the letters nearly touch.
+     --head-track is how tight they sit. --head-em is the width of a wide letter
+     at that tracking as a share of the type size, which the reel uses to set
+     its names to fill their rows. */
+  --font-head: "Anybody", var(--font-mono);
+  --head-track: -0.01em;
+  --head-em: 0.48;
+
   /* The rule colour is what makes the grid read as hard-ruled, and every one of
      the 26 rules in the system draws from this one token. It takes the page hue
      rather than ink, so the whole ruled structure is tinted by the section it
@@ -653,9 +671,10 @@ body { margin: 0; }
 
 .cert h1, .cert h2, .cert h3,
 .cert h4, .cert h5, .cert h6 {
-  font-family: var(--font-mono);
+  font-family: var(--font-head);
   font-weight: 700;
-  letter-spacing: -0.01em;
+  letter-spacing: var(--head-track);
+  text-transform: uppercase;
   color: var(--ink);
 }
 
@@ -747,6 +766,7 @@ body { margin: 0; }
   margin: 0;
 }
 
+.cert h2.c-display { font-size: clamp(1.5rem, 3vw, 2.6rem); letter-spacing: 0; line-height: 0.9; }
 .c-display {
   font-size: clamp(1.05rem, 2.7vw, 1.85rem);
   font-weight: 400;
@@ -1555,6 +1575,8 @@ body { margin: 0; }
   color: var(--hue);
 }
 .cert .type-row h3 {
+  text-transform: none;
+  font-family: var(--font-mono);
   font-size: clamp(1.05rem, 1.7vw, 1.28rem);
   font-weight: 700;
   letter-spacing: -0.01em;
@@ -1676,10 +1698,11 @@ body { margin: 0; }
 /* Next project + outbound link */
 .cert .next-link {
   display: inline-block;
-  font-family: var(--font-mono);   /* the legacy rule sets the serif face */
-  font-size: clamp(1.45rem, 5vw, 3.6rem);
+  font-family: var(--font-head);   /* the legacy rule sets the serif face */
+  font-size: clamp(1.8rem, 6vw, 4.5rem);
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: var(--head-track);
+  text-transform: uppercase;
   line-height: 1.08;
   color: var(--ink);
   text-decoration: none;
@@ -2000,22 +2023,23 @@ body { margin: 0; }
    tracking) still clears its cell without breaking. */
 .cell:has(.c-hero) { container-type: inline-size; }
 .c-hero {
-  font-size: min(clamp(2rem, 7vw, 6.5rem), 12.5cqi);
-  line-height: 1;
+  font-size: min(clamp(2.4rem, 7.5vw, 7.5rem), 15.5cqi);
+  line-height: 0.82;
 }
 
 /* The name runs the full width of its cell on one line, sitting on the
-   rule beneath it. Space Mono advances 0.592em a character at this
-   tracking, so "Stefan Carter" is 7.696em: 12.95cqi fills the cell. */
-.page-home .cell:has(.c-hero) { justify-content: flex-end; }
+   rule beneath it. "Stefan Carter" sets at about 5.1em in Anybody, so 19.3cqi
+   fills the cell. Tall type would push the sheet past the screen, so the
+   padding comes down to keep the row the height it had. */
+.page-home .cell:has(.c-hero) { justify-content: flex-end; padding-block: clamp(1rem, 2vw, 1.8rem); }
 .page-home .c-hero {
-  font-size: 12.95cqi;
-  line-height: 0.9;
+  font-size: 19.3cqi;
+  line-height: 0.8;
   white-space: nowrap;
 }
-/* On a phone it takes a word a line instead ("Stefan" is 3.552em) */
+/* On a phone it takes a word a line instead ("Stefan" is about 2.5em) */
 @media (max-width: 575.98px) {
-  .page-home .c-hero { font-size: 28cqi; white-space: normal; }
+  .page-home .c-hero { font-size: 39cqi; white-space: normal; }
 }
 
 /* Sized to its cell, which lost a quarter to the portrait, so the longer
@@ -2160,6 +2184,8 @@ body { margin: 0; }
 .project-item .c-link { position: static; }
 .project-item .c-link::after { inset: 0; }
 
+.cert :is(h2, h3).c-title { font-size: clamp(1.3rem, 1.9vw, 1.6rem); letter-spacing: 0; line-height: 0.95; }
+.cert .project-item :is(h2, h3).c-title { font-size: clamp(1.8rem, 3.6vw, 3.2rem); letter-spacing: 0; line-height: 0.9; }
 .project-item .c-title {
   font-size: clamp(1.3rem, 2.6vw, 2.4rem);
   letter-spacing: -0.02em;
@@ -2491,9 +2517,9 @@ html.intro-on .intro.is-clear { background: none; }
 
 /* --- The name ----------------------------------------------------------------
    Each name fills the row's width on one line, the way the name on Home
-   does, unless the row's height stops it first. Space Mono advances 0.592em
-   a character at this tracking; the sums below allow 0.6 so a name that
-   fills its row never meets the edge. --chars is the name's length. Each
+   does, unless the row's height stops it first. Anybody is not monospaced, so
+   the sums below allow --head-em a character, its wide letters, so that a
+   name that fills its row never meets the edge. --chars is the name's length. Each
    letter is its own box so it can drop into the line, which clips above
    its top edge and leaves room below for descenders. */
 .intro-head {
@@ -2504,11 +2530,13 @@ html.intro-on .intro.is-clear { background: none; }
   padding-inline: var(--pad);
 }
 .intro-title {
-  padding-bottom: 0.14em;
-  font-size: min(calc((100cqw - 2 * var(--pad)) / (var(--chars) * 0.6)), 22cqh);
+  text-transform: uppercase;
+  font-family: var(--font-head);
+  padding-bottom: 0.06em;
+  font-size: min(calc((100cqw - 2 * var(--pad)) / (var(--chars) * var(--head-em))), 25cqh);
   font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1;
+  letter-spacing: var(--head-track);
+  line-height: 0.76;
   white-space: nowrap;
   color: var(--ink);
 }
@@ -2575,10 +2603,12 @@ html.intro-on .intro.is-clear { background: none; }
   padding: var(--pad) var(--pad) max(var(--pad), 3.6rem);
 }
 .intro-open {
-  font-size: min(calc((100cqw - 2 * var(--pad)) / (6 * 0.6)), 34cqh);
+  text-transform: uppercase;
+  font-family: var(--font-head);
+  font-size: min(calc((100cqw - 2 * var(--pad)) / (6 * var(--head-em))), 42cqh);
   font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 0.95;
+  letter-spacing: var(--head-track);
+  line-height: 0.8;
   color: var(--ink);
 }
 .intro-ob { display: block; }
@@ -2604,7 +2634,7 @@ html.intro-on .intro.is-clear { background: none; }
 }
 .intro-rule-b { inset: 0 auto 0 62cqw; width: var(--rw); translate: -50% 0; }
 .intro-say {
-  --say: min(calc((62cqw - 2 * var(--pad)) / (var(--say-chars) * 0.6)), 13cqh);
+  --say: min(calc((62cqw - 2 * var(--pad)) / (var(--say-chars) * var(--head-em))), 16cqh);
   position: relative;
   min-width: 0;
   padding: var(--pad);
@@ -2617,12 +2647,14 @@ html.intro-on .intro.is-clear { background: none; }
   color: var(--ink);
 }
 .intro-word {
+  text-transform: uppercase;
+  font-family: var(--font-head);
   position: absolute;
   left: var(--pad);
   bottom: max(var(--pad), 3.6rem);
   font-size: var(--say);
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: var(--head-track);
   line-height: 1;
   color: var(--ink);
 }
@@ -2670,7 +2702,7 @@ html.intro-on .intro.is-clear { background: none; }
   }
   .intro-title {
     white-space: normal;
-    font-size: min(calc((100cqw - 2 * var(--pad)) / (var(--chars-n) * 0.6)), calc(16cqh / var(--lines-n)));
+    font-size: min(calc((100cqw - 2 * var(--pad)) / (var(--chars-n) * var(--head-em))), calc(16cqh / var(--lines-n)));
   }
   .intro-tl { display: block; }
   .intro-sp { display: none; }
@@ -2689,7 +2721,7 @@ html.intro-on .intro.is-clear { background: none; }
   }
   .intro-me { grid-row: 1; }
   .intro-say {
-    --say: calc((100cqw - 2 * var(--pad)) / (var(--say-chars) * 0.6));
+    --say: calc((100cqw - 2 * var(--pad)) / (var(--say-chars) * var(--head-em)));
     grid-row: 2;
   }
   .intro-tag { font-size: max(var(--step-label), 2.4cqw); }
@@ -2752,9 +2784,11 @@ html.soon .intro-brand { display: none; }
    every other page */
 .row-soon > .cell { container-type: inline-size; }
 .c-soon {
-  font-size: clamp(1.5rem, 5.5cqi, 4.5rem);
+  text-transform: uppercase;
+  font-family: var(--font-head);
+  font-size: clamp(2rem, 10cqi, 8rem);
   font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.05;
+  letter-spacing: var(--head-track);
+  line-height: 0.85;
   color: var(--surface);
 }
