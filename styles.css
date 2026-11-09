@@ -2177,25 +2177,24 @@ body { margin: 0; }
 .project-item:focus-within .c-link { border-bottom-color: var(--surface); }
 .project-item .c-link:focus-visible { outline-color: var(--surface); }
 
-/* Halftone prints. js/main.js lays a square halftone print over each index
-   thumbnail and over the portrait. A thumbnail's print starts as blank paper
-   rather than transparent, so a slow image never flashes in colour before it
-   is reprinted, and the real image shows through while its row is inverted.
-   Prints are drawn at the screen's own density; pixelated only keeps the
-   square edges hard if the browser rescales one by a fraction of a pixel. */
-.project-item .c-shot { position: relative; }
+/* Engraved prints. js/main.js lays a line engraving (js/engrave.js) over the
+   portrait, and over each index thumbnail one object that stands for its
+   project. A thumbnail's print starts as blank paper rather than transparent,
+   so a slow image never flashes in colour first, and the real image shows
+   through while its row is inverted, by hover or by keyboard focus alike. */
+/* An object stands on bare paper, where the rule under its well would float */
+.project-item .c-shot { position: relative; border-bottom: 0; }
 .c-print {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   background: var(--surface);
-  image-rendering: pixelated;
 }
 .project-item:hover .c-print,
 .project-item:focus-within .c-print { visibility: hidden; }
 
-/* The portrait is an inked illustration on white, printed in black squares
+/* The portrait is an inked illustration on white, printed in black lines
    straight onto its cell's section colour: its white is bare paper, so the
    colour shows through wherever there is no ink. The image stays in the
    page under the print for anyone who cannot see the canvas, and is only
@@ -2328,7 +2327,7 @@ html.js .reveal { transform: none; transition: none; }
    behind it.
 
    It is built from the site's own parts: the black rail, 2px rules, Space
-   Mono, the four ink blocks and the halftone squares of section 21. Each
+   Mono, the four ink blocks and the engraved prints of section 21. Each
    plate takes one block, as the page's one block of colour. The reel runs
    on a 30 frame a second clock, so even the camera moves in frames, as
    the rest of the site's motion steps rather than glides. The hand-over
@@ -2513,14 +2512,18 @@ html.intro-on .intro.is-clear { background: none; }
   white-space: nowrap;
   color: var(--ink);
 }
+/* The project's name, which takes over the same slot on the final board */
+.intro-head { position: relative; }
+.intro-title.is-name { position: absolute; left: var(--pad); bottom: 0; }
 .intro-tl { display: inline-block; clip-path: inset(0 -0.2em -0.45em -0.2em); }
 .intro-ch { display: inline-block; }
 
 /* --- The picture -------------------------------------------------------------
-   The plate's block, with the picture printed onto it in black squares
-   (the block is the paper), and for a live site, the capture itself. It
-   spans the width: on a wide screen it is cropped top and bottom, and on a
-   phone it sits on the block like a print on a mat (js/intro.js, fit()). */
+   The plate's block, with its picture printed onto it in black lines (the
+   block is the paper). A live site's capture then develops over the print,
+   spanning the width: cropped top and bottom on a wide screen, and on a phone
+   sitting on the block like a print on a mat (js/intro.js, fit()). A project
+   with no captures keeps its object, centred by Engrave.place(). */
 .intro-shot {
   position: relative;
   overflow: hidden;
@@ -2562,7 +2565,7 @@ html.intro-on .intro.is-clear { background: none; }
 
 /* --- Who: the name ---------------------------------------------------------------
    The first plate, two lines above what I do. The name is printed from the
-   same squares before it is set as type, sitting on the foot of the plate
+   same flying lines before it is set as type, sitting on the foot of the plate
    as the name on Home sits on its rule, as big as six letters across the
    plate allow. */
 .intro-plate.is-open .intro-grid {
@@ -2584,7 +2587,6 @@ html.intro-on .intro.is-clear { background: none; }
   inset: 0;
   width: 100%;
   height: 100%;
-  image-rendering: pixelated;
 }
 
 /* --- Who: what I do --------------------------------------------------------------
@@ -2593,7 +2595,7 @@ html.intro-on .intro.is-clear { background: none; }
    its longest line allows (--say-chars, from js/intro.js), sits on the foot
    of the plate and is run over with a highlighter in its ink, a line at a
    time. Its letters drop in and out of their lines, which clip at the top
-   as the names on the plates do. The portrait is printed in black squares
+   as the names on the plates do. The portrait is printed in black lines
    onto the same ink, which rolls up from the foot of the cell as each word
    arrives. */
 .intro-plate.is-about .intro-grid {

@@ -5,8 +5,8 @@
    for reduced motion), and loads this file only when it will. The look is
    styles.css section 22.
 
-   About twelve seconds, in four parts. Who: the name prints
-   itself from halftone squares, then the camera drops a line to the
+   About fourteen seconds, in four parts. Who: the name prints
+   itself from flying lines of engraving, then the camera drops a line to the
    portrait and what I do, five words at a reading pace. The work: the
    camera drops onto a ruled board of the nine projects and flicks along it
    like a print carriage. The board: it pulls back to show all nine, and
@@ -14,7 +14,7 @@
 
    1. Words and projects
    2. Time
-   3. Halftone prints
+   3. Engraved prints
    4. Building the board
    5. The camera
    6. Drawing a frame
@@ -24,7 +24,7 @@
   "use strict";
 
   var root = document.documentElement;
-  if (!root.classList.contains("intro-on")) return;
+  if (!root.classList.contains("intro-on") || !window.Engrave) return;
   /* Tells the <head> gate's failsafe that the reel has been taken over */
   root.classList.add("intro-live");
 
@@ -34,13 +34,15 @@
      word takes one ink, and the portrait beside it changes ink with it. Its
      hold is how long it stays, which is roughly how long it takes to read.
 
-     Then the nine projects, in the Selected work order. At the speed they
-     flick past, a project is its name and its picture, so that is all a
-     plate shows. The four Instem projects show only their abstract
-     illustrations, never real UI (PRODUCT.md). A picture spans its plate's
-     width, and where the plate is wider than 16:10 it is cropped top and
-     bottom about its focus, the share of its height held in view: Bird
-     Watcher's headline sits high, so it keeps its top. */
+     Then the nine projects, in the Selected work order, under the name of their
+     practice: the title lands once, on the first plate of its section, and
+     stands from there as the camera moves along, and on the final board each
+     plate changes to its project's own name (title). A project with real captures
+     shows one, spanning the plate's width and, where the plate is wider than
+     16:10, cropped top and bottom about its focus, the share of its height
+     held in view: Bird Watcher's headline sits high, so it keeps its top. A
+     project with none shows its engraved object (assets/img/objects), so no
+     Instem UI ever appears (PRODUCT.md). */
   var IMG = "/assets/img/";
   var SAY = [
     { lines: ["Senior", "product", "designer"], tag: "Now", ink: "moss", hold: 0.95 },
@@ -49,16 +51,18 @@
     { lines: ["Design", "systems"], ink: "slate", hold: 0.75 },
     { lines: ["Design", "engineering"], ink: "moss", hold: 0.8 }
   ];
+  var PRODUCT = ["Product", "design"];
+  var WEB = ["Web", "design"];
   var PROJECTS = [
-    { name: ["Centrus"], art: "centrus.svg" },
-    { name: ["Preclinical", "Insights"], art: "preclinical-insights.svg" },
-    { name: ["KnowledgeScan"], art: "knowledgescan.svg" },
-    { name: ["InstemUX"], art: "instemux.svg" },
-    { name: ["Nick", "Hampshire"], shot: "nick-hampshire/" },
-    { name: ["No", "Boundaries"], shot: "no-boundaries/" },
-    { name: ["Visit", "Stafford"], shot: "visit-stafford/" },
-    { name: ["Bird", "Watcher"], shot: "bird-watcher/", focus: 0.2 },
-    { name: ["Wrottesley", "Golf Club"], art: "wrottesley-golf.svg" }
+    { name: PRODUCT, title: ["Centrus"], object: "centrus" },
+    { name: PRODUCT, title: ["Preclinical", "Insights"], object: "preclinical-insights" },
+    { name: PRODUCT, title: ["KnowledgeScan"], object: "knowledgescan" },
+    { name: PRODUCT, title: ["InstemUX"], object: "instemux" },
+    { name: WEB, title: ["Nick", "Hampshire"], shot: "nick-hampshire/" },
+    { name: WEB, title: ["No", "Boundaries"], shot: "no-boundaries/" },
+    { name: WEB, title: ["Visit", "Stafford"], shot: "visit-stafford/" },
+    { name: WEB, title: ["Bird", "Watcher"], shot: "bird-watcher/", focus: 0.2 },
+    { name: WEB, title: ["Wrottesley", "Golf Club"], object: "wrottesley-golf" }
   ];
   /* Plate by plate through the four inks of section 21, so the whole board
      reads as a print run of all four, on the diagonal */
@@ -72,7 +76,7 @@
   var FPS = 30;
 
   /* Who. The words change at a reading pace; the work after them flicks. */
-  var SWARM_AT = 0.04, SWARM_MS = 0.40, SWARM_SPREAD = 0.12;   /* the name, from squares */
+  var SWARM_AT = 0.04, SWARM_MS = 0.40, SWARM_SPREAD = 0.12;   /* the name, from lines */
   var FEED_AT = 1.05, FEED = 0.30;      /* down a line, from the name to what I do */
   var ME_MS = 0.40, ME_SPREAD = 0.10;   /* the portrait printing, from FEED_AT */
   var WORD_CHAR = 0.09;                 /* one letter of a word dropping in, or out */
@@ -86,14 +90,14 @@
   var INTO = 0.28;      /* down a line, onto the first plate */
   var PAN = 0.16;       /* along a row */
   var RETURN = 0.24;    /* back to the start of the next row */
-  var AFTER = 0.26;     /* on a plate, once it has landed: long enough for the picture to land */
+  var AFTER = 0.51;     /* on a plate, once it has landed: long enough to see the picture */
   var PRINT_MS = 0.14, PRINT_SPREAD = 0.04;   /* a plate's picture, from its start */
   var CHAR_MS = 0.07;                         /* one letter of a name dropping in */
   var DEV_AT = 0.02, DEV_MS = 0.07;           /* a capture developing, from landing */
 
   /* The board */
   var PULL = 0.40;      /* out to the whole board */
-  var HOLD = 0.75;      /* the whole board, held */
+  var HOLD = 1;         /* the whole board, held */
   var CASCADE = 0.04;   /* the rail's index lighting up, number by number, as it holds */
 
   /* The hand-over, counted from the moment the board starts to leave. It
@@ -163,15 +167,16 @@
   }
   var leave = bezier(0.4, 0, 1, 1);
 
-  /* --- 3. Halftone prints --------------------------------------------------------
-     Laid out as js/main.js lays out the portrait: the picture is averaged
-     over a grid of square cells, its tones are stretched to the full range,
-     and each cell prints as one black square whose area is its share of
-     ink, straight onto the block behind it. Every square starts thrown out
-     from the picture's centre and is pulled home in whole cells, slowly and
-     then with a snap. The throw is seeded, so a frame is the same however
-     the clock reached it. */
-  var PR = Math.min(window.devicePixelRatio || 1, 2);
+  /* --- 3. Engraved prints --------------------------------------------------------
+     Cut by js/engrave.js, as js/main.js cuts the portrait: the picture's tones
+     are stretched to the full range and reprinted as lines in black,
+     straight onto the block behind them. Every length of line starts thrown out
+     from the picture's centre and is pulled home in whole line spacings,
+     slowly and then with a snap. The throw is seeded, so a frame is the same
+     however the clock reached it. */
+  var Engrave = window.Engrave;
+  var INK = { ink: Engrave.config.ink };
+  var PR = Math.min(window.devicePixelRatio || 1, Engrave.config.maxDPR);
 
   function seeded(seed) {
     return function () {
@@ -190,104 +195,11 @@
     return { x: 0, y: ph > h ? (h - ph) * (focus == null ? 0.5 : focus) : (h - ph) / 2, w: w, h: ph };
   }
 
-  /* The picture is painted straight onto a canvas of one pixel per cell, so
-     the browser's own scaler does the averaging that js/main.js does by
-     hand. That is a hundredth of the work, which matters here: these are
-     laid out while the reel is already moving. */
-  function layoutPrint(paint, w, h, cell, pr) {
-    var cols = Math.ceil(w / cell);
-    var rows = Math.ceil(h / cell);
-    var ox = (w - cols * cell) / 2;
-    var oy = (h - rows * cell) / 2;
-    var sample = document.createElement("canvas");
-    sample.width = cols;
-    sample.height = rows;
-    var sctx = sample.getContext("2d", { willReadFrequently: true });
-    sctx.fillStyle = "#fff";
-    sctx.fillRect(0, 0, cols, rows);
-    sctx.imageSmoothingEnabled = true;
-    sctx.imageSmoothingQuality = "high";
-    sctx.setTransform(1 / cell, 0, 0, 1 / cell, -ox / cell, -oy / cell);
-    paint(sctx);
-    var px;
-    try {
-      px = sctx.getImageData(0, 0, cols, rows).data;
-    } catch (e) {
-      return null;
-    }
-
-    var tone = new Float32Array(cols * rows);
-    for (var i = 0; i < tone.length; i++) {
-      tone[i] = 1 - (0.2126 * px[i * 4] + 0.7152 * px[i * 4 + 1] + 0.0722 * px[i * 4 + 2]) / 255;
-    }
-
-    var sorted = tone.slice().sort();
-    var lo = sorted[Math.floor(sorted.length * 0.02)];
-    var hi = sorted[Math.floor(sorted.length * 0.98)];
-    var range = Math.max(hi - lo, 0.05);
-
-    var col = [], row = [], left = [], top = [], size = [];
-    for (var r = 0; r < rows; r++) {
-      for (var c = 0; c < cols; c++) {
-        var ink = clamp01(((tone[r * cols + c] - lo) / range - 0.04) / 0.96);
-        if (!ink) continue;
-        var side = Math.round(cell * Math.sqrt(ink) * pr);
-        if (side < 1) continue;
-        col.push(c);
-        row.push(r);
-        left.push((ox + (c + 0.5) * cell) * pr - side / 2);
-        top.push((oy + (r + 0.5) * cell) * pr - side / 2);
-        size.push(side);
-      }
-    }
-    return {
-      n: size.length,
-      cols: cols,
-      rows: rows,
-      step: cell * pr,
-      col: col,
-      row: row,
-      left: Float32Array.from(left),
-      top: Float32Array.from(top),
-      size: Uint16Array.from(size)
-    };
-  }
-
-  /* Throw every square out: near and far scale its distance from the centre,
-     noise adds up to that many cells either way, and spread staggers when
-     each one sets off. */
-  function scatter(print, seed, near, far, noise, spread) {
-    var rnd = seeded(seed);
-    var n = print.n;
-    var cx = print.cols / 2;
-    var cy = print.rows / 2;
-    print.fx = new Float32Array(n);
-    print.fy = new Float32Array(n);
-    print.wait = new Float32Array(n);
-    for (var i = 0; i < n; i++) {
-      var fling = near + rnd() * (far - near);
-      print.fx[i] = (print.col[i] - cx) * fling + (rnd() - 0.5) * noise;
-      print.fy[i] = (print.row[i] - cy) * fling + (rnd() - 0.5) * noise;
-      print.wait[i] = rnd() * spread;
-    }
-  }
-
-  /* The print as it stands lt seconds after its squares set off, or whole */
+  /* The print as it stands lt seconds after its lines set off, or whole */
   function drawPrint(print, ctx, lt, ms) {
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    ctx.fillStyle = "#000";
     var whole = lt === Infinity;
-    for (var i = 0; i < print.n; i++) {
-      var dx = 0;
-      var dy = 0;
-      if (!whole) {
-        var p = clamp01((lt - print.wait[i]) / ms);
-        var pull = 1 - p * p;
-        dx = Math.round(print.fx[i] * pull);
-        dy = Math.round(print.fy[i] * pull);
-      }
-      ctx.fillRect(Math.round(print.left[i] + dx * print.step), Math.round(print.top[i] + dy * print.step), print.size[i], print.size[i]);
-    }
+    if (!whole) Engrave.settle(print, lt, ms);
+    Engrave.draw(ctx, print, INK, !whole);
   }
 
   /* A print that assembles once, from its own start, and then stands */
@@ -401,26 +313,34 @@
     style.setProperty("--c", k % 3);
     style.setProperty("--r", Math.floor(k / 3));
     style.setProperty("--block", "var(--" + INKS[k % 4] + "-block)");
-    style.setProperty("--chars", p.name.join(" ").length);
-    style.setProperty("--chars-n", Math.max.apply(null, p.name.map(function (l) { return l.length; })));
-    style.setProperty("--lines-n", p.name.length);
 
     var grid = make("div", "intro-grid");
 
+    /* Two titles in one slot, each sized to its own length: the section it
+       flicks past under, then the project's own name on the final board */
     var head = make("div", "intro-head");
-    var title = make("p", "intro-title");
-    var chars = [];
-    p.name.forEach(function (line, i) {
-      if (i) title.appendChild(make("span", "intro-sp", " "));
-      var tl = make("span", "intro-tl");
-      line.split("").forEach(function (ch) {
-        var c = make("span", "intro-ch", ch === " " ? "\u00a0" : ch);
-        chars.push(c);
-        tl.appendChild(c);
+    function buildTitle(lines, cls) {
+      var title = make("p", cls);
+      var chars = [];
+      title.style.setProperty("--chars", lines.join(" ").length);
+      title.style.setProperty("--chars-n", Math.max.apply(null, lines.map(function (l) { return l.length; })));
+      title.style.setProperty("--lines-n", lines.length);
+      lines.forEach(function (line, i) {
+        if (i) title.appendChild(make("span", "intro-sp", " "));
+        var tl = make("span", "intro-tl");
+        line.split("").forEach(function (ch) {
+          var c = make("span", "intro-ch", ch === " " ? "\u00a0" : ch);
+          chars.push(c);
+          tl.appendChild(c);
+        });
+        title.appendChild(tl);
       });
-      title.appendChild(tl);
-    });
-    head.appendChild(title);
+      head.appendChild(title);
+      return chars;
+    }
+    var chars = buildTitle(p.name, "intro-title");
+    var nameChars = buildTitle(p.title, "intro-title is-name");
+    nameChars.forEach(function (c) { show(c, false); });
 
     var shot = make("div", "intro-shot");
     var canvas = make("canvas", "intro-print");
@@ -433,7 +353,7 @@
 
     return {
       el: plate, p: p, k: k, c: k % 3, r: Math.floor(k / 3),
-      chars: chars, shot: shot, canvas: canvas, ctx: null,
+      chars: chars, nameChars: nameChars, shot: shot, canvas: canvas, ctx: null,
       img: null, failed: false, print: null, shown: null, final: false
     };
   }
@@ -516,19 +436,21 @@
     }, function () { P.failed = true; });
   }
 
+  /* The prints are cut off this thread, so the reel keeps its frames, and a
+     plate whose picture is not back yet stays blank until it is. */
   function printPlate(P) {
-    var f = fit(P.w, P.h, P.p.focus);
-    var cell = Math.max(4, Math.min(10, Math.round(P.w / 110)));
-    var print = layoutPrint(function (ctx) {
+    var f = P.p.shot ? fit(P.w, P.h, P.p.focus) : Engrave.place(P.img, P.w, P.h);
+    Engrave.print(function (ctx) {
       ctx.drawImage(P.img, f.x, f.y, f.w, f.h);
-    }, P.w, P.h, cell, PR);
-    if (!print) {
-      P.failed = true;
-      return;
-    }
-    scatter(print, 7 + P.k * 101, 0.3, 1.2, 8, PRINT_SPREAD);
-    P.print = print;
-    P.shown = null;
+    }, P.w, P.h, { pr: PR, relief: !P.p.shot }, function (print) {
+      if (!print) {
+        P.failed = true;
+        return;
+      }
+      Engrave.scatter(print, seeded(7 + P.k * 101), 0.3, 1.2, 8, PRINT_SPREAD);
+      P.print = print;
+      P.shown = null;
+    });
   }
 
   /* The whole head, set in from the edges of its cell, as the About page
@@ -538,33 +460,40 @@
     var ih = A.img.naturalHeight || 947;
     var inset = Math.round(Math.min(A.w, A.h) * 0.07);
     var s = Math.min((A.w - 2 * inset) / iw, (A.h - 2 * inset) / ih);
-    var cell = Math.max(4, Math.round(Math.min(A.w, A.h) / 70));
-    var print = layoutPrint(function (ctx) {
-      ctx.drawImage(A.img, (A.w - iw * s) / 2, (A.h - ih * s) / 2, iw * s, ih * s);
-    }, A.w, A.h, cell, PR);
-    if (!print) {
-      A.failed = true;
-      return;
-    }
-    scatter(print, 3, 0.3, 1.2, 8, ME_SPREAD);
-    A.print = print;
-    A.shown = null;
+    var x = (A.w - iw * s) / 2;
+    var y = (A.h - ih * s) / 2;
+    var head = Engrave.head;
+    Engrave.print(function (ctx) {
+      ctx.drawImage(A.img, x, y, iw * s, ih * s);
+    }, A.w, A.h, {
+      pr: PR,
+      head: { cx: x + head.cx * s, cy: y + head.cy * s, rx: head.rx * s, ry: head.ry * s }
+    }, function (print) {
+      if (!print) {
+        A.failed = true;
+        return;
+      }
+      Engrave.scatter(print, seeded(3), 0.3, 1.2, 8, ME_SPREAD);
+      A.print = print;
+      A.shown = null;
+    });
   }
 
   /* The name is drawn letter by letter where the page set it, then printed.
-     The sample covers only the name, but the squares fly in across the
-     whole plate, so they are drawn on a canvas the plate's size. */
-  function printOpen() {
+     The sample covers only the name, but the lines fly in across the
+     whole plate, so they are drawn on a canvas the plate's size. The reel's
+     clock waits for this print, since it is the opening frame. */
+  function printOpen(done) {
     var plateBox = open.el.getBoundingClientRect();
     var box = open.title.getBoundingClientRect();
     var fs = parseFloat(getComputedStyle(open.title).fontSize);
-    var cell = Math.max(3, Math.round(fs / 24));
-    var margin = cell * 2;
+    var spacing = Math.max(4, Math.min(8, fs / 30));
+    var margin = Math.ceil(spacing * 2);
     var bx = Math.max(0, Math.floor(box.left - plateBox.left) - margin);
     var by = Math.max(0, Math.floor(box.top - plateBox.top) - margin);
     var bw = Math.min(W - bx, Math.ceil(box.width) + 2 * margin);
     var bh = Math.min(H - by, Math.ceil(box.height) + 2 * margin);
-    var print = layoutPrint(function (ctx) {
+    Engrave.print(function (ctx) {
       ctx.font = "700 " + fs + "px \"Space Mono\"";
       ctx.fillStyle = "#000";
       ctx.textBaseline = "alphabetic";
@@ -576,17 +505,16 @@
         var base = ascent ? r.top + (r.height - ascent - descent) / 2 + ascent : r.top + r.height * 0.76;
         ctx.fillText(c.textContent, r.left - plateBox.left - bx, base - plateBox.top - by);
       });
-    }, bw, bh, cell, 1);
-    if (!print) return;
-    for (var i = 0; i < print.n; i++) {
-      print.left[i] += bx;
-      print.top[i] += by;
-    }
-    scatter(print, 1, 0.9, 2.4, print.cols * 0.5, SWARM_SPREAD);
-    open.swarm.width = W;
-    open.swarm.height = H;
-    open.ctx = open.swarm.getContext("2d");
-    open.print = print;
+    }, bw, bh, { pr: PR, spacing: spacing, plain: true, originX: bx * PR, originY: by * PR }, function (print) {
+      if (print) {
+        Engrave.scatter(print, seeded(1), 0.9, 2.4, bw / spacing * 0.5, SWARM_SPREAD);
+        open.swarm.width = Math.round(W * PR);
+        open.swarm.height = Math.round(H * PR);
+        open.ctx = open.swarm.getContext("2d");
+        open.print = print;
+      }
+      done();
+    });
   }
 
   /* --- 5. The camera ---------------------------------------------------------------
@@ -666,7 +594,7 @@
     show(open.title, landed);
     if (!open.print) return;
     if (lt < 0 || landed) {
-      if (open.drawn) open.ctx.clearRect(0, 0, W, H);
+      if (open.drawn) open.ctx.clearRect(0, 0, open.swarm.width, open.swarm.height);
       open.drawn = false;
     } else {
       drawPrint(open.print, open.ctx, lt, SWARM_MS);
@@ -775,11 +703,43 @@
     ctx.restore();
   }
 
-  function renderPlate(P, lt) {
+  /* On the final board each plate's section title drops out and the project's
+     own name drops in, plate by plate, as the rail lights that plate's number */
+  var namesDone = false;
+  function renderNames(t) {
+    plates.forEach(function (P) {
+      var at = HOLD_AT + P.k * CASCADE;
+      var n = P.chars.length;
+      var gap = Math.min(0.008, 0.12 / n);
+      for (var j = 0; j < n; j++) {
+        var gone = prog(t, at + j * gap, CHAR_MS);
+        show(P.chars[j], gone < 1);
+        put(P.chars[j], "translate", "0 " + Math.round(100 * stepsStart(3, gone)) + "%");
+      }
+      n = P.nameChars.length;
+      gap = Math.min(0.008, 0.12 / n);
+      for (j = 0; j < n; j++) {
+        var from = at + CHAR_MS / 2 + j * gap;
+        show(P.nameChars[j], t > from);
+        put(P.nameChars[j], "translate", "0 " + Math.round(-100 * (1 - stepsStart(3, prog(t, from, CHAR_MS)))) + "%");
+      }
+    });
+    namesDone = t >= HOLD_AT + PROJECTS.length * CASCADE + CHAR_MS * 2 + 0.2;
+  }
+
+  function renderPlate(P, lt, namesOn) {
     var land = pans[P.k];
-    var n = P.chars.length;
-    var gap = Math.min(0.008, 0.12 / n);
+    var n = namesOn ? 0 : P.chars.length;
+    var gap = Math.min(0.008, 0.12 / P.chars.length);
+    /* Only the first plate of a section lands its title: on the rest it is
+       already standing, so it holds as the camera moves along */
+    var lead = !P.k || PROJECTS[P.k - 1].name !== P.p.name;
     for (var j = 0; j < n; j++) {
+      if (!lead) {
+        show(P.chars[j], true);
+        put(P.chars[j], "translate", "0 0%");
+        continue;
+      }
       var from = land / 2 + j * gap;
       show(P.chars[j], lt > from);
       put(P.chars[j], "translate", "0 " + Math.round(-100 * (1 - stepsStart(3, prog(lt, from, CHAR_MS)))) + "%");
@@ -834,7 +794,7 @@
     else if (!open.gone) {
       open.gone = true;
       show(open.title, true);
-      open.swarm.width = 0;   /* its squares have landed for good */
+      open.swarm.width = 0;   /* its lines have landed for good */
     }
     if (t < FLICK_AT + INTO) renderAbout(t);
     else if (!about.gone) {
@@ -847,10 +807,11 @@
       var lt = t - starts[P.k];
       if (lt < -0.1) return;
       var settled = lt >= pans[P.k] + DEV_AT + DEV_MS + 0.06;
-      renderPlate(P, settled ? Infinity : lt);
+      renderPlate(P, settled ? Infinity : lt, t >= HOLD_AT);
       /* A picture still on its way keeps the plate live until it lands */
       if (settled && (P.print || P.failed)) P.final = true;
     });
+    if (t >= HOLD_AT && !namesDone) renderNames(t);
 
     renderClear(t);
   }
@@ -935,6 +896,7 @@
     window.removeEventListener("pagehide", finish);
     root.classList.remove("intro-hold", "intro-on", "intro-live");
     if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
+    Engrave.release();
     /* Home's entrance keeps its gliding timing until it has landed; dropped
        mid-flight, it would jump to the stepped one. After that the page
        moves like every other page of the site. */
@@ -976,7 +938,7 @@
     load(about, IMG + "stefan/portrait.webp", printMe);
     plates.forEach(function (P) {
       var p = P.p;
-      load(P, IMG + (p.shot ? p.shot + (P.w * PR > 1000 ? "desktop-hero.webp" : "thumb.webp") : p.art), printPlate);
+      load(P, IMG + (p.shot ? p.shot + (P.w * PR > 1000 ? "desktop-hero.webp" : "thumb.webp") : "objects/" + p.object + ".svg"), printPlate);
       renderPlate(P, -1);   /* every plate starts blank, however far off it is */
     });
     render(0);
@@ -990,21 +952,23 @@
         return;
       }
       try { sessionStorage.setItem("sc-intro", "1"); } catch (e) { /* storage off: it may play again */ }
-      printOpen();
-      started = true;
-      render(0);
-      /* One untimed frame to put the board up, so its first redraw is not
-         taken out of the opening second */
-      raf = requestAnimationFrame(function () { raf = requestAnimationFrame(tick); });
+      printOpen(function () {
+        if (finished) return;
+        started = true;
+        render(0);
+        /* One untimed frame to put the board up, so its first redraw is not
+           taken out of the opening second */
+        raf = requestAnimationFrame(function () { raf = requestAnimationFrame(tick); });
 
-      if ("ResizeObserver" in window) {
-        resizes = new ResizeObserver(function () {
-          /* A new width breaks the board, so the page takes over. A phone's
-             toolbars only change the height a little, and are let be. */
-          if (Math.abs(overlay.clientWidth - sizeW) > 1 || Math.abs(overlay.clientHeight - sizeH) > 150) finish();
-        });
-        resizes.observe(overlay);
-      }
+        if ("ResizeObserver" in window) {
+          resizes = new ResizeObserver(function () {
+            /* A new width breaks the board, so the page takes over. A phone's
+               toolbars only change the height a little, and are let be. */
+            if (Math.abs(overlay.clientWidth - sizeW) > 1 || Math.abs(overlay.clientHeight - sizeH) > 150) finish();
+          });
+          resizes.observe(overlay);
+        }
+      });
     }, finish);
   }
 
