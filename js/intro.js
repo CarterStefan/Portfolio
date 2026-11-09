@@ -494,7 +494,7 @@
     var bw = Math.min(W - bx, Math.ceil(box.width) + 2 * margin);
     var bh = Math.min(H - by, Math.ceil(box.height) + 2 * margin);
     Engrave.print(function (ctx) {
-      ctx.font = "700 " + fs + "px \"Space Mono\"";
+      ctx.font = "700 " + fs + "px \"Anybody\"";
       ctx.fillStyle = "#000";
       ctx.textBaseline = "alphabetic";
       var m = ctx.measureText("H");
@@ -503,7 +503,7 @@
       open.title.querySelectorAll(".intro-c").forEach(function (c) {
         var r = c.getBoundingClientRect();
         var base = ascent ? r.top + (r.height - ascent - descent) / 2 + ascent : r.top + r.height * 0.76;
-        ctx.fillText(c.textContent, r.left - plateBox.left - bx, base - plateBox.top - by);
+        ctx.fillText(c.textContent.toUpperCase(), r.left - plateBox.left - bx, base - plateBox.top - by);
       });
     }, bw, bh, { pr: PR, spacing: spacing, plain: true, originX: bx * PR, originY: by * PR }, function (print) {
       if (print) {
@@ -910,9 +910,10 @@
     if (!document.fonts || !document.fonts.load) return Promise.resolve(true);
     return Promise.all([
       document.fonts.load("700 1em \"Space Mono\""),
-      document.fonts.load("400 1em \"Space Mono\"")
+      document.fonts.load("400 1em \"Space Mono\""),
+      document.fonts.load("700 1em \"Anybody\"")
     ]).then(function () {
-      return document.fonts.check("700 1em \"Space Mono\"");
+      return document.fonts.check("700 1em \"Anybody\"");
     });
   }
 
@@ -943,7 +944,7 @@
     });
     render(0);
 
-    /* The reel is set in Space Mono or not at all */
+    /* The reel waits for its faces or does not play */
     var late = new Promise(function (resolve) { setTimeout(resolve, 1500, false); });
     Promise.race([fontsReady(), late]).then(function (ok) {
       if (finished) return;
