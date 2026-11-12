@@ -37,6 +37,7 @@
    21. Black Ink Trial
    22. Landing Reel
    23. Coming Soon
+   24. Crisp Trial
    ========================================================================== */
 
 /* Self-hosted Space Mono, latin subset only (the two weights the site
@@ -2892,3 +2893,238 @@ html.soon .intro-brand { display: none; }
   line-height: 0.85;
   color: var(--surface);
 }
+
+
+/* ==========================================================================
+   24. CRISP TRIAL
+   On trial since 2026-11-12 on design/crisp, after a study of how
+   oci.madebybuzzworthy.com keeps a ruled grid of big blocks feeling calm.
+   Like section 21 it only overrides, so it reads in one place and comes
+   out in one cut. If it is kept, fold it back into sections 17 and 21.
+
+   Four moves:
+   1. Hairlines. The rules drop to 1px and stop boxing the inside of a
+      block: a rule marks where one block ends, never a caption or a well.
+   2. Two voices with strict jobs. Hanken Grotesk sets everything a visitor
+      reads (body, statements, quotes, titles); Space Mono is kept for small
+      uppercase labels only, at near-normal tracking. Anybody is the one
+      headline a page carries, and nothing else.
+   3. One inset. Every cell holds its text the same distance off its rule,
+      so left edges line up down the sheet.
+   4. Six sizes. Hero, xl, l, read, rail and label, and nothing between.
+   ========================================================================== */
+
+/* Hanken Grotesk, latin subset, variable weight. OFL, see OFL-Hanken-Grotesk.txt.
+   Chosen over Host Grotesk, whose hyphen is nearly as long as its en dash
+   and made every compound word read as if it held a dash. */
+@font-face {
+  font-family: "Hanken Grotesk";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/assets/fonts/hanken-grotesk-latin.woff2") format("woff2");
+}
+
+.cert {
+  --font-sans: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --rule-w: 1px;
+
+  /* The one distance between a rule and the text it holds */
+  --inset: clamp(1rem, 1.6vw, 1.5rem);
+
+  /* The scale. The hero step lives on .c-hero (section 21). */
+  --step-xl:    clamp(1.75rem, 3.3vw, 3rem);      /* statements, lead lines   */
+  --step-l:     clamp(1.3rem, 2vw, 1.875rem);     /* titles, quotes           */
+  --step-read:  1.125rem;                         /* running text and lists   */
+  --step-rail:  0.8125rem;                        /* rail and nav (mono)      */
+  --step-label: 0.75rem;                          /* every other label (mono) */
+  --step-list:  var(--step-read);
+
+  /* Mono labels sit close to their natural spacing rather than tracked out */
+  --track-label: 0.04em;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+@media (max-width: 575.98px) {
+  .cert { --step-read: 1.0625rem; }
+}
+
+/* --- 1. Hairlines ----------------------------------------------------------- */
+
+.c-link,
+.cert .link-arrow,
+.cert figcaption a,
+.cert .cell p a:not([class]) { border-bottom-width: 1px; }
+.cert-mail,
+.cert .next-link { border-bottom-width: 1px; }
+.c-ladder s { text-decoration-thickness: 1px; }
+
+/* The current page's bar and the reading gauge thin to match the rules */
+.cert-nav-links a[aria-current] { box-shadow: inset 0 -3px 0 var(--ink); }
+@supports (animation-timeline: scroll()) {
+  .cert-nav::after { height: 3px; }
+}
+
+/* A plate's practice is a caption, not a second box */
+.home-plate-kind { border-top: 0; }
+
+/* A project row's picture and its name are one thing, so no rule between */
+.project-item > .cell-tight { border-right: 0; }
+
+/* --- 2. Two voices ------------------------------------------------------------ */
+
+/* Every heading below the page's one headline leaves Anybody */
+.cert h2, .cert h3,
+.cert h4, .cert h5, .cert h6 {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  text-transform: none;
+}
+
+/* Running text */
+.c-body,
+.c-quote p,
+.c-quote-sm p,
+.cert .cell p:not([class]),
+.cert .cell li:not([class]),
+.c-list,
+.c-ladder {
+  font-family: var(--font-sans);
+  font-size: var(--step-read);
+  line-height: 1.5;
+  letter-spacing: -0.005em;
+}
+.c-body,
+.cert .cell p:not([class]),
+.cert .cell li:not([class]) { max-width: 58ch; }
+.c-list { line-height: 1.45; }
+.c-ladder { line-height: 1.6; }
+.c-ladder .is-now { font-weight: 600; }
+.cert :where(strong, b) { font-weight: 600; }
+
+/* Statements and lead lines: large, light and tight, like the reference */
+.c-display,
+.cert h2.c-display,
+.page-home .c-statement-pair,
+.cert .cell .c-quote.c-quote-lead p {
+  font-family: var(--font-sans);
+  font-size: var(--step-xl);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.04;
+}
+
+/* Quotes and titles share the large step */
+.c-quote p,
+.c-title,
+.cert :is(h2, h3).c-title,
+.cert .project-item :is(h2, h3).c-title,
+.project-item .c-title,
+.cert .home-plate :is(h2, h3).c-title {
+  font-family: var(--font-sans);
+  font-size: var(--step-l);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  text-transform: none;
+}
+.c-quote p { font-weight: 400; max-width: 34ch; }
+/* Work's project names are what the page is a list of, so they take xl */
+.cert .project-item > .cell :is(h2, h3).c-title { font-size: var(--step-xl); line-height: 1; }
+
+.c-num {
+  font-family: var(--font-sans);
+  font-size: var(--step-xl);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+.cert-mail {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+.cert .next-link {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  text-transform: none;
+  line-height: 1;
+}
+
+/* Space Mono, small and close-set */
+.c-meta,
+.c-link,
+.c-btn,
+.c-filter,
+.c-now,
+.cert .form-label,
+.cert .form-note,
+.home-plate-kind {
+  font-size: var(--step-label);
+  letter-spacing: var(--track-label);
+}
+.cert-nav-links a { letter-spacing: var(--track-label); }
+.vlabel { letter-spacing: 0.08em; }
+@media (max-width: 575.98px) {
+  .vlabel { letter-spacing: 0.06em; }
+}
+
+/* --- 3. One inset --------------------------------------------------------------
+   Cells that bleed their content (media, the portrait) and the empty cells
+   that only carry a rail keep no padding. */
+.cell:not(.cell-flush, .cell-portrait, :empty) { padding-inline: var(--inset); }
+.cell-pad-lg { padding-block: clamp(1.75rem, 4.5vw, 4rem); }
+.cert .home-plate :is(h2, h3).c-title { padding: var(--inset) var(--inset) 0; }
+.home-plate-kind { padding: 0 var(--inset) var(--inset); }
+.home-plate .c-shot { margin-top: var(--inset); }
+
+/* A quote is set as a statement, not as running text. The selector has to
+   outrank the cell prose rule, which matches its paragraphs too. */
+.cert .cell .c-quote p {
+  font-size: var(--step-l);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  max-width: 34ch;
+}
+.cert .cell .c-quote-sm p { font-size: var(--step-read); line-height: 1.5; max-width: 58ch; }
+
+/* The case studies' legacy parts that still set themselves in mono */
+.cert .big-lead {
+  font-family: var(--font-sans);
+  font-size: var(--step-l);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.cert .type-row h3 {
+  font-family: var(--font-sans);
+  font-size: var(--step-read);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.cert .type-row-num { letter-spacing: var(--track-label); }
+.cert .form-control { font-family: var(--font-sans); font-size: var(--step-read); }
+
+/* A testimonial that runs to several paragraphs reads as text, not as a
+   statement, so it steps down between the read and large sizes */
+.cert .cell .c-quote:has(p + p) p {
+  font-size: clamp(1.15rem, 1.4vw, 1.3125rem);
+  line-height: 1.4;
+  max-width: 44ch;
+}
+
+/* Captions are running text at a smaller size, in the muted tone */
+.cert figcaption {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  letter-spacing: 0;
+  line-height: 1.45;
+}
+
+/* The practice pair may wrap on a phone rather than shrink to fit a line */
+.page-home .c-statement-pair { font-size: clamp(1.4rem, 5.2cqi, 3rem); }
