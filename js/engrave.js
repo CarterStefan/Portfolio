@@ -102,6 +102,24 @@
     pieceLength: 3
   };
 
+  /* On a page, the ink and the paper follow the sheet's own tokens, so a
+     print lands on the paper it sits on. Inside the worker there is no page
+     and the defaults above stand. Hex only, since shades() reads nothing
+     else. */
+  if (typeof document !== "undefined") {
+    [["ink", "--ink"], ["paper", "--surface"]].forEach(function (pair) {
+      var fallback = ENGRAVE[pair[0]];
+      Object.defineProperty(ENGRAVE, pair[0], {
+        enumerable: true,
+        get: function () {
+          var el = document.body || document.documentElement;
+          var v = getComputedStyle(el).getPropertyValue(pair[1]).trim();
+          return /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(v) ? v : fallback;
+        }
+      });
+    });
+  }
+
   /* The head within assets/img/stefan/portrait.webp, in that image's pixels */
   var HEAD = { cx: 345, cy: 473, rx: 279, ry: 407 };
 
