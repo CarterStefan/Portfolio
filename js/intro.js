@@ -5,12 +5,19 @@
    for reduced motion), and loads this file only when it will. The look is
    styles.css section 22.
 
-   About fourteen seconds, in four parts. Who: the name prints
-   itself from flying lines of engraving, then the camera drops a line to the
-   portrait and what I do, five words at a reading pace. The work: the
-   camera drops onto a ruled board of the nine projects and flicks along it
-   like a print carriage. The board: it pulls back to show all nine, and
-   holds. Home: the board peels away in lanes while the page lands behind.
+   About nine seconds, in four parts, cut on an eighth-of-a-second grid.
+   Who: the name prints itself from flying lines of engraving, then the
+   camera drops a line to the portrait and what I do, four words. The work:
+   the camera drops onto a ruled board of the nine projects and flicks along
+   it like a print carriage, each row faster than the last, every plate
+   landing with its project's name. The board: it pulls back to show all
+   nine, and holds. Home: the camera goes back up to the name, which sets
+   itself into Home's own heading while the page packs in round it.
+
+   Ink steps and travel glides. Whatever prints (letters, the highlighter,
+   the wash, a capture developing, the engraved lines, the index) moves in
+   frames, 30 a second. Whatever travels (the camera, the rail, the name
+   setting) is eased and drawn at the screen's own rate.
 
    1. Words and projects
    2. Time
@@ -30,94 +37,99 @@
 
   /* --- 1. Words and projects ---------------------------------------------------
      Who first, in the site's own words: the role from the career path, with
-     its Now; the award as the About page gives it; and the practice. Each
-     word takes one ink, and the portrait beside it changes ink with it. Its
-     hold is how long it stays, which is roughly how long it takes to read.
+     its Now; the practice; and last the award, which says Finalist itself
+     and stays standing as the camera leaves. Each word takes one ink, and
+     the portrait beside it changes ink with it. Its hold is how long it
+     stays.
 
-     Then the nine projects, in the Selected work order, under the name of their
-     practice: the title lands once, on the first plate of its section, and
-     stands from there as the camera moves along, and on the final board each
-     plate changes to its project's own name (title). A project with real captures
-     shows one, spanning the plate's width and, where the plate is wider than
-     16:10, cropped top and bottom about its focus, the share of its height
-     held in view: Bird Watcher's headline sits high, so it keeps its top. A
-     project with none shows its engraved object (assets/img/objects), so no
-     Instem UI ever appears (PRODUCT.md). */
+     Then the nine projects, each under its own name, with its practice on a
+     tab at the corner of its picture. The three live sites with the best
+     captures take the first, slowest row, and Bird Watcher's capture closes
+     the board, since the pull back starts from it. A capture spans the
+     plate's width and, where the plate is wider than 16:10, is cropped top
+     and bottom about its focus, the share of its height held in view: Bird
+     Watcher's headline sits high, so it keeps its top. A project with no
+     captures shows its engraved object (assets/img/objects), so no Instem UI
+     ever appears (PRODUCT.md).
+
+     The four Instem projects print drawn plates (assets/img/plates) in
+     place of their objects: full width diagrams, printed in a sweep.
+     Approved by Stefan on 2026-11-12. */
   var IMG = "/assets/img/";
   var SAY = [
-    { lines: ["Senior", "product", "designer"], tag: "Now", ink: "moss", hold: 0.95 },
-    { lines: ["Digital Hero", "of the Year"], note: "Nominated finalist, 2026", ink: "amber", hold: 1.3 },
-    { lines: ["Web", "design"], ink: "rose", hold: 0.75 },
-    { lines: ["Design", "systems"], ink: "slate", hold: 0.75 },
-    { lines: ["Design", "engineering"], ink: "moss", hold: 0.8 }
+    { lines: ["Senior", "product", "designer"], tag: "Now", ink: "moss", hold: 0.625 },
+    { lines: ["Design", "systems"], ink: "slate", hold: 0.5 },
+    { lines: ["Design", "engineering"], ink: "rose", hold: 0.5 },
+    /* The longest line and the one that matters most: held for a read */
+    { lines: ["Finalist", "Digital Hero", "of the Year"], note: "2026", ink: "amber", hold: 1.125 }
   ];
-  var PRODUCT = ["Product", "design"];
-  var WEB = ["Web", "design"];
+  var PRODUCT = "Product design";
+  var WEB = "Web design";
   var PROJECTS = [
-    { name: PRODUCT, title: ["Centrus"], object: "centrus" },
-    { name: PRODUCT, title: ["Preclinical", "Insights"], object: "preclinical-insights" },
-    { name: PRODUCT, title: ["KnowledgeScan"], object: "knowledgescan" },
-    { name: PRODUCT, title: ["InstemUX"], object: "instemux" },
-    { name: WEB, title: ["Nick", "Hampshire"], shot: "nick-hampshire/" },
-    { name: WEB, title: ["No", "Boundaries"], shot: "no-boundaries/" },
-    { name: WEB, title: ["Visit", "Stafford"], shot: "visit-stafford/" },
-    { name: WEB, title: ["Bird", "Watcher"], shot: "bird-watcher/", focus: 0.2 },
-    { name: WEB, title: ["Wrottesley", "Golf Club"], object: "wrottesley-golf" }
+    { kind: WEB, title: ["Nick", "Hampshire"], shot: "nick-hampshire/" },
+    { kind: WEB, title: ["No", "Boundaries"], shot: "no-boundaries/" },
+    { kind: WEB, title: ["Visit", "Stafford"], shot: "visit-stafford/" },
+    { kind: PRODUCT, title: ["Centrus"], object: "centrus", plate: true },
+    { kind: PRODUCT, title: ["Preclinical", "Insights"], object: "preclinical-insights", plate: true },
+    { kind: PRODUCT, title: ["KnowledgeScan"], object: "knowledgescan", plate: true },
+    { kind: PRODUCT, title: ["InstemUX"], object: "instemux", plate: true },
+    { kind: WEB, title: ["Wrottesley", "Golf Club"], object: "wrottesley-golf" },
+    { kind: WEB, title: ["Bird", "Watcher"], shot: "bird-watcher/", focus: 0.2 }
   ];
+  /* What each plate gets, from the camera setting off for it to the camera
+     leaving it, and how much of that is the move. Each row is faster than
+     the one before; the last flicks. */
+  var SLOTS = [
+    [0.875, 0.3], [0.75, 0.2], [0.625, 0.2],
+    [0.5, 0.2], [0.375, 0.12], [0.375, 0.12],
+    [0.25, 0.15], [0.25, 0.1], [0.25, 0.1]
+  ];
+  var FLICK = 0.25;   /* a slot this short has no time to print: its plate arrives whole */
   /* Plate by plate through the four inks of section 21, so the whole board
      reads as a print run of all four, on the diagonal */
   var INKS = ["moss", "amber", "rose", "slate"];
 
   /* --- 2. Time ---------------------------------------------------------------------
-     One clock, in seconds, read 30 times a second. Every frame is a pure
-     function of it, which is how a skip can jump straight to any frame. A
-     plate's own times are counted from the start of the camera move that
-     brings it in, and its words land when that move does. */
+     One clock, in seconds. Every frame is a pure function of it, which is
+     how a skip can jump straight to any frame. What travels reads the clock
+     as it stands; what prints reads it in frames, FPS a second. A plate's
+     own times are counted from the start of the camera move that brings it
+     in, and its name lands when that move does. */
   var FPS = 30;
 
-  /* Who. The words change at a reading pace; the work after them flicks. */
+  /* Who */
   var SWARM_AT = 0.04, SWARM_MS = 0.40, SWARM_SPREAD = 0.12;   /* the name, from lines */
-  var FEED_AT = 1.05, FEED = 0.30;      /* down a line, from the name to what I do */
+  var FEED_AT = 0.75, FEED = 0.25;      /* down a line, from the name to what I do */
   var ME_MS = 0.40, ME_SPREAD = 0.10;   /* the portrait printing, from FEED_AT */
-  var WORD_CHAR = 0.09;                 /* one letter of a word dropping in, or out */
-  var WORD_IN = 0.06;                   /* a new word waits this long for the old one to start falling */
-  var WORD_MARK_AT = 0.12, WORD_MARK_MS = 0.22;   /* these from a word's start */
-  var TAG_AT = 0.30;
-  var NOTE_AT = 0.40, NOTE_MS = 0.20;
+  var WORD_CHAR = 0.07;                 /* one letter of a word dropping in */
+  var WIPE = 2 / FPS;                   /* the old word cut away, whole, before the new one starts */
+  var WORD_MARK_AT = 0.10, WORD_MARK_MS = 0.15;   /* these from a word's start */
+  var TAG_AT = 0.20;
+  var NOTE_AT = 0.20, NOTE_MS = 0.20;
   var WASH_MS = 0.16;                   /* the portrait's ink rolling up to the next */
 
   /* The work */
-  var INTO = 0.28;      /* down a line, onto the first plate */
-  var PAN = 0.16;       /* along a row */
-  var RETURN = 0.24;    /* back to the start of the next row */
-  var AFTER = 0.51;     /* on a plate, once it has landed: long enough to see the picture */
   var PRINT_MS = 0.14, PRINT_SPREAD = 0.04;   /* a plate's picture, from its start */
+  var SWEEP = 0.14;                           /* a drawn plate printing across, left to right */
   var CHAR_MS = 0.07;                         /* one letter of a name dropping in */
   var DEV_AT = 0.02, DEV_MS = 0.07;           /* a capture developing, from landing */
 
   /* The board */
-  var PULL = 0.40;      /* out to the whole board */
-  var HOLD = 1;         /* the whole board, held */
+  var PULL = 0.5;       /* out to the whole board */
+  var HOLD = 0.875;     /* the whole board, held */
   var CASCADE = 0.04;   /* the rail's index lighting up, number by number, as it holds */
 
-  /* The hand-over, counted from the moment the board starts to leave. It
-     glides where the reel steps, and runs at the screen's own rate. Each row
-     of plates slides out on the site's original accelerating curve (section
-     1's --vt-ease-leave before section 21 stepped it); Home's entrance is
-     released just after, on its original settle curve (section 22's
-     html.intro-land), so each of its rows follows a row of plates off the
-     same edge and the board peels away from a page already landing. The
-     rail is the spine throughout: the mark stays where the nav's own sits,
-     and the rail only slides away once Home's rails are dropping in above
-     it. RAIL_AT is timed against that drop, --vt-lock-at at intro-land's
-     pace, and has to move with it. */
-  var LANE_GAP = 0.05;   /* between rows of plates */
-  var PLATE_GAP = 0.012; /* between plates in a row, the one nearest the exit first:
-                            barely apart, since on a curve that keeps speeding up
-                            a wider gap opens into holes in the row */
-  var LANE_MS = 0.55;
-  var HOME_AT = 0.15;    /* Home's entrance released */
-  var RAIL_AT = 0.34, RAIL_MS = 0.55;
+  /* Home. The held board scrolls up and away like a page (BACK), and Home
+     comes up beneath it from the bottom of the screen, bare but for the
+     name's own row, so the name rises into the very place it rests. Once it
+     has landed (SET_AT) Home's entrance is released on its original settle
+     curve (section 22's html.intro-land) and the page packs in round the
+     name. The rail is the spine throughout: the mark stays where the nav's
+     own sits, and the rail only slides away once Home's rails are dropping
+     in above it. RAIL_AT is timed against that drop, --vt-lock-at at
+     intro-land's pace, and has to move with it. */
+  var BACK = 1.0;
+  var RAIL_AT = 0.19, RAIL_MS = 0.55;   /* from the name starting to set */
 
   var ABOUT_AT = FEED_AT + FEED;
   var beats = [];
@@ -127,17 +139,20 @@
     at += word.hold;
   });
   var FLICK_AT = at;
+  var INTO = SLOTS[0][1];
   var starts = [];
   var pans = [];
-  for (var k = 0; k < PROJECTS.length; k++) {
-    var move = !k ? INTO : k % 3 === 0 ? RETURN : PAN;
+  SLOTS.forEach(function (slot) {
     starts.push(at);
-    pans.push(move);
-    at += move + AFTER;
-  }
+    pans.push(slot[1]);
+    at += slot[0];
+  });
+  var LAST = PROJECTS.length - 1;
   var PULL_AT = at;
   var HOLD_AT = PULL_AT + PULL;
-  var CLEAR_AT = HOLD_AT + HOLD;
+  var BACK_AT = HOLD_AT + HOLD;
+  var SET_AT = BACK_AT + BACK;
+  var END_AT = SET_AT + RAIL_AT + RAIL_MS;
 
   function clamp01(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
   function prog(t, from, span) { return clamp01((t - from) / span); }
@@ -145,8 +160,20 @@
   function stepsEnd(n, p) { return p >= 1 ? 1 : Math.floor(p * n) / n; }
   /* ...and steps that jump at once, like jump-start */
   function stepsStart(n, p) { return p <= 0 ? 0 : Math.ceil(p * n) / n; }
-  function inOutCubic(x) { return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
-  function inOutQuart(x) { return x < 0.5 ? 8 * x * x * x * x : 1 - Math.pow(-2 * x + 2, 4) / 2; }
+  function outCubic(x) { return 1 - Math.pow(1 - x, 3); }
+  /* A camera move: it leans back a touch before it goes and runs a touch
+     past its stop before it settles, by about a hundredth of the way */
+  function carry(x) {
+    var c = 0.55 * 1.525;
+    return x < 0.5 ?
+      Math.pow(2 * x, 2) * ((c + 1) * 2 * x - c) / 2 :
+      (Math.pow(2 * x - 2, 2) * ((c + 1) * (2 * x - 2) + c) + 2) / 2;
+  }
+  /* Out fast and past, then back: the pull back's settle */
+  function past(x) {
+    var c = 0.7;
+    return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2);
+  }
   /* A CSS cubic-bezier(), solved for x by halving, which stays exact on the
      flat ends where Newton's method stalls */
   function bezier(x1, y1, x2, y2) {
@@ -166,6 +193,9 @@
     };
   }
   var leave = bezier(0.4, 0, 1, 1);
+  /* A page scrolled by hand: it gathers from rest and glides a long way
+     into its stop, so the name arrives slowly rather than snapping */
+  var scroll = bezier(0.6, 0, 0.2, 1);
 
   /* --- 3. Engraved prints --------------------------------------------------------
      Cut by js/engrave.js, as js/main.js cuts the portrait: the picture's tones
@@ -195,6 +225,13 @@
     return { x: 0, y: ph > h ? (h - ph) * (focus == null ? 0.5 : focus) : (h - ph) / 2, w: w, h: ph };
   }
 
+  /* Where a drawn 16:10 plate lies in the box: whole, as large as it goes
+     with a margin, and centred */
+  function within(w, h) {
+    var ph = Math.min(w / 1.6, h) * 0.88;
+    return { x: (w - ph * 1.6) / 2, y: (h - ph) / 2, w: ph * 1.6, h: ph };
+  }
+
   /* The print as it stands lt seconds after its lines set off, or whole */
   function drawPrint(print, ctx, lt, ms) {
     var whole = lt === Infinity;
@@ -222,7 +259,7 @@
      projects, three to a row: the name at (0, -2), what I do at (0, -1),
      then the projects from (0, 0). The board is built once, measured once,
      and only ever moved. */
-  var overlay, stage, skipBtn, rail, railName, railSay, board, items, open, about, W, H, sizeW, sizeH;
+  var overlay, stage, skipBtn, field, rail, railName, railSay, board, sheet, sheetCtx, items, open, about, W, H, sizeW, sizeH;
   var plates = [];
   var queue = [];      /* prints whose picture has arrived but which are not laid out yet */
 
@@ -316,45 +353,43 @@
 
     var grid = make("div", "intro-grid");
 
-    /* Two titles in one slot, each sized to its own length: the section it
-       flicks past under, then the project's own name on the final board */
+    /* The project's name, sized to its own length */
     var head = make("div", "intro-head");
-    function buildTitle(lines, cls) {
-      var title = make("p", cls);
-      var chars = [];
-      title.style.setProperty("--chars", lines.join(" ").length);
-      title.style.setProperty("--chars-n", Math.max.apply(null, lines.map(function (l) { return l.length; })));
-      title.style.setProperty("--lines-n", lines.length);
-      lines.forEach(function (line, i) {
-        if (i) title.appendChild(make("span", "intro-sp", " "));
-        var tl = make("span", "intro-tl");
-        line.split("").forEach(function (ch) {
-          var c = make("span", "intro-ch", ch === " " ? "\u00a0" : ch);
-          chars.push(c);
-          tl.appendChild(c);
-        });
-        title.appendChild(tl);
+    var title = make("p", "intro-title");
+    var chars = [];
+    title.style.setProperty("--chars", p.title.join(" ").length);
+    title.style.setProperty("--chars-n", Math.max.apply(null, p.title.map(function (l) { return l.length; })));
+    title.style.setProperty("--lines-n", p.title.length);
+    p.title.forEach(function (line, i) {
+      if (i) title.appendChild(make("span", "intro-sp", " "));
+      var tl = make("span", "intro-tl");
+      line.split("").forEach(function (ch) {
+        var c = make("span", "intro-ch", ch === " " ? "\u00a0" : ch);
+        chars.push(c);
+        tl.appendChild(c);
       });
-      head.appendChild(title);
-      return chars;
-    }
-    var chars = buildTitle(p.name, "intro-title");
-    var nameChars = buildTitle(p.title, "intro-title is-name");
-    nameChars.forEach(function (c) { show(c, false); });
+      title.appendChild(tl);
+    });
+    head.appendChild(title);
 
+    /* Its picture, with its practice on a tab at the corner */
     var shot = make("div", "intro-shot");
     var canvas = make("canvas", "intro-print");
     shot.appendChild(canvas);
+    var kind = shot.appendChild(make("span", "intro-kind", p.kind));
 
     grid.appendChild(head);
     grid.appendChild(shot);
-    grid.appendChild(make("span", "intro-rule intro-rule-a"));
+    var rule = grid.appendChild(make("span", "intro-rule intro-rule-a"));
     plate.appendChild(grid);
 
     return {
       el: plate, p: p, k: k, c: k % 3, r: Math.floor(k / 3),
-      chars: chars, nameChars: nameChars, shot: shot, canvas: canvas, ctx: null,
-      img: null, failed: false, print: null, shown: null, final: false
+      chars: chars, shot: shot, kind: kind, rule: rule, canvas: canvas, ctx: null,
+      img: null, failed: false, print: null, shown: null, final: false,
+      /* A drawn plate spans the width like a capture and prints in a sweep */
+      wide: !!p.plate, flick: SLOTS[k][0] <= FLICK,
+      spread: p.plate ? SWEEP : PRINT_SPREAD, lay: null, tiled: false
     };
   }
 
@@ -379,7 +414,9 @@
       return li;
     });
 
-    var field = make("div", "intro-field");
+    field = make("div", "intro-field");
+    /* The whole board as one picture, under the board itself (section 5) */
+    sheet = field.appendChild(make("canvas", "intro-sheet"));
     board = field.appendChild(make("div", "intro-board"));
     open = buildOpen();
     about = buildAbout();
@@ -417,6 +454,12 @@
     }
     size(about, about.me);
     plates.forEach(function (P) { size(P, P.shot); });
+
+    sheet.width = Math.round(W * PR);
+    sheet.height = Math.round(H * PR);
+    sheet.style.width = W + "px";
+    sheet.style.height = H + "px";
+    sheetCtx = sheet.getContext("2d");
   }
 
   /* A live site's capture comes at the size it will be seen at: the 1920
@@ -439,7 +482,7 @@
   /* The prints are cut off this thread, so the reel keeps its frames, and a
      plate whose picture is not back yet stays blank until it is. */
   function printPlate(P) {
-    var f = P.p.shot ? fit(P.w, P.h, P.p.focus) : Engrave.place(P.img, P.w, P.h);
+    var f = P.p.shot ? fit(P.w, P.h, P.p.focus) : P.wide ? within(P.w, P.h) : Engrave.place(P.img, P.w, P.h);
     Engrave.print(function (ctx) {
       ctx.drawImage(P.img, f.x, f.y, f.w, f.h);
     }, P.w, P.h, { pr: PR, relief: !P.p.shot }, function (print) {
@@ -448,6 +491,11 @@
         return;
       }
       Engrave.scatter(print, seeded(7 + P.k * 101), 0.3, 1.2, 8, PRINT_SPREAD);
+      /* A drawn plate is cut across, left to right, like a tool crossing it */
+      if (P.wide) {
+        var across = P.w * print.pr;
+        for (var i = 0; i < print.pieces; i++) print.wait[i] = clamp01(print.homeX[i] / across) * SWEEP;
+      }
       P.print = print;
       P.shown = null;
     });
@@ -524,13 +572,13 @@
      next, like a print carriage. Moving along a row pulls back a touch; the
      carriage return pulls well back, so the board shows for a moment before
      the pull back reveals it. The pull back holds the field's corner still,
-     as a real zoom out from the last plate would, and clicks out in five
-     equal detents rather than gliding: every new scale redraws the whole
-     screen, and five redraws land on time where a glide's dozen would
-     stutter. */
+     as a real zoom out from the last plate would, and the way back to the
+     name is the same zoom run the other way. Every move is eased and drawn
+     at the screen's rate, and each is only ever a transform (see the sheet,
+     below), so none of them repaints. */
   var STOPS = [{ c: 0, r: -2, at: 0, pan: 0 }, { c: 0, r: -1, at: FEED_AT, pan: FEED }].concat(
     PROJECTS.map(function (p, k) {
-      return { c: k % 3, r: Math.floor(k / 3), at: starts[k], pan: pans[k], back: pans[k] === RETURN };
+      return { c: k % 3, r: Math.floor(k / 3), at: starts[k], pan: pans[k], back: k > 0 && k % 3 === 0 };
     })
   );
 
@@ -551,20 +599,96 @@
     return { s: s, x: fx * a.s + a.x - fx * s, y: fy * a.s + a.y - fy * s };
   }
 
+  var WHOLE = { s: 1 / 3, x: 0, y: 0 };
   function cameraAt(t) {
-    var last = STOPS[STOPS.length - 1];
-    if (t >= PULL_AT) return zoom(place(view(last)), { s: 1 / 3, x: 0, y: 0 }, stepsEnd(5, prog(t, PULL_AT, PULL)));
+    if (t >= BACK_AT) return WHOLE;   /* the board goes up as a page, whole (renderHome) */
+    if (t >= PULL_AT) return zoom(place(view(STOPS[STOPS.length - 1])), WHOLE, past(prog(t, PULL_AT, PULL)));
     for (var i = STOPS.length - 1; i > 0; i--) {
       var stop = STOPS[i];
       if (t < stop.at) continue;
       var p = prog(t, stop.at, stop.pan);
       if (p >= 1) return place(view(stop));
-      return stop.back ?
-        pan(view(STOPS[i - 1]), view(stop), inOutCubic(p), 0.35) :
-        pan(view(STOPS[i - 1]), view(stop), inOutQuart(p), 0.06);
+      return pan(view(STOPS[i - 1]), view(stop), carry(p), stop.back ? 0.35 : 0.06);
     }
     return place(view(STOPS[0]));
   }
+
+  /* The sheet: the whole board as one picture, a third of its size, which is
+     the size it is seen at once the camera is back. Each plate is painted
+     onto it once, when its picture has landed: its block, its print as it
+     stands, its name letter by letter where the page set it (as printOpen
+     sets the name), its tab and its rules. From the pull back on, the
+     plates themselves are put away and the sheet stands in for them, so
+     pulling back and going back up to the name move two layers and paint
+     nothing. It is soft only while it is larger than life, which is while
+     it is moving fastest. */
+  var colours = null;
+  function layoutPlates() {
+    colours = {
+      paper: getComputedStyle(plates[0].el).backgroundColor,
+      ink: getComputedStyle(rail).backgroundColor
+    };
+    plates.forEach(function (P) {
+      var box = P.el.getBoundingClientRect();
+      function rel(node) {
+        var r = node.getBoundingClientRect();
+        return { x: r.left - box.left, y: r.top - box.top, w: r.width, h: r.height };
+      }
+      var rule = rel(P.rule);
+      P.lay = {
+        fs: parseFloat(getComputedStyle(P.chars[0].parentNode.parentNode).fontSize),
+        /* A letter waiting to drop in is measured where it will land */
+        chars: P.chars.map(function (c) {
+          var was = c.style.translate;
+          c.style.translate = "none";
+          var r = rel(c);
+          c.style.translate = was;
+          r.ch = c.textContent.toUpperCase();
+          return r;
+        }),
+        shot: rel(P.shot),
+        kind: rel(P.kind),
+        ruleY: rule.y + rule.h / 2,
+        block: getComputedStyle(P.shot).backgroundColor
+      };
+    });
+  }
+
+  function paintTile(P) {
+    if (P.tiled || !P.lay) return;
+    P.tiled = true;
+    var L = P.lay;
+    var ctx = sheetCtx;
+    var q = PR / 3;
+    var edge = RULE * 3;   /* a rule, in the plate's own pixels, as it will be seen */
+    ctx.save();
+    ctx.setTransform(q, 0, 0, q, P.c * W * q, P.r * H * q);
+    ctx.beginPath();
+    ctx.rect(0, 0, W, H);
+    ctx.clip();
+    ctx.fillStyle = colours.paper;
+    ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = L.block;
+    ctx.fillRect(L.shot.x, L.shot.y, L.shot.w, L.shot.h);
+    if (P.canvas.width && P.canvas.height) ctx.drawImage(P.canvas, L.shot.x, L.shot.y, L.shot.w, L.shot.h);
+    ctx.fillStyle = colours.ink;
+    ctx.fillRect(L.kind.x, L.kind.y, L.kind.w, L.kind.h);
+    ctx.font = "700 " + L.fs + "px \"Anybody\"";
+    ctx.textBaseline = "alphabetic";
+    var m = ctx.measureText("H");
+    var ascent = m.fontBoundingBoxAscent;
+    var descent = m.fontBoundingBoxDescent;
+    L.chars.forEach(function (c) {
+      ctx.fillText(c.ch, c.x, ascent ? c.y + (c.h - ascent - descent) / 2 + ascent : c.y + c.h * 0.76);
+    });
+    ctx.fillRect(0, L.ruleY - edge / 2, W, edge);
+    ctx.fillRect(0, 0, W, edge / 2);
+    ctx.fillRect(0, H - edge / 2, W, edge / 2);
+    ctx.fillRect(0, 0, edge / 2, H);
+    ctx.fillRect(W - edge / 2, 0, edge / 2, H);
+    ctx.restore();
+  }
+
 
   /* --- 6. Drawing a frame --------------------------------------------------------- */
   var RULE = 2;
@@ -578,6 +702,9 @@
     else node.style[prop] = value;
   }
   function show(node, on) { put(node, "visibility", on ? "visible" : "hidden"); }
+  /* Put away altogether, letters and all: a letter that has been shown stays
+     visible inside a hidden plate */
+  function keep(node, on) { put(node, "display", on ? "" : "none"); }
 
   function drawNote(note, m) {
     show(note.el, m > 0);
@@ -602,9 +729,11 @@
     }
   }
 
-  /* What I do. Each word drops in a letter at a time, is run over with the
-     highlighter in its ink, and drops out again as the next one drops in,
-     like a split-flap board. The portrait's ink rolls up to each word's. */
+  /* What I do. Each word drops in a letter at a time and is run over with
+     the highlighter in its ink. The word before it is cut away whole first,
+     down behind its own line in two frames, and the new one only starts
+     once it has gone, so two words are never in the slot together. The
+     portrait's ink rolls up to each word's. */
   function renderAbout(t) {
     var now = -1;
     beats.forEach(function (b, i) { if (t >= b) now = i; });
@@ -617,19 +746,18 @@
       var from = beats[i];
       var until = i + 1 < beats.length ? beats[i + 1] : Infinity;
       var n = w.chars.length;
-      var gap = Math.min(0.012, 0.15 / n);
+      var gap = Math.min(0.008, 0.08 / n);
       for (var j = 0; j < n; j++) {
-        var din = from + (i ? WORD_IN : 0) + j * gap;
-        var dout = until + j * gap;
+        var din = from + (i ? WIPE : 0) + j * gap;
         var y;
         var on;
-        if (t < dout) {
+        if (t < until) {
           on = t > din;
           y = -100 * (1 - stepsStart(3, prog(t, din, WORD_CHAR)));
         } else {
-          var gone = prog(t, dout, WORD_CHAR);
-          on = gone < 1;
-          y = 100 * stepsStart(3, gone);
+          var gone = prog(t, until, WIPE);
+          on = gone < 1 - 1e-6;
+          y = 100 * stepsStart(2, gone);
         }
         show(w.chars[j], on);
         put(w.chars[j], "translate", "0 " + Math.round(y) + "%");
@@ -647,12 +775,18 @@
   }
 
   function renderRail(t) {
-    var y = t >= CLEAR_AT ?
-      leave(prog(t, CLEAR_AT + RAIL_AT, RAIL_MS)) * 100 :   /* last out, off the bottom */
-      (stepsEnd(5, prog(t, 0, 0.325)) - 1) * 100;          /* in from the top, like Lock */
+    var y = t >= SET_AT ?
+      leave(prog(t, SET_AT + RAIL_AT, RAIL_MS)) * 100 :   /* last out, off the bottom */
+      (outCubic(prog(t, 0, 0.325)) - 1) * 100;           /* in from the top, like Lock */
     put(rail, "translate", "0 " + y.toFixed(2) + "%");
+  }
+
+  /* What the rail says: Portfolio by the name, at both ends of the reel,
+     Practice by the words, and the index by the board */
+  function renderIndex(t) {
     var index = FLICK_AT + INTO / 2;
-    show(railName, t >= 0.2 && t < FEED_AT + FEED / 2);
+    var back = BACK_AT + BACK / 2;
+    show(railName, (t >= 0.2 && t < FEED_AT + FEED / 2) || (t >= back && t < SET_AT));
     show(railSay, t >= FEED_AT + FEED / 2 && t < index);
     /* The plate on screen lights its number; as the whole board holds, every
        number lights in turn, 01 to 09, each in its plate's ink */
@@ -660,7 +794,7 @@
     for (var k = 0; k < 9; k++) if (t >= starts[k] + pans[k] / 2) on = k;
     var lit = t >= HOLD_AT ? Math.floor((t - HOLD_AT) / CASCADE) : -1;
     items.forEach(function (li, j) {
-      show(li, t >= index + j / FPS);
+      show(li, t >= index + j / FPS && t < back);
       var is = j === on || j <= lit;
       if (li._lit !== is) {
         li._lit = is;
@@ -672,18 +806,26 @@
   function renderShot(P, lt, land) {
     if (!P.print) return;
     var ctx = P.ctx;
+    var printed = PRINT_MS + P.spread;
+    /* A plate the camera only flicks past starts early, out of sight, and
+       is whole, and developing, as the camera reaches it */
+    var develop = land + DEV_AT;
+    if (P.flick) {
+      lt += printed;
+      develop = printed;
+    }
     if (lt < 0) {
       if (P.shown !== -1) ctx.clearRect(0, 0, P.canvas.width, P.canvas.height);
       P.shown = -1;
       return;
     }
-    if (lt < PRINT_MS + PRINT_SPREAD) {
+    if (lt < printed) {
       drawPrint(P.print, ctx, lt, PRINT_MS);
       P.shown = 0;
       return;
     }
     /* A live site's capture then develops over its print, a band at a time */
-    var bands = P.p.shot ? Math.round(stepsEnd(4, prog(lt, land + DEV_AT, DEV_MS)) * 4) : 0;
+    var bands = P.p.shot ? Math.round(stepsEnd(4, prog(lt, develop, DEV_MS)) * 4) : 0;
     if (P.shown === 1 + bands) return;
     P.shown = 1 + bands;
     drawPrint(P.print, ctx, Infinity, PRINT_MS);
@@ -703,91 +845,55 @@
     ctx.restore();
   }
 
-  /* On the final board each plate's section title drops out and the project's
-     own name drops in, plate by plate, as the rail lights that plate's number */
-  var namesDone = false;
-  function renderNames(t) {
-    plates.forEach(function (P) {
-      var at = HOLD_AT + P.k * CASCADE;
-      var n = P.chars.length;
-      var gap = Math.min(0.008, 0.12 / n);
-      for (var j = 0; j < n; j++) {
-        var gone = prog(t, at + j * gap, CHAR_MS);
-        show(P.chars[j], gone < 1);
-        put(P.chars[j], "translate", "0 " + Math.round(100 * stepsStart(3, gone)) + "%");
-      }
-      n = P.nameChars.length;
-      gap = Math.min(0.008, 0.12 / n);
-      for (j = 0; j < n; j++) {
-        var from = at + CHAR_MS / 2 + j * gap;
-        show(P.nameChars[j], t > from);
-        put(P.nameChars[j], "translate", "0 " + Math.round(-100 * (1 - stepsStart(3, prog(t, from, CHAR_MS)))) + "%");
-      }
-    });
-    namesDone = t >= HOLD_AT + PROJECTS.length * CASCADE + CHAR_MS * 2 + 0.2;
-  }
-
-  function renderPlate(P, lt, namesOn) {
+  /* A plate's name drops in a letter at a time as the camera lands on it. On
+     a plate the camera only flicks past it is stamped whole. */
+  function renderPlate(P, lt) {
     var land = pans[P.k];
-    var n = namesOn ? 0 : P.chars.length;
-    var gap = Math.min(0.008, 0.12 / P.chars.length);
-    /* Only the first plate of a section lands its title: on the rest it is
-       already standing, so it holds as the camera moves along */
-    var lead = !P.k || PROJECTS[P.k - 1].name !== P.p.name;
+    var n = P.chars.length;
+    var gap = P.flick ? 0 : Math.min(0.008, 0.12 / n);
     for (var j = 0; j < n; j++) {
-      if (!lead) {
-        show(P.chars[j], true);
-        put(P.chars[j], "translate", "0 0%");
-        continue;
-      }
       var from = land / 2 + j * gap;
       show(P.chars[j], lt > from);
-      put(P.chars[j], "translate", "0 " + Math.round(-100 * (1 - stepsStart(3, prog(lt, from, CHAR_MS)))) + "%");
+      put(P.chars[j], "translate", "0 " + (P.flick ? 0 : Math.round(-100 * (1 - stepsStart(3, prog(lt, from, CHAR_MS))))) + "%");
     }
     renderShot(P, lt, land);
   }
 
-  function renderClear(t) {
-    if (t < CLEAR_AT) return;
-    var lt = t - CLEAR_AT;
-    /* The paper can go at once: the whole board still covers the screen, so
-       from here on the page is only ever uncovered by something moving */
-    overlay.classList.add("is-leaving", "is-clear");
-    /* Each row of plates is a lane, and the lanes alternate, as Home's rows
-       do, so each of Home's rows comes in behind a lane leaving the same
-       way. In each lane the plate nearest the exit goes first (section 20,
-       rule 1). The board is at a third of its size, so the field's width on
-       screen is three plates' width on the board. */
-    plates.forEach(function (P) {
-      var dir = P.r % 2 ? -1 : 1;
-      var near = dir > 0 ? 2 - P.c : P.c;
-      var off = leave(prog(lt, P.r * LANE_GAP + near * PLATE_GAP, LANE_MS));
-      put(P.el, "translate", (dir * off * 3 * W).toFixed(1) + "px 0");
-    });
-    if (lt >= HOME_AT) root.classList.remove("intro-hold");
-    if (lt >= RAIL_AT + RAIL_MS) finish();
+  /* Home coming up from below. The board scrolls up off the top and the
+     page rises on its trailing edge, a screen behind it, as if they were one
+     long page: the paper goes clear so Home shows through, the heading is
+     unhidden to ride up in its own cell, and every other row waits off to
+     the side, parked at its entrance's first frame, so the name rises alone.
+     It lands where it rests, and only then does the page pack in round it. */
+  var page = null;
+  var landed = false;
+  function renderHome(t) {
+    if (t < BACK_AT) return;
+    if (!page) {
+      page = document.querySelector(".cert-page") || document.body;
+      overlay.classList.add("is-sheer");
+      root.classList.remove("intro-name");
+    }
+    if (!landed) {
+      if (t >= SET_AT) {
+        landed = true;
+        page.style.transform = "";
+        put(field, "transform", "");
+        keep(field, false);
+        overlay.classList.add("is-leaving", "is-clear");
+        root.classList.remove("intro-hold");
+      } else {
+        var up = scroll(prog(t, BACK_AT, BACK));
+        put(field, "transform", "translateY(" + (-up * sizeH).toFixed(2) + "px)");
+        page.style.transform = "translateY(" + ((1 - up) * sizeH).toFixed(2) + "px)";
+      }
+    }
+    if (t >= END_AT) finish();
   }
 
-  function render(t) {
-    var cam = cameraAt(t);
-    var near = t < PULL_AT - 0.15;
-    /* Near full size the board moves as one layer, so a camera move only
-       repaints what changes on a plate. For the pull back it is painted at
-       the size it is seen instead, rather than held in memory whole at full
-       size; the switch is made while the last plate stands still, so its
-       one redraw goes unseen. Once the whole board is in view each plate
-       becomes a layer of its own at that size, and the clear that follows
-       only moves layers. */
-    put(board, "willChange", near ? "transform" : "auto");
-    var parked = t >= HOLD_AT;
-    plates.forEach(function (P) { put(P.el, "willChange", parked ? "transform" : "auto"); });
-    put(board, "transform", "translate(" + cam.x.toFixed(2) + "px," + cam.y.toFixed(2) + "px) scale(" + cam.s.toFixed(5) + ")");
-    /* Rules keep their weight on screen once the camera is well back. The
-       brief dips along the way are left alone: re-weighing every rule would
-       restyle the whole board for a difference nobody could see. */
-    put(board, "--rw", (near ? RULE : RULE / cam.s).toFixed(2) + "px");
-
-    renderRail(t);
+  /* What prints, drawn once a frame of the film clock */
+  function renderInk(t) {
+    renderIndex(t);
 
     /* The two plates about me only change while they can be seen */
     if (t < FEED_AT + FEED) renderOpen(t);
@@ -805,15 +911,48 @@
     plates.forEach(function (P) {
       if (P.final) return;
       var lt = t - starts[P.k];
-      if (lt < -0.1) return;
-      var settled = lt >= pans[P.k] + DEV_AT + DEV_MS + 0.06;
-      renderPlate(P, settled ? Infinity : lt, t >= HOLD_AT);
+      if (lt < -0.4) return;
+      var settled = lt >= Math.max(pans[P.k] + DEV_AT + DEV_MS, PRINT_MS + P.spread) + 0.06;
+      renderPlate(P, settled ? Infinity : lt);
       /* A picture still on its way keeps the plate live until it lands */
-      if (settled && (P.print || P.failed)) P.final = true;
+      if (settled && (P.print || P.failed)) {
+        P.final = true;
+        paintTile(P);
+      }
     });
-    if (t >= HOLD_AT && !namesDone) renderNames(t);
+  }
 
-    renderClear(t);
+  /* Returns whether this frame printed, as well as moved */
+  function render(t) {
+    var cam = cameraAt(t);
+    var pulled = t >= PULL_AT;
+    /* From the pull back on, the sheet stands in for the plates: only the
+       last one stays, shrinking onto its own place on the sheet. Its rules
+       are doubled for that move, while it still stands, so they do not thin
+       away with it. */
+    keep(open.el, !pulled);
+    keep(about.el, !pulled);
+    plates.forEach(function (P) { keep(P.el, !pulled || (P.k === LAST && t < HOLD_AT)); });
+    put(plates[LAST].el, "--rw", (t >= PULL_AT - 0.1 ? RULE * 2 : RULE) + "px");
+    show(sheet, pulled);
+    var move = "translate(" + cam.x.toFixed(2) + "px," + cam.y.toFixed(2) + "px) scale(";
+    put(board, "transform", move + cam.s.toFixed(5) + ")");
+    put(sheet, "transform", move + (cam.s * 3).toFixed(5) + ")");
+
+    renderRail(t);
+
+    var f = Math.floor(t * FPS + 1e-6);
+    var inked = f !== frame;
+    if (inked) {
+      frame = f;
+      renderInk(f / FPS);
+    }
+    /* Whatever has not made it onto the sheet by the time it is needed goes
+       on as it stands */
+    if (pulled) plates.forEach(function (P) { if (P.k < LAST || t >= HOLD_AT) paintTile(P); });
+
+    renderHome(t);
+    return inked;
   }
 
   /* --- 7. Hand-over, skipping and giving up ------------------------------------
@@ -831,37 +970,29 @@
     raf = requestAnimationFrame(tick);
     if (last) clock += Math.min(now - last, 50) / 1000;
     last = now;
-    /* The reel runs on its film clock; the hand-over glides at the screen's
-       own rate */
-    if (clock >= CLEAR_AT) {
-      render(clock);
-      return;
-    }
-    var f = Math.floor(clock * FPS + 1e-6);
-    if (f !== frame) {
-      frame = f;
-      render(f / FPS);
-    } else if (queue.length) {
-      /* One picture per spare frame, so printing never drops a frame */
-      queue.shift()();
-    }
+    /* What travels is drawn every time; what prints, once a frame of the
+       film clock. One picture is sent to be cut on a frame that printed
+       nothing, so printing never drops a frame. */
+    if (!render(clock) && queue.length && !finished) queue.shift()();
   }
 
-  /* Straight to the board leaving, with every plate finished */
+  /* Straight to the name setting into the page */
   function skip() {
     if (finished) return;
     if (!started) {
       finish();
       return;
     }
-    if (clock >= CLEAR_AT) return;
-    while (queue.length) queue.shift()();
-    clock = CLEAR_AT;
+    if (clock >= SET_AT) return;
+    queue.length = 0;
+    clock = SET_AT;
     frame = -1;
   }
 
   var SCROLL_KEYS = /^(ArrowUp|ArrowDown|PageUp|PageDown|Home|End| |Spacebar)$/;
   function onKey(e) {
+    /* Once the name is setting, the page is the reader's */
+    if (clock >= SET_AT) return;
     if (e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key === "Escape") skip();
     /* Enter and Space on the button press it; a scroll key wants the page */
@@ -894,7 +1025,8 @@
     document.removeEventListener("keydown", onKey, true);
     document.removeEventListener("focusin", onFocus);
     window.removeEventListener("pagehide", finish);
-    root.classList.remove("intro-hold", "intro-on", "intro-live");
+    root.classList.remove("intro-hold", "intro-on", "intro-live", "intro-name");
+    if (page) page.style.transform = "";   /* stopped mid-scroll, the page is put back */
     if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
     Engrave.release();
     /* Home's entrance keeps its gliding timing until it has landed; dropped
@@ -939,7 +1071,8 @@
     load(about, IMG + "stefan/portrait.webp", printMe);
     plates.forEach(function (P) {
       var p = P.p;
-      load(P, IMG + (p.shot ? p.shot + (P.w * PR > 1000 ? "desktop-hero.webp" : "thumb.webp") : "objects/" + p.object + ".svg"), printPlate);
+      load(P, IMG + (p.shot ? p.shot + (P.w * PR > 1000 ? "desktop-hero.webp" : "thumb.webp") :
+        (P.wide ? "plates/" : "objects/") + p.object + ".svg"), printPlate);
       renderPlate(P, -1);   /* every plate starts blank, however far off it is */
     });
     render(0);
@@ -956,6 +1089,13 @@
       printOpen(function () {
         if (finished) return;
         started = true;
+        layoutPlates();
+        /* From here the name is the reel's to hand over: its cell on the
+           page stands in place rather than arriving with the other rows
+           (intro-cut, which stays for good), and the page's own name waits
+           unseen until the reel's has set into it (intro-name). */
+        root.classList.add("intro-cut", "intro-name");
+        frame = -1;
         render(0);
         /* One untimed frame to put the board up, so its first redraw is not
            taken out of the opening second */

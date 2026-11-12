@@ -26,6 +26,7 @@
   <link rel="preload" href="/assets/fonts/space-mono-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/space-mono-700.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/anybody-condensed-black.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/hanken-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="styles.css">
   <script src="/js/soon.js"></script>
@@ -142,9 +143,81 @@
         </div>
       </div>
 
-      <!-- Career and selected work. Set aside on the live site while it is
-           coming soon (js/soon.js), with the band below in its place. -->
-      <div class="crow row-paired-aside soon-hide">
+      <!-- Proof, the nine projects as the plates the landing reel lands on
+           (in the reel's order), then the career path. All set aside on the
+           live site while it is coming soon (js/soon.js), with the band
+           below in their place. The quote is trimmed from Brenda's kudos
+           nomination and otherwise verbatim (PRODUCT.md: quote or trim,
+           never reword). -->
+      <div class="crow row-aside-right soon-hide">
+        <p class="vlabel">Recognition</p>
+        <div class="cell cell-pad-lg">
+          <blockquote class="c-quote mb-gap">
+            <p>&ldquo;He has a rare ability to distill complex concepts into their essential components, quickly
+              identifying issues and articulating them in a way that enables the team to align and act.&rdquo;</p>
+          </blockquote>
+          <p class="c-meta">Dr Brenda Finney, kudos nomination</p>
+        </div>
+        <div class="cell cell-pad-lg cell-mid">
+          <p class="c-meta mb-label">Award</p>
+          <p class="c-title">Finalist</p>
+          <p class="c-meta cs-1">Digital Hero of the Year &middot; Computing &middot; 2026</p>
+        </div>
+      </div>
+
+      <div class="crow row-full soon-hide">
+        <p class="vlabel" aria-hidden="true">Selected work</p>
+        <div class="home-plates">
+          <h2 class="visually-hidden">Selected work</h2>
+          <article class="home-plate project-item">
+            <h3 class="c-title"><a class="c-link" href="/projects/nick-hampshire">Nick Hampshire</a></h3>
+            <div class="c-shot" data-object="assets/img/objects/nick-hampshire.svg"><img src="assets/img/nick-hampshire/thumb.webp" alt="" width="960" height="600" loading="eager"></div>
+            <p class="c-meta home-plate-kind">Web design</p>
+          </article>
+          <article class="home-plate project-item">
+            <h3 class="c-title"><a class="c-link" href="/projects/no-boundaries">No Boundaries</a></h3>
+            <div class="c-shot" data-object="assets/img/objects/no-boundaries.svg"><img src="assets/img/no-boundaries/thumb.webp" alt="" width="960" height="600" loading="eager"></div>
+            <p class="c-meta home-plate-kind">Web design</p>
+          </article>
+          <article class="home-plate project-item">
+            <h3 class="c-title"><a class="c-link" href="/projects/visit-stafford">Visit Stafford</a></h3>
+            <div class="c-shot" data-object="assets/img/objects/visit-stafford.svg"><img src="assets/img/visit-stafford/thumb.webp" alt="" width="960" height="600" loading="eager"></div>
+            <p class="c-meta home-plate-kind">Web design</p>
+          </article>
+          <article class="home-plate project-item">
+            <h3 class="c-title"><a class="c-link" href="/projects/centrus">Centrus</a></h3>
+            <div class="c-shot" data-object="assets/img/objects/centrus.svg"><img src="assets/img/centrus.svg" alt="" width="960" height="600" loading="lazy"></div>
+            <p class="c-meta home-plate-kind">Product design</p>
+          </article>
+          <article class="home-plate project-item">
+            <h3 class="c-title"><a class="c-link" href="/projects/preclinical-insights">Preclinical Insights</a></h3>
+            <div class="c-shot" data-object="assets/img/objects/preclinical-insights.svg"><img src="assets/img/preclinical-insights.svg" alt="" width="960" height="600" loading="lazy"></div>
+            <p class="c-meta home-plate-kind">Product design</p>
+          </article>
+          <article class="home-plate project-item">
+            <h3 class="c-title"><a class="c-link" href="/projects/knowledgescan">KnowledgeScan</a></h3>
+            <div class="c-shot" data-object="assets/img/objects/knowledgescan.svg"><img src="assets/img/knowledgescan.svg" alt="" width="960" height="600" loading="lazy"></div>
+            <p class="c-meta home-plate-kind">Product design</p>
+          </article>
+          <article class="home-plate project-item">
+            <h3 class="c-title"><a class="c-link" href="/projects/instemux">InstemUX</a></h3>
+            <div class="c-shot" data-object="assets/img/objects/instemux.svg"><img src="assets/img/instemux.svg" alt="" width="960" height="600" loading="lazy"></div>
+            <p class="c-meta home-plate-kind">Product design</p>
+          </article>
+          <article class="home-plate project-item">
+            <h3 class="c-title"><a class="c-link" href="/projects/wrottesley-golf">Wrottesley Golf Club</a></h3>
+            <div class="c-shot" data-object="assets/img/objects/wrottesley-golf.svg"><img src="assets/img/wrottesley-golf.svg" alt="" width="960" height="600" loading="lazy"></div>
+            <p class="c-meta home-plate-kind">Web design</p>
+          </article>
+          <article class="home-plate project-item">
+            <h3 class="c-title"><a class="c-link" href="/projects/bird-watcher">Bird Watcher</a></h3>
+            <div class="c-shot" data-object="assets/img/objects/bird-watcher.svg"><img src="assets/img/bird-watcher/thumb.webp" alt="" width="960" height="600" loading="lazy"></div>
+            <p class="c-meta home-plate-kind">Web design</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="crow row-full soon-hide">
         <p class="vlabel">Career</p>
         <div class="cell">
           <p class="c-meta mb-label">Path</p>
@@ -153,20 +226,6 @@
             <li><s>UX/UI Designer</s><span class="visually-hidden">(past role)</span></li>
             <li><s>Senior UX/UI Designer</s><span class="visually-hidden">(past role)</span></li>
             <li class="is-now">Senior Product Designer <span class="c-now" aria-hidden="true">Now</span><span class="visually-hidden">(current role)</span></li>
-          </ul>
-        </div>
-        <p class="vlabel">Selected work</p>
-        <div class="cell cell-tight">
-          <ul class="c-list">
-            <li><a href="/projects/centrus">Centrus</a></li>
-            <li><a href="/projects/preclinical-insights">Preclinical Insights</a></li>
-            <li><a href="/projects/knowledgescan">KnowledgeScan</a></li>
-            <li><a href="/projects/instemux">InstemUX</a></li>
-            <li><a href="/projects/nick-hampshire">Nick Hampshire</a></li>
-            <li><a href="/projects/no-boundaries">No Boundaries</a></li>
-            <li><a href="/projects/visit-stafford">Visit Stafford</a></li>
-            <li><a href="/projects/bird-watcher">Bird Watcher</a></li>
-            <li><a href="/projects/wrottesley-golf">Wrottesley Golf Club</a></li>
           </ul>
         </div>
       </div>

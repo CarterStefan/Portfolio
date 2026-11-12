@@ -37,6 +37,7 @@
    21. Black Ink Trial
    22. Landing Reel
    23. Coming Soon
+   24. Crisp Trial
    ========================================================================== */
 
 /* Self-hosted Space Mono, latin subset only (the two weights the site
@@ -1710,6 +1711,8 @@ body { margin: 0; }
 }
 .cert .next-link:hover,
 .cert .next-link:focus-visible { color: var(--hue); }
+/* Previous and next share a row, so each title gets half the width. */
+.cert .row-pager .next-link { font-size: clamp(1.5rem, 3.6vw, 3.2rem); }
 
 .cert .link-arrow {
   display: inline-flex;
@@ -2246,8 +2249,11 @@ body { margin: 0; }
    whole head sits centred in the cell with the green around it, and on a
    phone takes a square rather than the full 4:5. */
 .page-home .c-portrait img { object-fit: contain; object-position: 50% 50%; }
+/* Stacked, a square the full width of the screen was up to a screen of flat
+   green before its print arrived. Capped to half the screen instead, the
+   head still fits whole (contain) with green either side. */
 @media (max-width: 991.98px) {
-  .page-home .cell-portrait .c-portrait { aspect-ratio: 1; }
+  .page-home .cell-portrait .c-portrait { aspect-ratio: auto; height: clamp(16rem, 50svh, 30rem); }
 }
 
 /* About's cell is tall and narrow, and the head nearly fills its own image,
@@ -2342,23 +2348,23 @@ html.js .reveal { transform: none; transition: none; }
 
 /* ==========================================================================
    22. LANDING REEL
-   About twelve seconds on Home for a visitor arriving from outside the
+   About nine seconds on Home for a visitor arriving from outside the
    site. The gate is in index.html's <head>, the motion in js/intro.js.
-   It is about the person first: the name, then a plate with the portrait
-   and what I do, the words changing at a reading pace. Below those sits
-   one ruled board of the nine projects, three plates to a row, which a
-   camera flicks along like a print carriage: along a row, back to the
-   start of the next, then out to the whole board, which holds. The board
-   then leaves in lanes, as any page does (section 20), and Home packs in
-   behind it.
+   It opens on the person: the name, then a plate with the portrait and
+   what I do, four words. Below those sits one ruled board of the nine
+   projects, three plates to a row, which a camera flicks along like a
+   print carriage, each row faster than the last: along a row, back to the
+   start of the next, then out to the whole board, which holds. The camera
+   then goes back up to the name, which sets itself into Home's own
+   heading while the rest of the page packs in round it (section 20).
 
    It is built from the site's own parts: the black rail, 2px rules, Space
    Mono, the four ink blocks and the engraved prints of section 21. Each
-   plate takes one block, as the page's one block of colour. The reel runs
-   on a 30 frame a second clock, so even the camera moves in frames, as
-   the rest of the site's motion steps rather than glides. The hand-over
-   to Home is the one exception: it glides, so the reel settles into the
-   page instead of clattering into it.
+   plate takes one block, as the page's one block of colour. Ink steps and
+   travel glides: whatever prints (letters, the highlighter, the wash, the
+   engraved lines) moves in frames, 30 a second, as the rest of the site's
+   motion steps; whatever travels (the camera, the rail, the name setting,
+   Home's rows landing after it) is eased at the screen's own rate.
 
    A plate is the size of the screen beside the rail, and everything on it
    is sized in its container units, so the reel composes itself at any
@@ -2379,10 +2385,18 @@ html.intro-on .intro {
 }
 
 /* Home's own entrance waits under the reel, parked at its first frame, and
-   runs as the board leaves. A paused animation that has not started yet
+   runs as the name sets. A paused animation that has not started yet
    stays relevant, so js/main.js still holds the portrait's print until its
    cell has landed. */
 html.intro-hold .sheet-in > .crow > * { animation-play-state: paused; }
+
+/* The name's own cell does not arrive with the rest: it stands in place
+   from the moment the reel starts, since the reel ends by setting its name
+   into this one. The class stays for good, because taking it away would
+   start the cell's entrance afresh. The heading itself waits unseen (but
+   still read out) until the reel's copy has landed exactly on it. */
+html.intro-cut .sheet-in > .crow:first-child > .cell { animation: none; }
+html.intro-name .page-home .c-hero { opacity: 0; }
 
 /* After the reel that entrance glides: the system's settle curve, which
    section 21 replaced with steps, at a calmer pace. Every --vt-* duration
@@ -2393,10 +2407,13 @@ html.intro-land {
   --vt-ease-land: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* The paper goes the moment the board starts to leave, while the plates
-   still cover the whole screen, so the page is only ever uncovered by a
-   plate moving off it */
-html.intro-on .intro.is-clear { background: none; }
+/* The paper goes as the board starts to scroll away, so Home can come up
+   beneath it (js/intro.js, renderHome). The page is bare at that moment but
+   for the name's cell and the rules. The reel still takes clicks (one
+   skips it) until the name has landed; from then on the page is the
+   reader's to click. */
+html.intro-on .intro.is-sheer { background: none; }
+html.intro-on .intro.is-clear { background: none; pointer-events: none; }
 
 .intro-stage { position: absolute; inset: 0; }
 
@@ -2477,6 +2494,18 @@ html.intro-on .intro.is-clear { background: none; }
   top: 0;
   left: 0;
   transform-origin: 0 0;
+  will-change: transform;
+}
+
+/* The whole board as one picture, under the board itself: what the camera
+   pulls back to, and leaves from. It only ever moves. */
+.intro-sheet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  transform-origin: 0 0;
+  will-change: transform;
 }
 
 .intro-plate {
@@ -2540,9 +2569,6 @@ html.intro-on .intro.is-clear { background: none; }
   white-space: nowrap;
   color: var(--ink);
 }
-/* The project's name, which takes over the same slot on the final board */
-.intro-head { position: relative; }
-.intro-title.is-name { position: absolute; left: var(--pad); bottom: 0; }
 .intro-tl { display: inline-block; clip-path: inset(0 -0.2em -0.45em -0.2em); }
 .intro-ch { display: inline-block; }
 
@@ -2562,6 +2588,22 @@ html.intro-on .intro.is-clear { background: none; }
   inset: 0;
   width: 100%;
   height: 100%;
+}
+/* The project's practice, on a tab hung from the rule at the picture's corner */
+.intro-kind {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  padding: 0.4em 0.7em;
+  background: var(--ink);
+  color: var(--surface);
+  font-size: max(var(--step-label), 1.05cqw);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 /* A box drawn round one thing, side by side in its block, with what it
@@ -2662,7 +2704,9 @@ html.intro-on .intro.is-clear { background: none; }
   display: block;
   width: fit-content;
   margin-top: 0.1em;
-  clip-path: inset(0 -0.2em -0.45em -0.2em);
+  /* Shut top and bottom: a word leaves down behind its own line, never onto
+     the line below. Capitals have nothing to lose beneath the line. */
+  clip-path: inset(0 -0.2em);
   background: linear-gradient(var(--block), var(--block)) 0 0 / 0% 100% no-repeat;
 }
 .intro-wc { display: inline-block; }
@@ -2728,9 +2772,9 @@ html.intro-on .intro.is-clear { background: none; }
 }
 
 /* --- Skip ----------------------------------------------------------------------
-   The reel moves on its own for twelve seconds, so it needs a real way out
+   The reel moves on its own for nine seconds, so it needs a real way out
    (WCAG 2.2.2). Escape, a click, a scroll or moving focus into the page
-   skip it too, straight to the board leaving. The focus ring sits inside
+   skip it too, straight to the name setting into the page. The focus ring sits inside
    the button, which is flush with the corner of the screen. */
 .intro-skip { position: absolute; right: 0; bottom: 0; z-index: 4; }
 .intro .intro-skip.c-btn:focus-visible { outline: 2px solid var(--surface); outline-offset: -6px; }
@@ -2740,6 +2784,63 @@ html.intro-on .intro.is-clear { background: none; }
   html.intro-on .intro { display: none; }
 }
 
+
+/* --- Home's selected work: the reel's plates, left on the page ---------------
+   Nine plates, three to a row, in the order the landing reel lands on them
+   (js/intro.js), each a name over its engraved well (js/main.js prints it
+   from data-object, as on the index pages) with its practice beneath. They
+   share the sheet's rules, so the grid reads as the reel's board settled
+   into the page. A plate is one link, stretched over it as a project row's
+   is. Below 576px they go two to a row. */
+.home-plates {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  min-width: 0;
+}
+.home-plate {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border-right: var(--rule-w) solid var(--rule);
+  border-bottom: var(--rule-w) solid var(--rule);
+  background: var(--surface);
+}
+.home-plate:nth-of-type(3n) { border-right: 0; }
+.home-plate:nth-last-of-type(-n+3) { border-bottom: 0; }
+.cert .home-plate :is(h2, h3).c-title {
+  padding: clamp(0.7rem, 1.4vw, 1rem) clamp(0.7rem, 1.4vw, 1rem) 0;
+  font-size: clamp(1.3rem, 2.8cqw, 2.6rem);
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+.cert .home-plate .c-title a {
+  border-bottom: 0;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  text-decoration: none;
+}
+.home-plate .c-shot { margin-top: clamp(0.7rem, 1.4vw, 1rem); }
+.home-plate-kind {
+  margin: auto 0 0;   /* down to the plate's foot, so labels line up across a row */
+  color: var(--ink-2);
+  padding: 0.45rem clamp(0.7rem, 1.4vw, 1rem);
+  border-top: var(--rule-w) solid var(--rule);
+}
+.home-plate:hover,
+.home-plate:focus-within { background: var(--ink); }
+.home-plate:hover :is(.c-title, .c-meta),
+.home-plate:focus-within :is(.c-title, .c-meta) { color: var(--surface); }
+@media (max-width: 575.98px) {
+  .home-plates { grid-template-columns: repeat(2, 1fr); }
+  .home-plate:nth-of-type(3n) { border-right: var(--rule-w) solid var(--rule); }
+  .home-plate:nth-of-type(2n) { border-right: 0; }
+  .home-plate:nth-last-of-type(-n+3) { border-bottom: var(--rule-w) solid var(--rule); }
+  .home-plate:last-of-type { grid-column: 1 / -1; border-right: 0; border-bottom: 0; }
+  .home-plate:nth-last-of-type(2) { border-bottom: var(--rule-w) solid var(--rule); }
+}
 
 /* ==========================================================================
    23. COMING SOON
@@ -2792,3 +2893,238 @@ html.soon .intro-brand { display: none; }
   line-height: 0.85;
   color: var(--surface);
 }
+
+
+/* ==========================================================================
+   24. CRISP TRIAL
+   On trial since 2026-11-12 on design/crisp, after a study of how
+   oci.madebybuzzworthy.com keeps a ruled grid of big blocks feeling calm.
+   Like section 21 it only overrides, so it reads in one place and comes
+   out in one cut. If it is kept, fold it back into sections 17 and 21.
+
+   Four moves:
+   1. Hairlines. The rules drop to 1px and stop boxing the inside of a
+      block: a rule marks where one block ends, never a caption or a well.
+   2. Two voices with strict jobs. Hanken Grotesk sets everything a visitor
+      reads (body, statements, quotes, titles); Space Mono is kept for small
+      uppercase labels only, at near-normal tracking. Anybody is the one
+      headline a page carries, and nothing else.
+   3. One inset. Every cell holds its text the same distance off its rule,
+      so left edges line up down the sheet.
+   4. Six sizes. Hero, xl, l, read, rail and label, and nothing between.
+   ========================================================================== */
+
+/* Hanken Grotesk, latin subset, variable weight. OFL, see OFL-Hanken-Grotesk.txt.
+   Chosen over Host Grotesk, whose hyphen is nearly as long as its en dash
+   and made every compound word read as if it held a dash. */
+@font-face {
+  font-family: "Hanken Grotesk";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/assets/fonts/hanken-grotesk-latin.woff2") format("woff2");
+}
+
+.cert {
+  --font-sans: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --rule-w: 1px;
+
+  /* The one distance between a rule and the text it holds */
+  --inset: clamp(1rem, 1.6vw, 1.5rem);
+
+  /* The scale. The hero step lives on .c-hero (section 21). */
+  --step-xl:    clamp(1.75rem, 3.3vw, 3rem);      /* statements, lead lines   */
+  --step-l:     clamp(1.3rem, 2vw, 1.875rem);     /* titles, quotes           */
+  --step-read:  1.125rem;                         /* running text and lists   */
+  --step-rail:  0.8125rem;                        /* rail and nav (mono)      */
+  --step-label: 0.75rem;                          /* every other label (mono) */
+  --step-list:  var(--step-read);
+
+  /* Mono labels sit close to their natural spacing rather than tracked out */
+  --track-label: 0.04em;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+@media (max-width: 575.98px) {
+  .cert { --step-read: 1.0625rem; }
+}
+
+/* --- 1. Hairlines ----------------------------------------------------------- */
+
+.c-link,
+.cert .link-arrow,
+.cert figcaption a,
+.cert .cell p a:not([class]) { border-bottom-width: 1px; }
+.cert-mail,
+.cert .next-link { border-bottom-width: 1px; }
+.c-ladder s { text-decoration-thickness: 1px; }
+
+/* The current page's bar and the reading gauge thin to match the rules */
+.cert-nav-links a[aria-current] { box-shadow: inset 0 -3px 0 var(--ink); }
+@supports (animation-timeline: scroll()) {
+  .cert-nav::after { height: 3px; }
+}
+
+/* A plate's practice is a caption, not a second box */
+.home-plate-kind { border-top: 0; }
+
+/* A project row's picture and its name are one thing, so no rule between */
+.project-item > .cell-tight { border-right: 0; }
+
+/* --- 2. Two voices ------------------------------------------------------------ */
+
+/* Every heading below the page's one headline leaves Anybody */
+.cert h2, .cert h3,
+.cert h4, .cert h5, .cert h6 {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  text-transform: none;
+}
+
+/* Running text */
+.c-body,
+.c-quote p,
+.c-quote-sm p,
+.cert .cell p:not([class]),
+.cert .cell li:not([class]),
+.c-list,
+.c-ladder {
+  font-family: var(--font-sans);
+  font-size: var(--step-read);
+  line-height: 1.5;
+  letter-spacing: -0.005em;
+}
+.c-body,
+.cert .cell p:not([class]),
+.cert .cell li:not([class]) { max-width: 58ch; }
+.c-list { line-height: 1.45; }
+.c-ladder { line-height: 1.6; }
+.c-ladder .is-now { font-weight: 600; }
+.cert :where(strong, b) { font-weight: 600; }
+
+/* Statements and lead lines: large, light and tight, like the reference */
+.c-display,
+.cert h2.c-display,
+.page-home .c-statement-pair,
+.cert .cell .c-quote.c-quote-lead p {
+  font-family: var(--font-sans);
+  font-size: var(--step-xl);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.04;
+}
+
+/* Quotes and titles share the large step */
+.c-quote p,
+.c-title,
+.cert :is(h2, h3).c-title,
+.cert .project-item :is(h2, h3).c-title,
+.project-item .c-title,
+.cert .home-plate :is(h2, h3).c-title {
+  font-family: var(--font-sans);
+  font-size: var(--step-l);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  text-transform: none;
+}
+.c-quote p { font-weight: 400; max-width: 34ch; }
+/* Work's project names are what the page is a list of, so they take xl */
+.cert .project-item > .cell :is(h2, h3).c-title { font-size: var(--step-xl); line-height: 1; }
+
+.c-num {
+  font-family: var(--font-sans);
+  font-size: var(--step-xl);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+.cert-mail {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+.cert .next-link {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  text-transform: none;
+  line-height: 1;
+}
+
+/* Space Mono, small and close-set */
+.c-meta,
+.c-link,
+.c-btn,
+.c-filter,
+.c-now,
+.cert .form-label,
+.cert .form-note,
+.home-plate-kind {
+  font-size: var(--step-label);
+  letter-spacing: var(--track-label);
+}
+.cert-nav-links a { letter-spacing: var(--track-label); }
+.vlabel { letter-spacing: 0.08em; }
+@media (max-width: 575.98px) {
+  .vlabel { letter-spacing: 0.06em; }
+}
+
+/* --- 3. One inset --------------------------------------------------------------
+   Cells that bleed their content (media, the portrait) and the empty cells
+   that only carry a rail keep no padding. */
+.cell:not(.cell-flush, .cell-portrait, :empty) { padding-inline: var(--inset); }
+.cell-pad-lg { padding-block: clamp(1.75rem, 4.5vw, 4rem); }
+.cert .home-plate :is(h2, h3).c-title { padding: var(--inset) var(--inset) 0; }
+.home-plate-kind { padding: 0 var(--inset) var(--inset); }
+.home-plate .c-shot { margin-top: var(--inset); }
+
+/* A quote is set as a statement, not as running text. The selector has to
+   outrank the cell prose rule, which matches its paragraphs too. */
+.cert .cell .c-quote p {
+  font-size: var(--step-l);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  max-width: 34ch;
+}
+.cert .cell .c-quote-sm p { font-size: var(--step-read); line-height: 1.5; max-width: 58ch; }
+
+/* The case studies' legacy parts that still set themselves in mono */
+.cert .big-lead {
+  font-family: var(--font-sans);
+  font-size: var(--step-l);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.cert .type-row h3 {
+  font-family: var(--font-sans);
+  font-size: var(--step-read);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.cert .type-row-num { letter-spacing: var(--track-label); }
+.cert .form-control { font-family: var(--font-sans); font-size: var(--step-read); }
+
+/* A testimonial that runs to several paragraphs reads as text, not as a
+   statement, so it steps down between the read and large sizes */
+.cert .cell .c-quote:has(p + p) p {
+  font-size: clamp(1.15rem, 1.4vw, 1.3125rem);
+  line-height: 1.4;
+  max-width: 44ch;
+}
+
+/* Captions are running text at a smaller size, in the muted tone */
+.cert figcaption {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  letter-spacing: 0;
+  line-height: 1.45;
+}
+
+/* The practice pair may wrap on a phone rather than shrink to fit a line */
+.page-home .c-statement-pair { font-size: clamp(1.4rem, 5.2cqi, 3rem); }

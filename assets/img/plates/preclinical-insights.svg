@@ -1,0 +1,16 @@
+<svg width="1600" height="1000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000"><!-- Draft plate for the landing reel: unlabelled readings rising along a line. An abstract diagram with no scale and no figures. -->
+<rect x="80" y="860" width="1440" height="50"/>
+<rect x="140" y="660" width="104" height="200"/>
+<rect x="296" y="590" width="104" height="270"/>
+<rect x="452" y="630" width="104" height="230"/>
+<rect x="608" y="470" width="104" height="390"/>
+<rect x="764" y="510" width="104" height="350"/>
+<rect x="920" y="340" width="104" height="520"/>
+<rect x="1076" y="380" width="104" height="480"/>
+<rect x="1232" y="210" width="104" height="650"/>
+<rect x="1388" y="110" width="104" height="750"/>
+<circle cx="192" cy="560" r="34"/>
+<circle cx="504" cy="530" r="34"/>
+<circle cx="816" cy="410" r="34"/>
+<circle cx="1128" cy="280" r="34"/>
+</svg>
