@@ -52,10 +52,10 @@
      captures shows its engraved object (assets/img/objects), so no Instem UI
      ever appears (PRODUCT.md).
 
-     /?intro&draft tries the four drawn Instem plates (assets/img/plates)
-     in place of their objects: full width diagrams, printed in a sweep. */
+     The four Instem projects print drawn plates (assets/img/plates) in
+     place of their objects: full width diagrams, printed in a sweep.
+     Approved by Stefan on 2026-11-12. */
   var IMG = "/assets/img/";
-  var DRAFT = /[?&]draft\b/.test(location.search);
   var SAY = [
     { lines: ["Senior", "product", "designer"], tag: "Now", ink: "moss", hold: 0.5 },
     { lines: ["Design", "systems"], ink: "slate", hold: 0.375 },
@@ -386,8 +386,8 @@
       chars: chars, shot: shot, kind: kind, rule: rule, canvas: canvas, ctx: null,
       img: null, failed: false, print: null, shown: null, final: false,
       /* A drawn plate spans the width like a capture and prints in a sweep */
-      wide: DRAFT && !!p.plate, flick: SLOTS[k][0] <= FLICK,
-      spread: DRAFT && p.plate ? SWEEP : PRINT_SPREAD, lay: null, tiled: false
+      wide: !!p.plate, flick: SLOTS[k][0] <= FLICK,
+      spread: p.plate ? SWEEP : PRINT_SPREAD, lay: null, tiled: false
     };
   }
 
