@@ -1710,6 +1710,8 @@ body { margin: 0; }
 }
 .cert .next-link:hover,
 .cert .next-link:focus-visible { color: var(--hue); }
+/* Previous and next share a row, so each title gets half the width. */
+.cert .row-pager .next-link { font-size: clamp(1.5rem, 3.6vw, 3.2rem); }
 
 .cert .link-arrow {
   display: inline-flex;
@@ -2246,8 +2248,11 @@ body { margin: 0; }
    whole head sits centred in the cell with the green around it, and on a
    phone takes a square rather than the full 4:5. */
 .page-home .c-portrait img { object-fit: contain; object-position: 50% 50%; }
+/* Stacked, a square the full width of the screen was up to a screen of flat
+   green before its print arrived. Capped to half the screen instead, the
+   head still fits whole (contain) with green either side. */
 @media (max-width: 991.98px) {
-  .page-home .cell-portrait .c-portrait { aspect-ratio: 1; }
+  .page-home .cell-portrait .c-portrait { aspect-ratio: auto; height: clamp(16rem, 50svh, 30rem); }
 }
 
 /* About's cell is tall and narrow, and the head nearly fills its own image,
@@ -2342,23 +2347,23 @@ html.js .reveal { transform: none; transition: none; }
 
 /* ==========================================================================
    22. LANDING REEL
-   About twelve seconds on Home for a visitor arriving from outside the
+   About nine seconds on Home for a visitor arriving from outside the
    site. The gate is in index.html's <head>, the motion in js/intro.js.
-   It is about the person first: the name, then a plate with the portrait
-   and what I do, the words changing at a reading pace. Below those sits
-   one ruled board of the nine projects, three plates to a row, which a
-   camera flicks along like a print carriage: along a row, back to the
-   start of the next, then out to the whole board, which holds. The board
-   then leaves in lanes, as any page does (section 20), and Home packs in
-   behind it.
+   It opens on the person: the name, then a plate with the portrait and
+   what I do, four words. Below those sits one ruled board of the nine
+   projects, three plates to a row, which a camera flicks along like a
+   print carriage, each row faster than the last: along a row, back to the
+   start of the next, then out to the whole board, which holds. The camera
+   then goes back up to the name, which sets itself into Home's own
+   heading while the rest of the page packs in round it (section 20).
 
    It is built from the site's own parts: the black rail, 2px rules, Space
    Mono, the four ink blocks and the engraved prints of section 21. Each
-   plate takes one block, as the page's one block of colour. The reel runs
-   on a 30 frame a second clock, so even the camera moves in frames, as
-   the rest of the site's motion steps rather than glides. The hand-over
-   to Home is the one exception: it glides, so the reel settles into the
-   page instead of clattering into it.
+   plate takes one block, as the page's one block of colour. Ink steps and
+   travel glides: whatever prints (letters, the highlighter, the wash, the
+   engraved lines) moves in frames, 30 a second, as the rest of the site's
+   motion steps; whatever travels (the camera, the rail, the name setting,
+   Home's rows landing after it) is eased at the screen's own rate.
 
    A plate is the size of the screen beside the rail, and everything on it
    is sized in its container units, so the reel composes itself at any
@@ -2379,10 +2384,18 @@ html.intro-on .intro {
 }
 
 /* Home's own entrance waits under the reel, parked at its first frame, and
-   runs as the board leaves. A paused animation that has not started yet
+   runs as the name sets. A paused animation that has not started yet
    stays relevant, so js/main.js still holds the portrait's print until its
    cell has landed. */
 html.intro-hold .sheet-in > .crow > * { animation-play-state: paused; }
+
+/* The name's own cell does not arrive with the rest: it stands in place
+   from the moment the reel starts, since the reel ends by setting its name
+   into this one. The class stays for good, because taking it away would
+   start the cell's entrance afresh. The heading itself waits unseen (but
+   still read out) until the reel's copy has landed exactly on it. */
+html.intro-cut .sheet-in > .crow:first-child > .cell { animation: none; }
+html.intro-name .page-home .c-hero { opacity: 0; }
 
 /* After the reel that entrance glides: the system's settle curve, which
    section 21 replaced with steps, at a calmer pace. Every --vt-* duration
@@ -2393,10 +2406,21 @@ html.intro-land {
   --vt-ease-land: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* The paper goes the moment the board starts to leave, while the plates
-   still cover the whole screen, so the page is only ever uncovered by a
-   plate moving off it */
-html.intro-on .intro.is-clear { background: none; }
+/* The paper goes the moment the name starts to set. The page beneath is
+   bare at that moment but for the name's cell, so nothing shows through
+   but its rules, and from then on it is the reader's to click. */
+html.intro-on .intro.is-clear { background: none; pointer-events: none; }
+
+/* The name on its way into Home's heading: a copy of the heading, in the
+   heading's own type and place (js/intro.js, beginSet), whose words start
+   enlarged onto the reel's and end as themselves. */
+.intro-set {
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  box-sizing: border-box;
+}
+.intro-sw { display: inline-block; }
 
 .intro-stage { position: absolute; inset: 0; }
 
@@ -2477,6 +2501,18 @@ html.intro-on .intro.is-clear { background: none; }
   top: 0;
   left: 0;
   transform-origin: 0 0;
+  will-change: transform;
+}
+
+/* The whole board as one picture, under the board itself: what the camera
+   pulls back to, and leaves from. It only ever moves. */
+.intro-sheet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  transform-origin: 0 0;
+  will-change: transform;
 }
 
 .intro-plate {
@@ -2540,9 +2576,6 @@ html.intro-on .intro.is-clear { background: none; }
   white-space: nowrap;
   color: var(--ink);
 }
-/* The project's name, which takes over the same slot on the final board */
-.intro-head { position: relative; }
-.intro-title.is-name { position: absolute; left: var(--pad); bottom: 0; }
 .intro-tl { display: inline-block; clip-path: inset(0 -0.2em -0.45em -0.2em); }
 .intro-ch { display: inline-block; }
 
@@ -2562,6 +2595,22 @@ html.intro-on .intro.is-clear { background: none; }
   inset: 0;
   width: 100%;
   height: 100%;
+}
+/* The project's practice, on a tab hung from the rule at the picture's corner */
+.intro-kind {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  padding: 0.4em 0.7em;
+  background: var(--ink);
+  color: var(--surface);
+  font-size: max(var(--step-label), 1.05cqw);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 /* A box drawn round one thing, side by side in its block, with what it
@@ -2662,7 +2711,9 @@ html.intro-on .intro.is-clear { background: none; }
   display: block;
   width: fit-content;
   margin-top: 0.1em;
-  clip-path: inset(0 -0.2em -0.45em -0.2em);
+  /* Shut top and bottom: a word leaves down behind its own line, never onto
+     the line below. Capitals have nothing to lose beneath the line. */
+  clip-path: inset(0 -0.2em);
   background: linear-gradient(var(--block), var(--block)) 0 0 / 0% 100% no-repeat;
 }
 .intro-wc { display: inline-block; }
@@ -2728,9 +2779,9 @@ html.intro-on .intro.is-clear { background: none; }
 }
 
 /* --- Skip ----------------------------------------------------------------------
-   The reel moves on its own for twelve seconds, so it needs a real way out
+   The reel moves on its own for nine seconds, so it needs a real way out
    (WCAG 2.2.2). Escape, a click, a scroll or moving focus into the page
-   skip it too, straight to the board leaving. The focus ring sits inside
+   skip it too, straight to the name setting into the page. The focus ring sits inside
    the button, which is flush with the corner of the screen. */
 .intro-skip { position: absolute; right: 0; bottom: 0; z-index: 4; }
 .intro .intro-skip.c-btn:focus-visible { outline: 2px solid var(--surface); outline-offset: -6px; }
@@ -2740,6 +2791,63 @@ html.intro-on .intro.is-clear { background: none; }
   html.intro-on .intro { display: none; }
 }
 
+
+/* --- Home's selected work: the reel's plates, left on the page ---------------
+   Nine plates, three to a row, in the order the landing reel lands on them
+   (js/intro.js), each a name over its engraved well (js/main.js prints it
+   from data-object, as on the index pages) with its practice beneath. They
+   share the sheet's rules, so the grid reads as the reel's board settled
+   into the page. A plate is one link, stretched over it as a project row's
+   is. Below 576px they go two to a row. */
+.home-plates {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  min-width: 0;
+}
+.home-plate {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border-right: var(--rule-w) solid var(--rule);
+  border-bottom: var(--rule-w) solid var(--rule);
+  background: var(--surface);
+}
+.home-plate:nth-of-type(3n) { border-right: 0; }
+.home-plate:nth-last-of-type(-n+3) { border-bottom: 0; }
+.cert .home-plate :is(h2, h3).c-title {
+  padding: clamp(0.7rem, 1.4vw, 1rem) clamp(0.7rem, 1.4vw, 1rem) 0;
+  font-size: clamp(1.3rem, 2.8cqw, 2.6rem);
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+.cert .home-plate .c-title a {
+  border-bottom: 0;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  text-decoration: none;
+}
+.home-plate .c-shot { margin-top: clamp(0.7rem, 1.4vw, 1rem); }
+.home-plate-kind {
+  margin: auto 0 0;   /* down to the plate's foot, so labels line up across a row */
+  color: var(--ink-2);
+  padding: 0.45rem clamp(0.7rem, 1.4vw, 1rem);
+  border-top: var(--rule-w) solid var(--rule);
+}
+.home-plate:hover,
+.home-plate:focus-within { background: var(--ink); }
+.home-plate:hover :is(.c-title, .c-meta),
+.home-plate:focus-within :is(.c-title, .c-meta) { color: var(--surface); }
+@media (max-width: 575.98px) {
+  .home-plates { grid-template-columns: repeat(2, 1fr); }
+  .home-plate:nth-of-type(3n) { border-right: var(--rule-w) solid var(--rule); }
+  .home-plate:nth-of-type(2n) { border-right: 0; }
+  .home-plate:nth-last-of-type(-n+3) { border-bottom: var(--rule-w) solid var(--rule); }
+  .home-plate:last-of-type { grid-column: 1 / -1; border-right: 0; border-bottom: 0; }
+  .home-plate:nth-last-of-type(2) { border-bottom: var(--rule-w) solid var(--rule); }
+}
 
 /* ==========================================================================
    23. COMING SOON
