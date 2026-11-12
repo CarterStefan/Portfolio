@@ -2406,21 +2406,13 @@ html.intro-land {
   --vt-ease-land: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* The paper goes the moment the name starts to set. The page beneath is
-   bare at that moment but for the name's cell, so nothing shows through
-   but its rules, and from then on it is the reader's to click. */
+/* The paper goes as the board starts to scroll away, so Home can come up
+   beneath it (js/intro.js, renderHome). The page is bare at that moment but
+   for the name's cell and the rules. The reel still takes clicks (one
+   skips it) until the name has landed; from then on the page is the
+   reader's to click. */
+html.intro-on .intro.is-sheer { background: none; }
 html.intro-on .intro.is-clear { background: none; pointer-events: none; }
-
-/* The name on its way into Home's heading: a copy of the heading, in the
-   heading's own type and place (js/intro.js, beginSet), whose words start
-   enlarged onto the reel's and end as themselves. */
-.intro-set {
-  position: absolute;
-  z-index: 2;
-  margin: 0;
-  box-sizing: border-box;
-}
-.intro-sw { display: inline-block; }
 
 .intro-stage { position: absolute; inset: 0; }
 

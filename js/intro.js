@@ -57,10 +57,11 @@
      Approved by Stefan on 2026-11-12. */
   var IMG = "/assets/img/";
   var SAY = [
-    { lines: ["Senior", "product", "designer"], tag: "Now", ink: "moss", hold: 0.5 },
-    { lines: ["Design", "systems"], ink: "slate", hold: 0.375 },
-    { lines: ["Design", "engineering"], ink: "rose", hold: 0.375 },
-    { lines: ["Finalist", "Digital Hero", "of the Year"], note: "2026", ink: "amber", hold: 0.5 }
+    { lines: ["Senior", "product", "designer"], tag: "Now", ink: "moss", hold: 0.625 },
+    { lines: ["Design", "systems"], ink: "slate", hold: 0.5 },
+    { lines: ["Design", "engineering"], ink: "rose", hold: 0.5 },
+    /* The longest line and the one that matters most: held for a read */
+    { lines: ["Finalist", "Digital Hero", "of the Year"], note: "2026", ink: "amber", hold: 1.125 }
   ];
   var PRODUCT = "Product design";
   var WEB = "Web design";
@@ -79,7 +80,7 @@
      leaving it, and how much of that is the move. Each row is faster than
      the one before; the last flicks. */
   var SLOTS = [
-    [0.75, 0.25], [0.625, 0.15], [0.5, 0.15],
+    [0.875, 0.3], [0.75, 0.2], [0.625, 0.2],
     [0.5, 0.2], [0.375, 0.12], [0.375, 0.12],
     [0.25, 0.15], [0.25, 0.1], [0.25, 0.1]
   ];
@@ -118,16 +119,16 @@
   var HOLD = 0.875;     /* the whole board, held */
   var CASCADE = 0.04;   /* the rail's index lighting up, number by number, as it holds */
 
-  /* Home. The camera goes back to the name (BACK), and the name then sets
-     itself into Home's heading (SET) over the page, whose own entrance is
-     released at the same moment on its original settle curve (section 22's
-     html.intro-land), so the page packs in round a name that is already
-     arriving. The rail is the spine throughout: the mark stays where the
-     nav's own sits, and the rail only slides away once Home's rails are
-     dropping in above it. RAIL_AT is timed against that drop, --vt-lock-at
-     at intro-land's pace, and has to move with it. */
-  var BACK = 0.5;
-  var SET = 0.375;
+  /* Home. The held board scrolls up and away like a page (BACK), and Home
+     comes up beneath it from the bottom of the screen, bare but for the
+     name's own row, so the name rises into the very place it rests. Once it
+     has landed (SET_AT) Home's entrance is released on its original settle
+     curve (section 22's html.intro-land) and the page packs in round the
+     name. The rail is the spine throughout: the mark stays where the nav's
+     own sits, and the rail only slides away once Home's rails are dropping
+     in above it. RAIL_AT is timed against that drop, --vt-lock-at at
+     intro-land's pace, and has to move with it. */
+  var BACK = 1.0;
   var RAIL_AT = 0.19, RAIL_MS = 0.55;   /* from the name starting to set */
 
   var ABOUT_AT = FEED_AT + FEED;
@@ -151,7 +152,6 @@
   var HOLD_AT = PULL_AT + PULL;
   var BACK_AT = HOLD_AT + HOLD;
   var SET_AT = BACK_AT + BACK;
-  var CUT_AT = SET_AT + SET;
   var END_AT = SET_AT + RAIL_AT + RAIL_MS;
 
   function clamp01(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
@@ -193,7 +193,9 @@
     };
   }
   var leave = bezier(0.4, 0, 1, 1);
-  var settleIn = bezier(0.16, 1, 0.3, 1);   /* the system's settle, as Home's rows land on */
+  /* A page scrolled by hand: it gathers from rest and glides a long way
+     into its stop, so the name arrives slowly rather than snapping */
+  var scroll = bezier(0.6, 0, 0.2, 1);
 
   /* --- 3. Engraved prints --------------------------------------------------------
      Cut by js/engrave.js, as js/main.js cuts the portrait: the picture's tones
@@ -599,7 +601,7 @@
 
   var WHOLE = { s: 1 / 3, x: 0, y: 0 };
   function cameraAt(t) {
-    if (t >= BACK_AT) return zoom(WHOLE, place(view(STOPS[0])), carry(prog(t, BACK_AT, BACK)));
+    if (t >= BACK_AT) return WHOLE;   /* the board goes up as a page, whole (renderHome) */
     if (t >= PULL_AT) return zoom(place(view(STOPS[STOPS.length - 1])), WHOLE, past(prog(t, PULL_AT, PULL)));
     for (var i = STOPS.length - 1; i > 0; i--) {
       var stop = STOPS[i];
@@ -857,90 +859,33 @@
     renderShot(P, lt, land);
   }
 
-  /* The name setting into Home's heading. A copy of the heading is laid over
-     the page exactly where the heading is, word for word, in the heading's
-     own type, and each word starts enlarged and moved onto the reel's word,
-     so the last frame of the move is the heading itself, pixel for pixel,
-     and the page's own can take over unseen. The page is bare beneath it
-     apart from the name's own cell: its other rows are released as the
-     name sets off, and pack in round it. */
-  var setter = null;
-  function wordBox(node, from, to) {
-    var range = document.createRange();
-    range.setStart(node, from);
-    range.setEnd(node, to);
-    return range.getBoundingClientRect();
-  }
-  function beginSet() {
-    setter = { el: null, words: [], cut: false };
-    var heading = document.querySelector(".page-home .c-hero");
-    var text = heading && heading.firstChild;
-    /* The reel's words as they stand, measured before the board is put away */
-    var from = Array.prototype.map.call(open.title.querySelectorAll(".intro-ow"), function (w) {
-      return w.getBoundingClientRect();
-    });
-    keep(field, false);
-    overlay.classList.add("is-leaving", "is-clear");
-    root.classList.remove("intro-hold");
-    if (!text || text.nodeType !== 3) {
-      cut();
-      return;
-    }
-
-    var style = getComputedStyle(heading);
-    var box = heading.getBoundingClientRect();
-    var el = make("p", "intro-set");
-    ["fontFamily", "fontSize", "fontWeight", "fontStretch", "fontVariationSettings", "fontKerning",
-      "fontFeatureSettings", "letterSpacing", "wordSpacing", "lineHeight", "textTransform", "whiteSpace",
-      "textAlign", "color", "paddingTop", "paddingRight", "paddingBottom", "paddingLeft"].forEach(function (prop) {
-      el.style[prop] = style[prop];
-    });
-    el.style.left = box.left + "px";
-    el.style.top = box.top + "px";
-    el.style.width = box.width + "px";
-    el.style.height = box.height + "px";
-    var homes = [];
-    var word = /\S+/g;
-    var found;
-    while ((found = word.exec(text.data))) {
-      if (homes.length) el.appendChild(document.createTextNode(" "));
-      setter.words.push({ el: el.appendChild(make("span", "intro-sw", found[0])) });
-      homes.push(wordBox(text, found.index, found.index + found[0].length));
-    }
-    overlay.appendChild(el);
-    setter.el = el;
-
-    setter.words.forEach(function (w, i) {
-      var span = w.el.getBoundingClientRect();
-      var own = wordBox(w.el.firstChild, 0, w.el.firstChild.length);
-      var start = from[i] || homes[i];
-      w.el.style.transformOrigin = (own.left - span.left) + "px " + (own.top - span.top) + "px";
-      w.k = start.height / own.height;
-      w.x0 = start.left - own.left;
-      w.y0 = start.top - own.top;
-      /* Where the heading's word really is, should the copy sit a hair off it */
-      w.x1 = homes[i].left - own.left;
-      w.y1 = homes[i].top - own.top;
-    });
-  }
-  function cut() {
-    setter.cut = true;
-    if (setter.el) overlay.removeChild(setter.el);
-    root.classList.remove("intro-name");
-  }
+  /* Home coming up from below. The board scrolls up off the top and the
+     page rises on its trailing edge, a screen behind it, as if they were one
+     long page: the paper goes clear so Home shows through, the heading is
+     unhidden to ride up in its own cell, and every other row waits off to
+     the side, parked at its entrance's first frame, so the name rises alone.
+     It lands where it rests, and only then does the page pack in round it. */
+  var page = null;
+  var landed = false;
   function renderHome(t) {
-    if (t < SET_AT) return;
-    if (!setter) beginSet();
-    if (!setter.cut) {
-      if (t >= CUT_AT) cut();
-      else {
-        /* Home a couple of frames before the cut, so the cut is between two
-           identical frames */
-        var u = settleIn(prog(t, SET_AT, SET - 0.04));
-        setter.words.forEach(function (w) {
-          put(w.el, "transform", "translate(" + (w.x0 + (w.x1 - w.x0) * u).toFixed(2) + "px," +
-            (w.y0 + (w.y1 - w.y0) * u).toFixed(2) + "px) scale(" + Math.pow(w.k, 1 - u).toFixed(5) + ")");
-        });
+    if (t < BACK_AT) return;
+    if (!page) {
+      page = document.querySelector(".cert-page") || document.body;
+      overlay.classList.add("is-sheer");
+      root.classList.remove("intro-name");
+    }
+    if (!landed) {
+      if (t >= SET_AT) {
+        landed = true;
+        page.style.transform = "";
+        put(field, "transform", "");
+        keep(field, false);
+        overlay.classList.add("is-leaving", "is-clear");
+        root.classList.remove("intro-hold");
+      } else {
+        var up = scroll(prog(t, BACK_AT, BACK));
+        put(field, "transform", "translateY(" + (-up * sizeH).toFixed(2) + "px)");
+        page.style.transform = "translateY(" + ((1 - up) * sizeH).toFixed(2) + "px)";
       }
     }
     if (t >= END_AT) finish();
@@ -982,10 +927,10 @@
     var cam = cameraAt(t);
     var pulled = t >= PULL_AT;
     /* From the pull back on, the sheet stands in for the plates: only the
-       last one stays, shrinking onto its own place on the sheet, and the
-       name's plate comes back for the way home. Its rules are doubled for
-       that move, while it still stands, so they do not thin away with it. */
-    keep(open.el, !pulled || t >= BACK_AT);
+       last one stays, shrinking onto its own place on the sheet. Its rules
+       are doubled for that move, while it still stands, so they do not thin
+       away with it. */
+    keep(open.el, !pulled);
     keep(about.el, !pulled);
     plates.forEach(function (P) { keep(P.el, !pulled || (P.k === LAST && t < HOLD_AT)); });
     put(plates[LAST].el, "--rw", (t >= PULL_AT - 0.1 ? RULE * 2 : RULE) + "px");
@@ -1081,6 +1026,7 @@
     document.removeEventListener("focusin", onFocus);
     window.removeEventListener("pagehide", finish);
     root.classList.remove("intro-hold", "intro-on", "intro-live", "intro-name");
+    if (page) page.style.transform = "";   /* stopped mid-scroll, the page is put back */
     if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
     Engrave.release();
     /* Home's entrance keeps its gliding timing until it has landed; dropped
