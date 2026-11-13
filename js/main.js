@@ -153,6 +153,8 @@
     }, w, h, {
       pr: dpr,
       relief: isObject,
+      spacing: inkOnly && FINE ? FINE_SPACING : 0,
+      fine: inkOnly && FINE ? FINE_WEIGHT : 0,
       reverse: inkOnly || isObject ? false : "auto",
       head: inkOnly ? {
         cx: imgX + FACE.cx * scale,
@@ -189,6 +191,13 @@
      on ink, so its flat areas stay clean ground. HALFTONE_FUZZ softens
      every dot's edge a little, like ink taken up by the paper.
      html.prints-engraved turns the trial off. */
+  /* Fine line trial: the portrait engraved in hairlines that match the
+     grid's 1px rules, closer together, with no solid shadows.
+     html.portrait-engraved turns it off. */
+  var FINE = !document.documentElement.classList.contains("portrait-engraved");
+  var FINE_SPACING = 2.6;      /* CSS px between lines */
+  var FINE_WEIGHT = 1.1;       /* CSS px, the heaviest line */
+
   var HALFTONE = !document.documentElement.classList.contains("prints-engraved");
   var HALFTONE_PITCH = 3;      /* CSS px from one dot to the next */
   var HALFTONE_ANGLE = 45;     /* degrees the screen is turned */
@@ -692,7 +701,9 @@
       // A project prints its object (data-object) over its real image, which
       // shows through on hover and focus. If the object will not load, the
       // image is simply the image.
-      var dots = HALFTONE;
+      // The portrait stays an engraving; the trial's fine option prints
+      // it in hairlines instead (FINE_SPACING, FINE_WEIGHT).
+      var dots = HALFTONE && !inkOnly;
       var object = dots ? null : well.getAttribute("data-object");
       var source = object ? new Image() : img;
       var state = { img: source, isObject: !!object, dots: dots, canvas: canvas, inkOnly: inkOnly, print: null, inView: !arrive, phase: "waiting" };

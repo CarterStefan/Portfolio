@@ -310,7 +310,9 @@
       var around = boxBlur(sharp, cols, rows, Math.max(1, Math.round(job.spacing * 2 / job.detail)));
       solids = new Float32Array(sharp.length);
       for (i = 0; i < solids.length; i++) {
-        var broad = (sharp[i] - E.solidFrom) * 12;
+        // A fine print keeps solid ink only for thin features, so the
+        // shadows stay in line rather than closing up.
+        var broad = job.fine ? -1 : (sharp[i] - E.solidFrom) * 12;
         var thin = (sharp[i] - around[i] - E.thinAbove) * 10;
         solids[i] = clamp01(broad > thin ? broad : thin);
       }
@@ -320,7 +322,9 @@
       var nx = -dy;
       var ny = dx;
       var wob = E.wobble;
-      var minHalf = E.minWeight * pr / 2;
+      var minHalf = (job.fine ? 0.15 : E.minWeight) * pr / 2;
+      // A fine print's heaviest line is a hairline like the grid's rules.
+      var fullHalf = job.fine ? job.fine * pr / 2 : band * 0.5;
       for (y = 0, k = 0; y < plateH; y++) {
         var py = (y + 0.5) / pr;
         gy = py / cy - 0.5;
@@ -334,7 +338,7 @@
             var phase = (nx * px + ny * py) / spacing + sample(shape, cols, rows, gx, gy) +
               wob * (Math.sin(px * 0.031 + py * 0.017) + 0.5 * Math.sin(px * 0.011 - py * 0.053));
             var dist = Math.abs(phase - Math.floor(phase) - 0.5) * band;
-            var half = t * band * 0.5;
+            var half = t * fullHalf;
             if (half >= minHalf) {
               var line = half - dist + 0.5;
               if (line > cover) cover = line > 1 ? 1 : line;
@@ -483,6 +487,8 @@
        opts.head     {cx, cy, rx, ry} in CSS px: model this as the head
        opts.plain    true: type set large, with no shading or fine work
        opts.relief   true: a flat object's silhouette, to be given form
+       opts.fine     a line weight, CSS px: every line at most this thick,
+                     with no solid shadows (a hairline print)
        opts.originX, originY  device px added to everything, for a print
                      that sits inside a larger canvas
      done(print) is called when it is ready, which may be after other work;
@@ -510,6 +516,7 @@
       reversed: reversed,
       plain: !!opts.plain,
       relief: !!opts.relief,
+      fine: opts.fine || 0,
       head: opts.head || null,
       originX: opts.originX || 0,
       originY: opts.originY || 0
