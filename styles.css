@@ -3225,3 +3225,68 @@ html.soon .intro-brand { display: none; }
    the rail gone from the pages it would hand over to a mark somewhere
    else, so the reel shows none, as in coming-soon mode. */
 .intro-brand { display: none; }
+
+/* --- Project stack ------------------------------------------------------------
+   Work and Web list their projects as a stack. Scrolling down, each row
+   sticks under the nav and the next one slides over it, so a row shrinks
+   to a strip of its own top edge: its number, its title and a sliver of
+   its picture. The strips pile up in order under the nav until the list
+   ends, and then leave with it. Each row is still one link, so a strip
+   opens its project.
+
+   For the strip to carry the title, the title and the details sit at the
+   top of their blocks, level with the number, rather than in the middle.
+   Only where a whole row fits on screen beneath the strips: on a narrow or
+   short screen the rows stack tall and scroll as before. */
+#projectGrid {
+  --stack-top: var(--nav-h);
+  --peek: calc(var(--inset) * 1.5 + var(--step-xl));   /* down to just under the title */
+}
+#projectGrid > :nth-child(2) { --i: 1; }
+#projectGrid > :nth-child(3) { --i: 2; }
+#projectGrid > :nth-child(4) { --i: 3; }
+#projectGrid > :nth-child(5) { --i: 4; }
+#projectGrid > :nth-child(6) { --i: 5; }
+@media (min-width: 992px) and (min-height: 720px) {
+  #projectGrid > .project-item {
+    position: sticky;
+    top: calc(var(--stack-top) + var(--i, 0) * var(--peek));
+    background: var(--surface);
+  }
+  #projectGrid > .project-item > .cell-mid {
+    justify-content: flex-start;
+    padding-top: var(--inset);
+  }
+  /* The description starts a full inset under the title, clear of the strip */
+  #projectGrid > .project-item .c-title { margin-bottom: var(--inset); }
+  /* The picture starts level with the description, below the strip, so a
+     strip is only the number, the title and the details. A sliver of a
+     halftone print across the strip read as noise next to the title. */
+  #projectGrid > .project-item > .cell-tight {
+    padding-top: calc(var(--inset) * 2 + var(--step-xl));
+  }
+  /* Each row carries its rule on its top edge rather than its bottom, so
+     the rule rides with the row that slides over and every strip keeps a
+     line above it. The first row's top is the head block's rule. */
+  #projectGrid > .project-item { border-bottom: 0; }
+  #projectGrid > .project-item + .project-item { border-top: var(--rule-w) solid var(--rule); }
+  /* "View project" drops to the foot of its block, out of the strip's way,
+     so the next row never slices through it as it slides over */
+  #projectGrid > .project-item > .cell-mid > .c-link { margin-top: auto; }
+
+  /* A stuck row may only stick while its margin box fits inside the list,
+     and the list ends where the last row ends, so on its own the last row
+     never sticks: it slid straight over the strips above and dragged them
+     off. Each row instead reserves, below itself, one strip for every row
+     still to come (--left), so every row lets go at the same moment: when
+     the last row has come up into its own slot under the strips. Then the
+     stack leaves as one. The following row's equal negative margin cancels
+     the reserve out of the layout (sibling margins collapse to their sum). */
+  #projectGrid > .project-item:nth-last-child(2) { --left: 1; }
+  #projectGrid > .project-item:nth-last-child(3) { --left: 2; }
+  #projectGrid > .project-item:nth-last-child(4) { --left: 3; }
+  #projectGrid > .project-item:nth-last-child(5) { --left: 4; }
+  #projectGrid > .project-item:nth-last-child(6) { --left: 5; }
+  #projectGrid > .project-item { margin-bottom: calc(var(--left, 0) * var(--peek)); }
+  #projectGrid > .project-item + .project-item { margin-top: calc((var(--left, 0) + 1) * var(--peek) * -1); }
+}

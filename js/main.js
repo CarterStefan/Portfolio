@@ -35,6 +35,17 @@
   var year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
 
+  /* The project stack on Work and Web sticks its rows just under the nav
+     (styles.css, "Project stack"), so it needs the nav's real height, which
+     changes with the width. Without JS the stack falls back to --nav-h. */
+  var stackNav = document.querySelector(".cert-nav");
+  var stack = document.getElementById("projectGrid");
+  if (stackNav && stack && "ResizeObserver" in window) {
+    new ResizeObserver(function () {
+      stack.style.setProperty("--stack-top", stackNav.offsetHeight + "px");
+    }).observe(stackNav);
+  }
+
   /* --- 3. Contact form ------------------------------------------------------
      Progressive enhancement over the plain POST: without JS the form still
      submits to Formspree and Formspree's own confirmation page is shown.
@@ -203,6 +214,7 @@
   var HALFTONE_FUZZ = 0.2;     /* CSS px of blur on each dot's edge */
   var HALFTONE_GROW = 0.72;    /* a full dot's radius, as a share of the pitch */
   var HALFTONE_SHARPEN = 0.8;  /* how far each dot's tone is pushed from its surroundings */
+  var SWELL_STEPS = 6;         /* the dots come up in this many steps */
 
   var layoutHalftone = function (img, canvas, inkOnly, done) {
     var well = canvas.parentNode;
@@ -340,7 +352,9 @@
     }
     if (!p.shown) return;
     ctx.fillStyle = p.colours.ink;
-    if (HALFTONE_FUZZ) ctx.filter = "blur(" + (HALFTONE_FUZZ * p.dpr).toFixed(2) + "px)";
+    // The soft edge only on the finished screen: a blur costs a full pass
+    // of the canvas, and the swell's steps are gone in a blink.
+    if (HALFTONE_FUZZ && p.grow >= 1) ctx.filter = "blur(" + (HALFTONE_FUZZ * p.dpr).toFixed(2) + "px)";
     ctx.beginPath();
     for (var i = 0; i < p.n; i++) {
       var r = p.r[i] * p.grow;
@@ -385,7 +399,10 @@
   var assemble = function (state) {
     var p = state.print;
     if (p.dots) {
-      // The screen comes up as its dots swell into place.
+      /* The screen comes up as its dots swell into place, in a few steps
+         like the rest of the site's ink rather than every frame: a picture
+         is thousands of dots, and redrawing them all each frame, a screen
+         of pictures at once, is what made the page stutter. */
       p.shown = true;
       p.grow = 0;
       state.phase = "assembling";
@@ -393,8 +410,12 @@
       var swell = function (now) {
         if (state.print !== p) return;
         if (!begin) begin = now;
-        p.grow = Math.min(1, (now - begin) / ASSEMBLE_MS);
-        drawDots(p);
+        var g = Math.min(1, (now - begin) / ASSEMBLE_MS);
+        g = g >= 1 ? 1 : Math.floor(g * SWELL_STEPS) / SWELL_STEPS;
+        if (g !== p.grow) {
+          p.grow = g;
+          drawDots(p);
+        }
         if (p.grow < 1) requestAnimationFrame(swell);
         else state.phase = "done";
       };
@@ -640,13 +661,38 @@
         .then(function () { assemble(state); });
     };
 
-    /* A print takes a moment to cut, off the page's own thread. A newer size
-       asked for meanwhile wins. */
+    /* A halftone is cut on the page's own thread, a few tens of
+       milliseconds a picture. Cut back to back (every picture on Home at
+       load, or after a resize) they froze the page for most of a second, so
+       they queue and each is cut in a task of its own, letting the page
+       scroll and draw in between. */
+    var screens = [];
+    var screening = false;
+    var nextScreen = function () {
+      var job = screens.shift();
+      if (job) job();
+      if (screens.length) setTimeout(nextScreen, 0);
+      else screening = false;
+    };
+    var screenLater = function (job) {
+      screens.push(job);
+      if (!screening) {
+        screening = true;
+        setTimeout(nextScreen, 0);
+      }
+    };
+
+    /* An engraving is cut off the page's own thread (js/engrave.js), a
+       halftone in its own task. A newer size asked for meanwhile wins. */
     var relayout = function (well) {
       var state = states.get(well);
       var asked = state.asked = (state.asked || 0) + 1;
       var cut = state.dots ?
-        function (cb) { layoutHalftone(state.img, state.canvas, state.inkOnly, cb); } :
+        function (cb) {
+          screenLater(function () {
+            if (asked === state.asked) layoutHalftone(state.img, state.canvas, state.inkOnly, cb);
+          });
+        } :
         function (cb) { layoutPrint(state.img, state.canvas, state.inkOnly, state.isObject, cb); };
       cut(function (p) {
         if (asked !== state.asked) return;
