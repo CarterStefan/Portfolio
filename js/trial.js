@@ -6,7 +6,7 @@
 (function (root) {
   var KEY = "sc-trial";
   var OPTIONS = {
-    paper: ["gray", "warm", "white"],
+    paper: ["gray", "stone", "warm", "white"],
     rail: ["slim", "none", "full"]
   };
   var local = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
@@ -23,6 +23,7 @@
   function apply() {
     root.classList.toggle("paper-white", state.paper === "white");
     root.classList.toggle("paper-gray", state.paper === "gray");
+    root.classList.toggle("paper-stone", state.paper === "stone");
     root.classList.toggle("rail-none", state.rail === "none");
     root.classList.toggle("rail-full", state.rail === "full");
   }

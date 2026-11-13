@@ -3172,6 +3172,17 @@ html.paper-gray .cert {
 html.paper-gray .cert-foot,
 html.paper-gray .cert-foot > .cell { --muted: #B3B3B3; }
 
+/* Stone paper: between the two, a gray with a little warmth left in */
+html.paper-stone .cert {
+  --surface: #E8E6E0;
+  --band:    #E8E6E0;
+  --ink:     #161513;
+  --ink-2:   #161513;
+  --muted:   #57544D;   /* 6.1:1 on the paper */
+}
+html.paper-stone .cert-foot,
+html.paper-stone .cert-foot > .cell { --muted: #B5B1A8; }
+
 /* --- Corner labels ------------------------------------------------------------ */
 html:not(.rail-full) .cert {
   --rail: 0.5rem;
