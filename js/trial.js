@@ -6,13 +6,13 @@
 (function (root) {
   var KEY = "sc-trial";
   var OPTIONS = {
-    paper: ["warm", "white"],
+    paper: ["gray", "warm", "white"],
     rail: ["slim", "none", "full"]
   };
   var local = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
   if (!local) return;
 
-  var state = { paper: "warm", rail: "slim" };
+  var state = { paper: "gray", rail: "slim" };
   try {
     var saved = JSON.parse(localStorage.getItem(KEY) || "{}");
     Object.keys(OPTIONS).forEach(function (k) {
@@ -22,6 +22,7 @@
 
   function apply() {
     root.classList.toggle("paper-white", state.paper === "white");
+    root.classList.toggle("paper-gray", state.paper === "gray");
     root.classList.toggle("rail-none", state.rail === "none");
     root.classList.toggle("rail-full", state.rail === "full");
   }

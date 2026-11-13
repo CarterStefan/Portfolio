@@ -3160,6 +3160,18 @@ html:not(.paper-white) .cert {
 html:not(.paper-white) .cert-foot,
 html:not(.paper-white) .cert-foot > .cell { --muted: #B9B5AC; }
 
+/* Gray paper: the same move with the warmth taken out, a neutral light
+   gray with a neutral near-black ink */
+html.paper-gray .cert {
+  --surface: #EBEBEA;
+  --band:    #EBEBEA;
+  --ink:     #151515;
+  --ink-2:   #151515;
+  --muted:   #585858;   /* 6.1:1 on the paper */
+}
+html.paper-gray .cert-foot,
+html.paper-gray .cert-foot > .cell { --muted: #B3B3B3; }
+
 /* --- Corner labels ------------------------------------------------------------ */
 html:not(.rail-full) .cert {
   --rail: 0.5rem;
