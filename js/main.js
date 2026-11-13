@@ -190,12 +190,13 @@
      every dot's edge a little, like ink taken up by the paper.
      html.prints-engraved turns the trial off. */
   var HALFTONE = !document.documentElement.classList.contains("prints-engraved");
-  var HALFTONE_PITCH = 4.5;    /* CSS px from one dot to the next */
+  var HALFTONE_PITCH = 3;      /* CSS px from one dot to the next */
   var HALFTONE_ANGLE = 45;     /* degrees the screen is turned */
-  var HALFTONE_FUZZ = 0.55;    /* CSS px of blur on each dot's edge */
-  var HALFTONE_GROW = 0.74;    /* a full dot's radius, as a share of the pitch */
+  var HALFTONE_FUZZ = 0.2;     /* CSS px of blur on each dot's edge */
+  var HALFTONE_GROW = 0.72;    /* a full dot's radius, as a share of the pitch */
+  var HALFTONE_SHARPEN = 0.8;  /* how far each dot's tone is pushed from its surroundings */
 
-  var layoutHalftone = function (img, canvas, done) {
+  var layoutHalftone = function (img, canvas, inkOnly, done) {
     var well = canvas.parentNode;
     var w = well.clientWidth;
     var h = well.clientHeight;
@@ -240,7 +241,8 @@
       }
     }
     mean /= w * h;
-    var reversed = mean < 0.5;
+    // The portrait is ink on white and always prints ink on its cell.
+    var reversed = !inkOnly && mean < 0.5;
     var boxLight = function (cx, cy, half) {
       var x0 = Math.max(0, Math.floor(cx - half));
       var y0 = Math.max(0, Math.floor(cy - half));
@@ -267,7 +269,11 @@
         var dx = cx + (u * cos - v * sin) * pitch;
         var dy = cy + (u * sin + v * cos) * pitch;
         if (dx < -pitch || dy < -pitch || dx > w + pitch || dy > h + pitch) continue;
+        // Sharpened against a wider box, so edges and small type hold up
+        // at a fine screen instead of melting into their surroundings.
         var light = boxLight(dx, dy, pitch / 2);
+        light += HALFTONE_SHARPEN * (light - boxLight(dx, dy, pitch * 2));
+        light = Math.min(1, Math.max(0, light));
         xs.push(dx);
         ys.push(dy);
         tones.push(reversed ? light : 1 - light);
@@ -277,8 +283,8 @@
     // Stretch to the full range, so a pale placeholder still prints from
     // clean ground to dots that close up.
     var sorted = tones.slice().sort(function (p, q) { return p - q; });
-    var lo = sorted[Math.floor(sorted.length * 0.02)];
-    var hi = sorted[Math.floor(sorted.length * 0.98)];
+    var lo = sorted[Math.floor(sorted.length * 0.01)];
+    var hi = sorted[Math.floor(sorted.length * 0.995)];
     var range = Math.max(hi - lo, 0.05);
 
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -286,7 +292,7 @@
     var dotY = [];
     var dotR = [];
     for (var k = 0; k < tones.length; k++) {
-      var ink = Math.min(1, Math.max(0, ((tones[k] - lo) / range - 0.04) / 0.96));
+      var ink = Math.min(1, Math.max(0, ((tones[k] - lo) / range - 0.03) / 0.97));
       if (ink <= 0) continue;
       var r = HALFTONE_GROW * pitch * Math.sqrt(ink) * dpr;
       if (r < 0.35) continue;
@@ -312,7 +318,7 @@
       grow: 1,
       colours: reversed ?
         { ink: Engrave.config.paper, ground: Engrave.config.ink } :
-        { ink: Engrave.config.ink, ground: Engrave.config.paper },
+        { ink: Engrave.config.ink, ground: inkOnly ? null : Engrave.config.paper },
       shown: false
     });
   };
@@ -320,8 +326,10 @@
   var drawDots = function (p) {
     var ctx = p.ctx;
     ctx.clearRect(0, 0, p.canvas.width, p.canvas.height);
-    ctx.fillStyle = p.colours.ground;
-    ctx.fillRect(0, 0, p.canvas.width, p.canvas.height);
+    if (p.colours.ground) {
+      ctx.fillStyle = p.colours.ground;
+      ctx.fillRect(0, 0, p.canvas.width, p.canvas.height);
+    }
     if (!p.shown) return;
     ctx.fillStyle = p.colours.ink;
     if (HALFTONE_FUZZ) ctx.filter = "blur(" + (HALFTONE_FUZZ * p.dpr).toFixed(2) + "px)";
@@ -630,7 +638,7 @@
       var state = states.get(well);
       var asked = state.asked = (state.asked || 0) + 1;
       var cut = state.dots ?
-        function (cb) { layoutHalftone(state.img, state.canvas, cb); } :
+        function (cb) { layoutHalftone(state.img, state.canvas, state.inkOnly, cb); } :
         function (cb) { layoutPrint(state.img, state.canvas, state.inkOnly, state.isObject, cb); };
       cut(function (p) {
         if (asked !== state.asked) return;
@@ -684,7 +692,7 @@
       // A project prints its object (data-object) over its real image, which
       // shows through on hover and focus. If the object will not load, the
       // image is simply the image.
-      var dots = HALFTONE && !inkOnly;
+      var dots = HALFTONE;
       var object = dots ? null : well.getAttribute("data-object");
       var source = object ? new Image() : img;
       var state = { img: source, isObject: !!object, dots: dots, canvas: canvas, inkOnly: inkOnly, print: null, inView: !arrive, phase: "waiting" };
@@ -697,7 +705,8 @@
       }
       reprint.observe(well);
       if (arrive) arrive.observe(well);
-      if (inkOnly && finePointer && !reduceMotion) follow(well, state);
+      // The turning head reads the engraving, so a halftone portrait holds still.
+      if (inkOnly && !dots && finePointer && !reduceMotion) follow(well, state);
     });
   }
 })();
