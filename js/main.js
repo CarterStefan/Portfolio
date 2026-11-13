@@ -183,21 +183,21 @@
     });
   };
 
-  /* Halftone trial (styles.css section 25). A project prints its real image,
-     the capture or its placeholder, as a screen of round dots instead of
-     an engraved object. The screen sits at 45 degrees like a printed one,
-     each dot's area is its cell's share of ink, and dark tones grow the
-     dots until they run together. A mostly dark capture prints paper dots
-     on ink, so its flat areas stay clean ground. HALFTONE_FUZZ softens
-     every dot's edge a little, like ink taken up by the paper.
-     html.prints-engraved turns the trial off. */
   /* The portrait is engraved in fine line: hairlines that match the grid's
      1px rules, closer together, with no solid shadows. */
   var FINE = true;
   var FINE_SPACING = 2.6;      /* CSS px between lines */
   var FINE_WEIGHT = 1.1;       /* CSS px, the heaviest line */
 
-  var HALFTONE = !document.documentElement.classList.contains("prints-engraved");
+  /* Halftone. A project prints its real image,
+     the capture or its placeholder, as a screen of round dots instead of
+     an engraved object. The screen sits at 45 degrees like a printed one,
+     each dot's area is its cell's share of ink, and dark tones grow the
+     dots until they run together. A mostly dark capture prints paper dots
+     on ink, so its flat areas stay clean ground. HALFTONE_FUZZ softens
+     every dot's edge a little, like ink taken up by the paper. Set
+     HALFTONE false to engrave each project's object instead. */
+  var HALFTONE = true;
   var HALFTONE_PITCH = 3;      /* CSS px from one dot to the next */
   var HALFTONE_ANGLE = 45;     /* degrees the screen is turned */
   var HALFTONE_FUZZ = 0.2;     /* CSS px of blur on each dot's edge */

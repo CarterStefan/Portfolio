@@ -38,7 +38,7 @@
    22. Landing Reel
    23. Coming Soon
    24. Crisp Trial
-   25. Paper And Corner Labels Trial
+   25. Gray Paper And Corner Labels
    ========================================================================== */
 
 /* Self-hosted Space Mono, latin subset only (the two weights the site
@@ -3132,80 +3132,45 @@ html.soon .intro-brand { display: none; }
 
 
 /* ==========================================================================
-   25. PAPER AND CORNER LABELS TRIAL
-   On trial since 2026-11-12 on design/paper-labels. Two moves, each with
-   an off switch so the page can be compared with what is live:
+   25. GRAY PAPER AND CORNER LABELS
+   Settled on 2026-11-13 after a trial on design/paper-labels:
 
-   - Paper. A warm off-white sheet and a near-black ink in place of pure
-     white and pure black, which lowers the contrast without going grey.
-     html.paper-white turns it off.
-   - Corner labels. The rotated label rail becomes a slim black spine, and
-     each block's name moves into its top left corner as a small upright
-     mono label, the way the reference names its sections.
-     html.rail-none drops the spine as well; html.rail-full restores the
-     rail exactly as it was.
-
-   js/trial.js sets those classes from a small switcher that only shows on
-   a local server. Without it the defaults below are what renders.
+   - Paper. A neutral light gray sheet and a near-black ink in place of pure
+     white and pure black, which lowers the contrast.
+   - Corner labels. The rotated label rail is gone. Each block's name sits
+     in its top left corner as a small upright mono label, the way the
+     reference names its sections. Home drops them: its blocks say what
+     they are without one.
    ========================================================================== */
 
 /* --- Paper ------------------------------------------------------------------- */
-html:not(.paper-white) .cert {
-  --surface: #F4F2EC;
-  --band:    #F4F2EC;
-  --ink:     #161513;
-  --ink-2:   #161513;
-  --muted:   #5E5B54;   /* 6.2:1 on the paper */
-}
-html:not(.paper-white) .cert-foot,
-html:not(.paper-white) .cert-foot > .cell { --muted: #B9B5AC; }
-
-/* Gray paper: the same move with the warmth taken out, a neutral light
-   gray with a neutral near-black ink */
-html.paper-gray .cert {
+.cert {
   --surface: #EBEBEA;
   --band:    #EBEBEA;
   --ink:     #151515;
   --ink-2:   #151515;
   --muted:   #585858;   /* 6.1:1 on the paper */
 }
-html.paper-gray .cert-foot,
-html.paper-gray .cert-foot > .cell { --muted: #B3B3B3; }
-
-/* Stone paper: between the two, a gray with a little warmth left in */
-html.paper-stone .cert {
-  --surface: #E8E6E0;
-  --band:    #E8E6E0;
-  --ink:     #161513;
-  --ink-2:   #161513;
-  --muted:   #57544D;   /* 6.1:1 on the paper */
-}
-html.paper-stone .cert-foot,
-html.paper-stone .cert-foot > .cell { --muted: #B5B1A8; }
+.cert-foot,
+.cert-foot > .cell { --muted: #B3B3B3; }
 
 /* --- Corner labels ------------------------------------------------------------ */
-html:not(.rail-full) .cert {
-  --rail: 0.5rem;
+.cert {
+  --rail: 0px;
   /* The room a block leaves above its content for the label in its corner */
   --label-clear: calc(var(--inset) * 2 + 0.9rem);
 }
-html.rail-none .cert { --rail: 0px; }
-@media (max-width: 991.98px) {
-  html:not(.rail-full) .cert { --rail: 0.375rem; }
-  html.rail-none .cert { --rail: 0px; }
-}
 
 /* The reel keeps its own rail, which it builds at the old width */
-html:not(.rail-full) .intro { --rail: 2.6rem; }
+.intro { --rail: 2.6rem; }
 @media (max-width: 991.98px) {
-  html:not(.rail-full) .intro { --rail: 2.2rem; }
+  .intro { --rail: 2.2rem; }
 }
 
-/* The label still sits in the rail's track, which is now only as wide as
-   the spine. It stands upright and its text runs out of the track into the
-   corner of the block beside it. The spine is painted as a background
-   sized to the track, so the overflowing words carry no black with them. */
-html:not(.rail-full) .vlabel {
+/* The label still sits in the rail's track, which is now no width at all.
+   It stands upright and its text runs out of the track into the corner of
+   the block beside it. */
+.cert .vlabel {
   writing-mode: horizontal-tb;
   transform: none;
   justify-content: flex-start;
@@ -3214,38 +3179,49 @@ html:not(.rail-full) .vlabel {
   z-index: 1;
   overflow: visible;
   border-right: 0;
-  padding: var(--inset) 0 0 calc(var(--rail) + var(--inset));
+  padding: var(--inset) 0 0 var(--inset);
   font-size: var(--step-label);
   font-weight: 400;
   letter-spacing: var(--track-label);
   line-height: 1.2;
   color: var(--ink);
-  background: linear-gradient(var(--ink), var(--ink)) 0 0 / var(--rail) 100% no-repeat;
+  background: none;
   pointer-events: none;
 }
-html:not(.rail-full) .project-item > .vlabel { font-size: var(--step-label); letter-spacing: var(--track-label); }
-/* A second label mid-row draws no spine of its own */
-html:not(.rail-full) .crow > .vlabel:not(:first-child) { background: none; }
-html:not(.rail-full) .cert-foot .vlabel { color: var(--surface); }
+.cert .project-item > .vlabel { font-size: var(--step-label); letter-spacing: var(--track-label); }
+.cert .cert-foot .vlabel { color: var(--surface); }
 @media (max-width: 575.98px) {
-  html:not(.rail-full) .vlabel { font-size: var(--step-label); letter-spacing: var(--track-label); padding: var(--inset) 0 0 calc(var(--rail) + var(--inset)); }
+  .cert .vlabel { font-size: var(--step-label); letter-spacing: var(--track-label); padding: var(--inset) 0 0 var(--inset); }
 }
 
 /* Whatever sits beside a label clears it */
-html:not(.rail-full) .vlabel + .cell:not(.cell-portrait),
-html:not(.rail-full) .vlabel + .home-plates { padding-top: var(--label-clear); }
-html:not(.rail-full) .vlabel + .cell-pad-lg { padding-top: max(var(--label-clear), clamp(1.75rem, 4.5vw, 4rem)); }
+.cert:not(.page-home) .vlabel + .cell:not(.cell-portrait),
+.cert:not(.page-home) .vlabel + .home-plates { padding-top: var(--label-clear); }
+.cert:not(.page-home) .vlabel + .cell-pad-lg { padding-top: max(var(--label-clear), clamp(1.75rem, 4.5vw, 4rem)); }
 
-/* The mark leaves the rail and stands on the paper, in ink, beside the
-   spine. On wide screens it takes the first two tracks, as it did before
-   the rail took it in. */
-html:not(.rail-full) .cert-nav-inner .cert-brand {
+/* Home's blocks need no names. The labels keep their place in the grid but
+   show nothing, and the blocks beside them keep their usual padding. */
+.page-home .vlabel { visibility: hidden; }
+
+/* The mark leaves the rail and stands on the paper, in ink. On wide screens
+   it takes the first two tracks, as it did before the rail took it in. */
+.cert-nav-inner .cert-brand {
   flex: 0 0 auto;
   justify-content: flex-start;
-  padding-inline: calc(var(--rail) + var(--inset)) var(--inset);
-  background: linear-gradient(var(--ink), var(--ink)) 0 0 / var(--rail) 100% no-repeat;
+  padding-inline: var(--inset);
+  background: none;
 }
-html:not(.rail-full) .cert-brand img { width: 32px; filter: grayscale(1) contrast(10); }
+.cert .cert-brand img { width: 32px; filter: grayscale(1) contrast(10); }
 @media (min-width: 992px) {
-  html:not(.rail-full) .cert-nav-inner .cert-brand { grid-column: 1 / 3; }
+  .cert-nav-inner .cert-brand { grid-column: 1 / 3; }
 }
+
+/* The contact band names itself ("Want to talk?"), so its corner label
+   would only say the same thing twice */
+.cert .cert-foot > .vlabel { visibility: hidden; }
+.cert:not(.page-home) .cert-foot > .vlabel + .cell-pad-lg { padding-top: clamp(1.75rem, 4.5vw, 4rem); }
+
+/* The reel's mark sat in its rail, where the nav's mark used to be. With
+   the rail gone from the pages it would hand over to a mark somewhere
+   else, so the reel shows none, as in coming-soon mode. */
+.intro-brand { display: none; }
