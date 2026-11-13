@@ -181,9 +181,173 @@
     });
   };
 
+  /* Halftone trial (styles.css section 25). A project prints its real image,
+     the capture or its placeholder, as a screen of round dots instead of
+     an engraved object. The screen sits at 45 degrees like a printed one,
+     each dot's area is its cell's share of ink, and dark tones grow the
+     dots until they run together. A mostly dark capture prints paper dots
+     on ink, so its flat areas stay clean ground. HALFTONE_FUZZ softens
+     every dot's edge a little, like ink taken up by the paper.
+     html.prints-engraved turns the trial off. */
+  var HALFTONE = !document.documentElement.classList.contains("prints-engraved");
+  var HALFTONE_PITCH = 4.5;    /* CSS px from one dot to the next */
+  var HALFTONE_ANGLE = 45;     /* degrees the screen is turned */
+  var HALFTONE_FUZZ = 0.55;    /* CSS px of blur on each dot's edge */
+  var HALFTONE_GROW = 0.74;    /* a full dot's radius, as a share of the pitch */
+
+  var layoutHalftone = function (img, canvas, done) {
+    var well = canvas.parentNode;
+    var w = well.clientWidth;
+    var h = well.clientHeight;
+    var iw = img.naturalWidth;
+    var ih = img.naturalHeight;
+    if (!w || !h || !iw || !ih) return;
+
+    var style = getComputedStyle(img);
+    var focus = style.objectPosition.split(" ").map(function (v) {
+      return /%$/.test(v) ? parseFloat(v) / 100 : 0.5;
+    });
+    var scale = (style.objectFit === "contain" ? Math.min : Math.max)(w / iw, h / ih);
+
+    // One sample per CSS pixel, framed as the image itself is framed.
+    var sample = document.createElement("canvas");
+    sample.width = w;
+    sample.height = h;
+    var sctx = sample.getContext("2d", { willReadFrequently: true });
+    sctx.fillStyle = "#fff";
+    sctx.fillRect(0, 0, w, h);
+    sctx.drawImage(img, (w - iw * scale) * focus[0], (h - ih * scale) * focus[1], iw * scale, ih * scale);
+    var px;
+    try {
+      px = sctx.getImageData(0, 0, w, h).data;
+    } catch (e) {
+      done(null);
+      return;
+    }
+
+    // A summed area table of lightness, so any box averages in four reads.
+    var W1 = w + 1;
+    var sat = new Float64Array(W1 * (h + 1));
+    var mean = 0;
+    for (var y = 0; y < h; y++) {
+      var row = 0;
+      for (var x = 0; x < w; x++) {
+        var i = (y * w + x) * 4;
+        var l = (0.2126 * px[i] + 0.7152 * px[i + 1] + 0.0722 * px[i + 2]) / 255;
+        row += l;
+        mean += l;
+        sat[(y + 1) * W1 + x + 1] = sat[y * W1 + x + 1] + row;
+      }
+    }
+    mean /= w * h;
+    var reversed = mean < 0.5;
+    var boxLight = function (cx, cy, half) {
+      var x0 = Math.max(0, Math.floor(cx - half));
+      var y0 = Math.max(0, Math.floor(cy - half));
+      var x1 = Math.min(w, Math.ceil(cx + half));
+      var y1 = Math.min(h, Math.ceil(cy + half));
+      var n = (x1 - x0) * (y1 - y0);
+      if (n <= 0) return 1;
+      return (sat[y1 * W1 + x1] - sat[y0 * W1 + x1] - sat[y1 * W1 + x0] + sat[y0 * W1 + x0]) / n;
+    };
+
+    // Every point of the turned screen that lands on the well.
+    var pitch = HALFTONE_PITCH;
+    var a = HALFTONE_ANGLE * Math.PI / 180;
+    var cos = Math.cos(a);
+    var sin = Math.sin(a);
+    var cx = w / 2;
+    var cy = h / 2;
+    var reach = Math.ceil(Math.hypot(w, h) / 2 / pitch) + 1;
+    var xs = [];
+    var ys = [];
+    var tones = [];
+    for (var v = -reach; v <= reach; v++) {
+      for (var u = -reach; u <= reach; u++) {
+        var dx = cx + (u * cos - v * sin) * pitch;
+        var dy = cy + (u * sin + v * cos) * pitch;
+        if (dx < -pitch || dy < -pitch || dx > w + pitch || dy > h + pitch) continue;
+        var light = boxLight(dx, dy, pitch / 2);
+        xs.push(dx);
+        ys.push(dy);
+        tones.push(reversed ? light : 1 - light);
+      }
+    }
+
+    // Stretch to the full range, so a pale placeholder still prints from
+    // clean ground to dots that close up.
+    var sorted = tones.slice().sort(function (p, q) { return p - q; });
+    var lo = sorted[Math.floor(sorted.length * 0.02)];
+    var hi = sorted[Math.floor(sorted.length * 0.98)];
+    var range = Math.max(hi - lo, 0.05);
+
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var dotX = [];
+    var dotY = [];
+    var dotR = [];
+    for (var k = 0; k < tones.length; k++) {
+      var ink = Math.min(1, Math.max(0, ((tones[k] - lo) / range - 0.04) / 0.96));
+      if (ink <= 0) continue;
+      var r = HALFTONE_GROW * pitch * Math.sqrt(ink) * dpr;
+      if (r < 0.35) continue;
+      dotX.push(xs[k] * dpr);
+      dotY.push(ys[k] * dpr);
+      dotR.push(r);
+    }
+
+    var n = dotR.length;
+    var wait = new Float32Array(n);
+    for (var j = 0; j < n; j++) wait[j] = Math.random();
+    done({
+      dots: true,
+      canvas: canvas,
+      pw: Math.round(w * dpr),
+      ph: Math.round(h * dpr),
+      dpr: dpr,
+      n: n,
+      x: Float32Array.from(dotX),
+      y: Float32Array.from(dotY),
+      r: Float32Array.from(dotR),
+      wait: wait,
+      grow: 1,
+      colours: reversed ?
+        { ink: Engrave.config.paper, ground: Engrave.config.ink } :
+        { ink: Engrave.config.ink, ground: Engrave.config.paper },
+      shown: false
+    });
+  };
+
+  var drawDots = function (p) {
+    var ctx = p.ctx;
+    ctx.clearRect(0, 0, p.canvas.width, p.canvas.height);
+    ctx.fillStyle = p.colours.ground;
+    ctx.fillRect(0, 0, p.canvas.width, p.canvas.height);
+    if (!p.shown) return;
+    ctx.fillStyle = p.colours.ink;
+    if (HALFTONE_FUZZ) ctx.filter = "blur(" + (HALFTONE_FUZZ * p.dpr).toFixed(2) + "px)";
+    ctx.beginPath();
+    for (var i = 0; i < p.n; i++) {
+      var r = p.r[i] * p.grow;
+      if (p.grow < 1) {
+        // Each dot swells in its own time while the screen comes up.
+        var t = Math.min(1, Math.max(0, (p.grow * 1.6 - p.wait[i] * 0.6)));
+        r = p.r[i] * (1 - (1 - t) * (1 - t));
+      }
+      if (r < 0.2) continue;
+      ctx.moveTo(p.x[i] + r, p.y[i]);
+      ctx.arc(p.x[i], p.y[i], r, 0, Math.PI * 2);
+    }
+    ctx.fill();
+    ctx.filter = "none";
+  };
+
   /* Draw a print as it stands: bare, or (once it is shown) every line, at
      home or wherever its flight has it. */
   var drawPrint = function (p) {
+    if (p.dots) {
+      drawDots(p);
+      return;
+    }
     var ctx = p.ctx;
     if (p.shown) {
       Engrave.draw(ctx, p, p.colours, p.flying);
@@ -204,6 +368,23 @@
      steps like the rest of the site rather than gliding. */
   var assemble = function (state) {
     var p = state.print;
+    if (p.dots) {
+      // The screen comes up as its dots swell into place.
+      p.shown = true;
+      p.grow = 0;
+      state.phase = "assembling";
+      var begin = 0;
+      var swell = function (now) {
+        if (state.print !== p) return;
+        if (!begin) begin = now;
+        p.grow = Math.min(1, (now - begin) / ASSEMBLE_MS);
+        drawDots(p);
+        if (p.grow < 1) requestAnimationFrame(swell);
+        else state.phase = "done";
+      };
+      requestAnimationFrame(swell);
+      return;
+    }
     Engrave.scatter(p, Math.random, 0.3, 1.2, 5, ASSEMBLE_STAGGER);
     p.shown = true;
     p.flying = true;
@@ -448,7 +629,10 @@
     var relayout = function (well) {
       var state = states.get(well);
       var asked = state.asked = (state.asked || 0) + 1;
-      layoutPrint(state.img, state.canvas, state.inkOnly, state.isObject, function (p) {
+      var cut = state.dots ?
+        function (cb) { layoutHalftone(state.img, state.canvas, cb); } :
+        function (cb) { layoutPrint(state.img, state.canvas, state.inkOnly, state.isObject, cb); };
+      cut(function (p) {
         if (asked !== state.asked) return;
         if (!p) {
           // The canvas could not be read back: the image is simply the image.
@@ -500,9 +684,10 @@
       // A project prints its object (data-object) over its real image, which
       // shows through on hover and focus. If the object will not load, the
       // image is simply the image.
-      var object = well.getAttribute("data-object");
+      var dots = HALFTONE && !inkOnly;
+      var object = dots ? null : well.getAttribute("data-object");
       var source = object ? new Image() : img;
-      var state = { img: source, isObject: !!object, canvas: canvas, inkOnly: inkOnly, print: null, inView: !arrive, phase: "waiting" };
+      var state = { img: source, isObject: !!object, dots: dots, canvas: canvas, inkOnly: inkOnly, print: null, inView: !arrive, phase: "waiting" };
       states.set(well, state);
 
       source.addEventListener("load", function () { relayout(well); });

@@ -7,12 +7,13 @@
   var KEY = "sc-trial";
   var OPTIONS = {
     paper: ["gray", "stone", "warm", "white"],
-    rail: ["slim", "none", "full"]
+    rail: ["slim", "none", "full"],
+    prints: ["halftone", "engraved"]
   };
   var local = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
   if (!local) return;
 
-  var state = { paper: "gray", rail: "slim" };
+  var state = { paper: "stone", rail: "slim", prints: "halftone" };
   try {
     var saved = JSON.parse(localStorage.getItem(KEY) || "{}");
     Object.keys(OPTIONS).forEach(function (k) {
@@ -24,6 +25,7 @@
     root.classList.toggle("paper-white", state.paper === "white");
     root.classList.toggle("paper-gray", state.paper === "gray");
     root.classList.toggle("paper-stone", state.paper === "stone");
+    root.classList.toggle("prints-engraved", state.prints === "engraved");
     root.classList.toggle("rail-none", state.rail === "none");
     root.classList.toggle("rail-full", state.rail === "full");
   }
@@ -32,7 +34,7 @@
   function build() {
     var panel = document.createElement("div");
     panel.setAttribute("aria-label", "Design trial");
-    panel.style.cssText = "position:fixed;left:12px;bottom:12px;z-index:2000;display:flex;gap:10px;" +
+    panel.style.cssText = "position:fixed;left:12px;bottom:12px;z-index:2000;display:flex;flex-wrap:wrap;max-width:calc(100vw - 24px);gap:10px;" +
       "padding:8px 10px;background:#161513;color:#F4F2EC;font:11px/1.2 'Space Mono',monospace;" +
       "text-transform:uppercase;letter-spacing:.04em";
     Object.keys(OPTIONS).forEach(function (k) {
