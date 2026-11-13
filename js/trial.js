@@ -8,13 +8,12 @@
   var OPTIONS = {
     paper: ["gray", "stone", "warm", "white"],
     rail: ["slim", "none", "full"],
-    prints: ["halftone", "engraved"],
-    portrait: ["fine", "engraved"]
+    prints: ["halftone", "engraved"]
   };
   var local = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
   if (!local) return;
 
-  var state = { paper: "stone", rail: "slim", prints: "halftone", portrait: "fine" };
+  var state = { paper: "stone", rail: "slim", prints: "halftone" };
   try {
     var saved = JSON.parse(localStorage.getItem(KEY) || "{}");
     Object.keys(OPTIONS).forEach(function (k) {
@@ -27,7 +26,6 @@
     root.classList.toggle("paper-gray", state.paper === "gray");
     root.classList.toggle("paper-stone", state.paper === "stone");
     root.classList.toggle("prints-engraved", state.prints === "engraved");
-    root.classList.toggle("portrait-engraved", state.portrait === "engraved");
     root.classList.toggle("rail-none", state.rail === "none");
     root.classList.toggle("rail-full", state.rail === "full");
   }
