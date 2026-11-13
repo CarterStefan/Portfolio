@@ -38,6 +38,7 @@
    22. Landing Reel
    23. Coming Soon
    24. Crisp Trial
+   25. Gray Paper And Corner Labels
    ========================================================================== */
 
 /* Self-hosted Space Mono, latin subset only (the two weights the site
@@ -3128,3 +3129,99 @@ html.soon .intro-brand { display: none; }
 
 /* The practice pair may wrap on a phone rather than shrink to fit a line */
 .page-home .c-statement-pair { font-size: clamp(1.4rem, 5.2cqi, 3rem); }
+
+
+/* ==========================================================================
+   25. GRAY PAPER AND CORNER LABELS
+   Settled on 2026-11-13 after a trial on design/paper-labels:
+
+   - Paper. A neutral light gray sheet and a near-black ink in place of pure
+     white and pure black, which lowers the contrast.
+   - Corner labels. The rotated label rail is gone. Each block's name sits
+     in its top left corner as a small upright mono label, the way the
+     reference names its sections. Home drops them: its blocks say what
+     they are without one.
+   ========================================================================== */
+
+/* --- Paper ------------------------------------------------------------------- */
+.cert {
+  --surface: #EBEBEA;
+  --band:    #EBEBEA;
+  --ink:     #151515;
+  --ink-2:   #151515;
+  --muted:   #585858;   /* 6.1:1 on the paper */
+}
+.cert-foot,
+.cert-foot > .cell { --muted: #B3B3B3; }
+
+/* --- Corner labels ------------------------------------------------------------ */
+.cert {
+  --rail: 0px;
+  /* The room a block leaves above its content for the label in its corner */
+  --label-clear: calc(var(--inset) * 2 + 0.9rem);
+}
+
+/* The reel keeps its own rail, which it builds at the old width */
+.intro { --rail: 2.6rem; }
+@media (max-width: 991.98px) {
+  .intro { --rail: 2.2rem; }
+}
+
+/* The label still sits in the rail's track, which is now no width at all.
+   It stands upright and its text runs out of the track into the corner of
+   the block beside it. */
+.cert .vlabel {
+  writing-mode: horizontal-tb;
+  transform: none;
+  justify-content: flex-start;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+  border-right: 0;
+  padding: var(--inset) 0 0 var(--inset);
+  font-size: var(--step-label);
+  font-weight: 400;
+  letter-spacing: var(--track-label);
+  line-height: 1.2;
+  color: var(--ink);
+  background: none;
+  pointer-events: none;
+}
+.cert .project-item > .vlabel { font-size: var(--step-label); letter-spacing: var(--track-label); }
+.cert .cert-foot .vlabel { color: var(--surface); }
+@media (max-width: 575.98px) {
+  .cert .vlabel { font-size: var(--step-label); letter-spacing: var(--track-label); padding: var(--inset) 0 0 var(--inset); }
+}
+
+/* Whatever sits beside a label clears it */
+.cert:not(.page-home) .vlabel + .cell:not(.cell-portrait),
+.cert:not(.page-home) .vlabel + .home-plates { padding-top: var(--label-clear); }
+.cert:not(.page-home) .vlabel + .cell-pad-lg { padding-top: max(var(--label-clear), clamp(1.75rem, 4.5vw, 4rem)); }
+
+/* Home's blocks need no names. The labels keep their place in the grid but
+   show nothing, and the blocks beside them keep their usual padding. */
+.page-home .vlabel { visibility: hidden; }
+
+/* The mark leaves the rail and stands on the paper, in ink. On wide screens
+   it takes the first two tracks, as it did before the rail took it in. */
+.cert-nav-inner .cert-brand {
+  flex: 0 0 auto;
+  justify-content: flex-start;
+  padding-inline: var(--inset);
+  background: none;
+}
+.cert .cert-brand img { width: 32px; filter: grayscale(1) contrast(10); }
+@media (min-width: 992px) {
+  .cert-nav-inner .cert-brand { grid-column: 1 / 3; }
+}
+
+/* The contact band names itself ("Want to talk?"), so its corner label
+   would only say the same thing twice */
+.cert .cert-foot > .vlabel { visibility: hidden; }
+.cert:not(.page-home) .cert-foot > .vlabel + .cell-pad-lg { padding-top: clamp(1.75rem, 4.5vw, 4rem); }
+
+/* The reel's mark sat in its rail, where the nav's mark used to be. With
+   the rail gone from the pages it would hand over to a mark somewhere
+   else, so the reel shows none, as in coming-soon mode. */
+.intro-brand { display: none; }
