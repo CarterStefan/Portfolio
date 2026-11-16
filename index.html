@@ -236,6 +236,16 @@
         <p class="vlabel">Status</p>
         <div class="cell cell-pad-lg">
           <p class="c-soon">Website coming soon.</p>
+          <!-- Preview code: opens the full site in this browser (js/soon.js) -->
+          <form class="soon-code" id="soon-code" novalidate>
+            <label class="c-meta" for="soon-code-input">Have a preview code?</label>
+            <div class="soon-code-row">
+              <input id="soon-code-input" name="code" type="password" autocomplete="off"
+                     autocapitalize="off" spellcheck="false">
+              <button class="soon-code-btn" type="submit">Enter</button>
+            </div>
+            <p class="soon-code-msg c-meta" role="status" aria-live="polite"></p>
+          </form>
         </div>
       </div>
 
