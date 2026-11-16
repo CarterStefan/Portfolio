@@ -2895,6 +2895,45 @@ html.soon .intro-brand { display: none; }
   color: var(--surface);
 }
 
+/* The preview code box under the message: quiet, reversed out like it */
+.soon-code {
+  margin-top: 2.5rem;
+  display: grid;
+  gap: 0.75rem;
+  max-width: 26rem;
+}
+.soon-code .c-meta { color: var(--muted); }
+.soon-code-row { display: flex; }
+.soon-code input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  color: var(--surface);
+  border: var(--rule-w) solid var(--muted);
+  border-right: 0;
+  border-radius: 0;
+  font: inherit;
+  padding: 0.75rem 1rem;
+}
+.soon-code-btn {
+  border: var(--rule-w) solid var(--surface);
+  border-radius: 0;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: var(--step-label);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.4rem;
+  cursor: pointer;
+}
+.soon-code-btn:hover,
+.soon-code-btn:focus-visible { background: var(--hue); border-color: var(--hue); color: var(--surface); }
+.soon-code input:focus-visible,
+.soon-code-btn:focus-visible { outline: 2px solid var(--surface); outline-offset: 3px; border-radius: 0; }
+.soon-code-msg:empty { display: none; }
+
 
 /* ==========================================================================
    24. CRISP TRIAL
